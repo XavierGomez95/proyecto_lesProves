@@ -5,7 +5,7 @@ import java.util.List;
 public class Trial {
     private Player[] players;
     private String name;
-
+/*
     public List listTrials () {
 
         return ;
@@ -15,6 +15,7 @@ public class Trial {
 
         return ;
     }
+ */
 
     public void createTrial () {
 

@@ -20,34 +20,59 @@ public class Menu {
     }
 
 
-    /** This method is called to show the general menu options on the screen. */
-    public void showMenu () {
-        System.out.println("--- The Factory ---" + System.lineSeparator() +
-                System.lineSeparator() +
-                "1. Show progress" + System.lineSeparator() +
-                "2. Exit" + System.lineSeparator());
+    /** This method is called to show the format menu options on the screen. */
+    public void showFormatMenu () { // 4.1
+        System.out.println(System.lineSeparator() +
+                "I) People’s Front of Engineering (CSV)" + System.lineSeparator() +
+                "II) Engineering People’s Front (JSON)" + System.lineSeparator());
+    }
+
+    /** This method is called to show the role menu options on the screen. */
+    public void showRoleMenu () { // 4.2
+        System.out.println(System.lineSeparator() +
+                "A) The Composer" + System.lineSeparator() +
+                "B) This year’s Conductor" + System.lineSeparator());
+    }
+
+    /** This method is called to show the manager menu options on the screen. */
+    public void showManagerMenu () { // 4.3
+        System.out.println(System.lineSeparator() +
+                "1) Manage Trials" + System.lineSeparator() +
+                "2) Manage Editions" + System.lineSeparator() +
+                                        System.lineSeparator() +
+                "3) Exit" + System.lineSeparator());
     }
 
     /** This method is called to show the trial menu options on the screen. */
-    public void showTrialMenu () {
-        System.out.println("--- The Factory ---" + System.lineSeparator() +
+    public void showTrialsMenu () { // 4.3.1
+        System.out.println(System.lineSeparator() +
+                "a) Create Trial" + System.lineSeparator() +
+                "b) List Trials" + System.lineSeparator() +
+                "c) Delete Trial" + System.lineSeparator() +
                 System.lineSeparator() +
-                "1. Show progress" + System.lineSeparator() +
-                "2. Exit" + System.lineSeparator());
+                "e) Back" + System.lineSeparator());
     }
 
-    /** This method is called to show the trial menu options on the screen. */
-    public void deleteTrialMenu () {
-        System.out.println("--- The Factory ---" + System.lineSeparator() +
+    /** This method is called to show the editions menu options on the screen. */
+    public void showEditionsMenu () { // 4.3.2
+        System.out.println(System.lineSeparator() +
+                "a) Create Edition" + System.lineSeparator() +
+                "b) List Editions" + System.lineSeparator() +
+                "c) Duplicate Edition" + System.lineSeparator() +
+                "d) Delete Edition" + System.lineSeparator() +
                 System.lineSeparator() +
-                "1. Show progress" + System.lineSeparator() +
-                "2. Exit" + System.lineSeparator());
+                "e) Back" + System.lineSeparator());
     }
 
-    /** This method is called to show the trial menu options on the screen. */
+    /** This method is called to show the delete trial menu on the screen. */
+    public void showDeleteTrialMenu () {
+        System.out.println();
+    }
+
+    /** This method is called to show the list of trials. */
     public void showList (List<String> list) {
         for(int i = 0; i < list.size(); i++) {
-            //
+            // ALGO
         }
     }
 
@@ -106,13 +131,23 @@ public class Menu {
     }
 
 
+    public void showTittle () {
+        System.out.println(System.lineSeparator() +
+                " _____ _             _____      _       _" + System.lineSeparator() +
+                "/__   \\ |__   ___   /__   \\_ __(_) __ _| |___" + System.lineSeparator() +
+                "  / /\\/ '_ \\ / _ \\    / /\\/ '__| |/ _` | / __|" + System.lineSeparator() +
+                " / /  | | | | ___/   / /  | |  | | (_| | \\__ \\" + System.lineSeparator() +
+                " \\/   |_| |_|\\___|   \\/   |_|  |_|\\__,_|_|___/" + System.lineSeparator());
+    }
+
+
     /**
      * Displays a message.
      *
      * @param message contains the message to be displayed.
      */
     public void showMessage (String message) {
-        System.out.print(message);
+        System.out.println(message);
     }
 
 
