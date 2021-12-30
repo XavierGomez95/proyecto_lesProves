@@ -9,15 +9,18 @@ public class Controller {
         this.menu = menu;
     }
 
-    public void run () {
+    /**
+     *
+     */
+    public void run() {
 
     }
 
-    private void chooseFormat () {
+    private void chooseFormat() {
 
     }
 
-    private void chooseRole (ArrayList<String> arrayList) {
+    private void chooseRole(ArrayList<String> arrayList) {
 
     }
 }
