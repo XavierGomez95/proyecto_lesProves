@@ -17,6 +17,9 @@ public class LesProvesDAO {
     private Trial[] phDefense = new PhDefense[]{};
     private Trial[] budgedRequest = new BudgedRequest[]{};
 
+
+
+    // JSON
     public void writeJson () {
 
     }
@@ -34,6 +37,9 @@ public class LesProvesDAO {
         return trialsList;
     }
 
+
+
+    // CSV
     public void writeCsv () {
 
     }
