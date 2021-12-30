@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LesProvesDAO {
+public class TrialDAO {
     private static Gson gson = new Gson();
     private List<String> trialsList = new ArrayList<>();
 
@@ -20,7 +20,9 @@ public class LesProvesDAO {
 
 
     // JSON
-    public void writeJson () {
+    public void writeJson (Trial[] trials) {
+
+
 
     }
 
@@ -41,7 +43,6 @@ public class LesProvesDAO {
 
     // CSV
     public void writeCsv () {
-
     }
 
     public List<String> readCsv () {

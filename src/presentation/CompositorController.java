@@ -1,13 +1,13 @@
 package presentation;
 
 import business.CompositorManager;
-import persistence.LesProvesDAO;
+import persistence.TrialDAO;
 
 public class CompositorController extends Controller{
     CompositorManager compositorM;
 
-    public CompositorController(Menu menu, LesProvesDAO lesProvesDAO) {
-        super(menu, lesProvesDAO);
+    public CompositorController(Menu menu, TrialDAO trialDAO) {
+        super(menu, trialDAO);
         this.compositorM = new CompositorManager();
     }
 

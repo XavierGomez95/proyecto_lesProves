@@ -1,13 +1,13 @@
 package presentation;
 
 import business.ConductorManager;
-import persistence.LesProvesDAO;
+import persistence.TrialDAO;
 
 public class ConductorController extends Controller{
     ConductorManager conductorM;
 
-    public ConductorController(Menu menu, LesProvesDAO lesProvesDAO) {
-        super(menu, lesProvesDAO);
+    public ConductorController(Menu menu, TrialDAO trialDAO) {
+        super(menu, trialDAO);
         this.conductorM = new ConductorManager();
     }
 
