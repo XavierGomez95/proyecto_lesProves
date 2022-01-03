@@ -16,7 +16,7 @@ public class CompositorController extends Controller{
         menu.showMessage("Entering management mode...");
         menu.showManagerMenu(); // 4.3
         do {
-            mode = menu.askOptionInteger("Pick a faction: ");
+            mode = menu.askInteger("Pick a faction: ");
             if (mode < 1 || mode > 3) menu.errorInput("Enter a number between 1 and 3 (included).");
         } while (mode < 1 || mode > 3);
         enterMode(mode);

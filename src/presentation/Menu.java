@@ -105,7 +105,7 @@ public class Menu {
      * @param inputOption It is a String variable that we use to ask a user for information.
      * @return A value of primitive type integer entered by the user.
      */
-    public int askOptionInteger(String inputOption) {
+    public int askInteger(String inputOption) {
         int number;
 
         while (true) {
@@ -128,7 +128,7 @@ public class Menu {
      * @param inputOption It is a String variable that we use to ask a user for information.
      * @return A value of non primitive type String entered by the user.
      */
-    public String askOptionString(String inputOption) {
+    public String askString(String inputOption) {
         String answear;
 
         while (true) {

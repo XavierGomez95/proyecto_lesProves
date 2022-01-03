@@ -22,7 +22,7 @@ public class Controller {
         menu.showMessage("The IEEE needs to know where your allegiance lies.");
         menu.showFormatMenu();
         do {
-            format = menu.askOptionString("Pick a faction: ");
+            format = menu.askString("Pick a faction: ");
             if (!format.equals("I") && !format.equals("II"))
                 menu.errorInput("Error entry."); // Poner el mensaje que quieras.
         } while (!format.equals("I") && !format.equals("II"));
@@ -55,7 +55,7 @@ public class Controller {
         menu.showMessage("Welcome to The Trials. Who are you?");
         menu.showRoleMenu();
         do {
-            format = menu.askOptionString("Enter a role: ");
+            format = menu.askString("Enter a role: ");
             if (!format.equals("A") && !format.equals("B")) {
                 menu.errorInput("Error entry."); // Poner el mensaje que quieras.
             }

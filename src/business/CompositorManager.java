@@ -1,5 +1,7 @@
 package business;
 
+import business.trial.Trial;
+
 import java.util.List;
 
 public class CompositorManager {
