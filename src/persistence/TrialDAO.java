@@ -12,31 +12,20 @@ import java.util.Scanner;
 
 public class TrialDAO {
     private static Gson gson = new Gson();
-    private List<Trial> trials = new ArrayList<>();
 
-    private final String jsonArticle = "json_files/publicArticle.json";
-    private final String jsonMaster = "json_files/studyMaster.json";
-    private final String jsonPHD = "json_files/phdDefense.json";
-    private final String jsonBudget = "json_files/budgetRequest.json";
+    private final String jsonArticlePath = "json_files/publicArticle.json";
+    private final String jsonMasterPath = "json_files/studyMaster.json";
+    private final String jsonPHDPath = "json_files/phdDefense.json";
+    private final String jsonBudgetPath = "json_files/budgetRequest.json";
 
-    private final String csvArticle = "csv_files/publicArticle.csv";
-    private final String csvMaster = "csv_files/studyMaster.csv";
-    private final String csvPHD = "csv_files/phdDefense.csv";
-    private final String csvBudget = "csv_files/budgetRequest.csv";
+    private final String csvArticlePath = "csv_files/publicArticle.csv";
+    private final String csvMasterPath = "csv_files/studyMaster.csv";
+    private final String csvPHDPath = "csv_files/phdDefense.csv";
+    private final String csvBudgetPath = "csv_files/budgetRequest.csv";
 
     // JSON
-    public void writeJson(List<Trial> trials) {
-        for (Trial t : trials) {
-            if (t instanceof PublicArticle) {
-                writeTrialJson(jsonArticle, t);
-            } else if (t instanceof StudyMaster) {
-                writeTrialJson(jsonMaster, t);
-            } else if (t instanceof PhDefense) {
-                writeTrialJson(jsonPHD, t);
-            } else if (t instanceof BudgedRequest) {
-                writeTrialJson(jsonBudget, t);
-            }
-        }
+    public void writeJson(List<Trial> jsonTrials) {
+        detectInstance(jsonTrials, "Json");
     }
 
     private void writeTrialJson(String path, Trial t) {
@@ -53,11 +42,12 @@ public class TrialDAO {
     }
 
     public List<Trial> readJson() {
+        List<Trial> trials = new ArrayList<>();
         try {
-            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonArticle), PublicArticle[].class)));
-            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonMaster), StudyMaster[].class)));
-            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonPHD), PhDefense[].class)));
-            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonBudget), BudgedRequest[].class)));
+            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonArticlePath), PublicArticle[].class)));
+            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonMasterPath), StudyMaster[].class)));
+            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonPHDPath), PhDefense[].class)));
+            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonBudgetPath), BudgedRequest[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -66,38 +56,35 @@ public class TrialDAO {
 
 
     // CSV
-    public void writeCsv() {
-
+    public void writeCsv(List<Trial> csvfTrials) {
+        detectInstance(csvfTrials, "Csv");
     }
 
-    /*  public List<Trial> readCsv() {
-          try {
-              BufferedReader bufferedReaderPublicArticle = new BufferedReader(new FileReader("csv_files/publicArticle.csv"));
-              BufferedReader bufferedReaderStudyMaster = new BufferedReader(new FileReader("csv_files/studyMaster.csv"));
-              BufferedReader bufferedReaderPhDefense = new BufferedReader(new FileReader("csv_files/phdDefense.csv"));
-              BufferedReader bufferedReaderBudgetRequest = new BufferedReader(new FileReader("csv_files/budgetRequest.csv"));
+    private void writeTrialCsv(String stringPath, Trial t) {
+        File file = new File(stringPath);
+        try {
+            FileWriter outputCsvFile = new FileWriter(file);
+            outputCsvFile.write(t.getInfo());
+            outputCsvFile.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-              trialsList.add(readFiles(bufferedReaderPublicArticle).toString());
-              trialsList.add(readFiles(bufferedReaderStudyMaster).toString());
-              trialsList.add(readFiles(bufferedReaderPhDefense).toString());
-              trialsList.add(readFiles(bufferedReaderBudgetRequest).toString());
-          } catch (FileNotFoundException e) {
-              e.printStackTrace();
-          }
-
-          return trialsList;
-      }
-     */
-
-    public List<Trial> readCsv() {
+    public List<Trial> readCsv() { // Corregir esto
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
         try {
-            File f = new File(csvArticle);
-            scanFile = new Scanner(f);
-            while (scanFile.hasNextLine()) {
-                trials.add(PublicArticle.fromLine(scanFile.nextLine()));
-            }
+            scanFile = new Scanner(new File(csvArticlePath));
+            readLines(scanFile, trials);
+            scanFile = new Scanner(new File(csvMasterPath));
+            readLines(scanFile, trials);
+            scanFile = new Scanner(new File(csvPHDPath));
+            readLines(scanFile, trials);
+            scanFile = new Scanner(new File(csvBudgetPath));
+            readLines(scanFile, trials);
+
             scanFile.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,22 +95,39 @@ public class TrialDAO {
         }
         return trials;
     }
-/*
-    public ArrayList<String> readFiles(BufferedReader bufferedReader) {
-        ArrayList<String> trials = new ArrayList<>();
 
-        try {
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                trials.add(line);
-                line = bufferedReader.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private List<Trial> readLines (Scanner scanFile, List<Trial> trials) {
+        while (scanFile.hasNextLine()) {
+            trials.add(PublicArticle.fromLine(scanFile.nextLine()));
         }
-
         return trials;
     }
 
- */
+
+
+    private void detectInstance (List<Trial> trials, String format) {
+        for (Trial t : trials) {
+            if (t instanceof PublicArticle publicArticle) { // Casteo el t para usar las funcionas abstractas para el write
+                switch (format) {
+                    case "Json" -> writeTrialJson(jsonArticlePath, publicArticle);
+                    case "Csv" ->  writeTrialCsv(csvArticlePath, publicArticle);
+                }
+            } else if (t instanceof StudyMaster studyMaster) { // Casteo el t para usar las funcionas abstractas para el write
+                switch (format) {
+                    case "Json" -> writeTrialJson(jsonMasterPath, studyMaster);
+                    case "Csv" ->  writeTrialCsv(csvMasterPath, studyMaster);
+                }
+            } else if (t instanceof PhDefense phDefense) { // Casteo el t para usar las funcionas abstractas para el write
+                switch (format) {
+                    case "Json" -> writeTrialJson(jsonPHDPath, phDefense);
+                    case "Csv" ->  writeTrialCsv(csvPHDPath, phDefense);
+                }
+            } else if (t instanceof BudgedRequest budgedRequest) { // Casteo el t para usar las funcionas abstractas para el write
+                switch (format) {
+                    case "Json" -> writeTrialJson(jsonBudgetPath, budgedRequest);
+                    case "Csv" ->  writeTrialCsv(csvBudgetPath, budgedRequest);
+                }
+            }
+        }
+    }
 }

@@ -5,10 +5,12 @@ import persistence.TrialDAO;
 
 public class ConductorController extends Controller{
     ConductorManager conductorM;
+    String fileFormat;
 
-    public ConductorController(Menu menu, TrialDAO trialDAO) {
+    public ConductorController(Menu menu, TrialDAO trialDAO, String fileFormat) {
         super(menu, trialDAO);
         this.conductorM = new ConductorManager();
+        this.fileFormat = fileFormat;
     }
 
     public void run () {
