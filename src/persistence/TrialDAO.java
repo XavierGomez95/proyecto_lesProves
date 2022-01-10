@@ -28,17 +28,33 @@ public class TrialDAO {
         detectInstance(jsonTrials, "Json");
     }
 
-    private void writeTrialJson(String path, Trial t) {
+    private void writeTrialJson(Trial t) {
         Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
         try {
-            OutputStream os = new FileOutputStream(path);
-            os.write(gsonBuild.toJson(t).getBytes());
-            os.flush();
-            os.close();
+            if (t instanceof PublicArticle publicArticle) {
+                OutputStream os = new FileOutputStream(jsonArticlePath);
+                os.write(gsonBuild.toJson(publicArticle).getBytes());
+                os.flush();
+                os.close();
+            } else if (t instanceof StudyMaster studyMaster) {
+                OutputStream os = new FileOutputStream(jsonMasterPath);
+                os.write(gsonBuild.toJson(studyMaster).getBytes());
+                os.flush();
+                os.close();
+            } else if (t instanceof PhDefense phDefense) {
+                OutputStream os = new FileOutputStream(jsonPHDPath);
+                os.write(gsonBuild.toJson(phDefense).getBytes());
+                os.flush();
+                os.close();
+            } else if (t instanceof BudgedRequest budgedRequest) {
+                OutputStream os = new FileOutputStream(jsonBudgetPath);
+                os.write(gsonBuild.toJson(budgedRequest).getBytes());
+                os.flush();
+                os.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public List<Trial> readJson() {
@@ -60,14 +76,30 @@ public class TrialDAO {
         detectInstance(csvfTrials, "Csv");
     }
 
-    private void writeTrialCsv(String stringPath, Trial t) {
-        File file = new File(stringPath);
+    private void writeTrialCsv(Trial t) {
         try {
-            FileWriter outputCsvFile = new FileWriter(file);
-            outputCsvFile.write(t.getInfo());
-            outputCsvFile.close();
-        }
-        catch (IOException e) {
+            if (t instanceof PublicArticle publicArticle) { // Casteo el t para usar las funcionas abstractas para el write
+                File file = new File(csvArticlePath);
+                FileWriter outputCsvFile = new FileWriter(file);
+                outputCsvFile.write(publicArticle.getInfo());
+                outputCsvFile.close();
+            } else if (t instanceof StudyMaster studyMaster) { // Casteo el t para usar las funcionas abstractas para el write
+                File file = new File(csvMasterPath);
+                FileWriter outputCsvFile = new FileWriter(file);
+                outputCsvFile.write(studyMaster.getInfo());
+                outputCsvFile.close();
+            } else if (t instanceof PhDefense phDefense) { // Casteo el t para usar las funcionas abstractas para el write
+                File file = new File(csvPHDPath);
+                FileWriter outputCsvFile = new FileWriter(file);
+                outputCsvFile.write(phDefense.getInfo());
+                outputCsvFile.close();
+            } else if (t instanceof BudgedRequest budgedRequest) { // Casteo el t para usar las funcionas abstractas para el write
+                File file = new File(csvBudgetPath);
+                FileWriter outputCsvFile = new FileWriter(file);
+                outputCsvFile.write(budgedRequest.getInfo());
+                outputCsvFile.close();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -76,14 +108,18 @@ public class TrialDAO {
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
         try {
+
             scanFile = new Scanner(new File(csvArticlePath));
-            readLines(scanFile, trials);
+            if (!isDirectoryEmpty(new File(csvArticlePath))) readLines(scanFile, trials);
+
             scanFile = new Scanner(new File(csvMasterPath));
-            readLines(scanFile, trials);
+            if (!isDirectoryEmpty(new File(csvMasterPath))) readLines(scanFile, trials);
+
             scanFile = new Scanner(new File(csvPHDPath));
-            readLines(scanFile, trials);
+            if (!isDirectoryEmpty(new File(csvPHDPath))) readLines(scanFile, trials);
+
             scanFile = new Scanner(new File(csvBudgetPath));
-            readLines(scanFile, trials);
+            if (!isDirectoryEmpty(new File(csvBudgetPath))) readLines(scanFile, trials);
 
             scanFile.close();
         } catch (IOException e) {
@@ -96,7 +132,17 @@ public class TrialDAO {
         return trials;
     }
 
-    private List<Trial> readLines (Scanner scanFile, List<Trial> trials) {
+    private boolean isDirectoryEmpty(File file) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return br.readLine() == null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private List<Trial> readLines(Scanner scanFile, List<Trial> trials) {
         while (scanFile.hasNextLine()) {
             trials.add(PublicArticle.fromLine(scanFile.nextLine()));
         }
@@ -104,29 +150,11 @@ public class TrialDAO {
     }
 
 
-
-    private void detectInstance (List<Trial> trials, String format) {
+    private void detectInstance(List<Trial> trials, String format) {
         for (Trial t : trials) {
-            if (t instanceof PublicArticle publicArticle) { // Casteo el t para usar las funcionas abstractas para el write
-                switch (format) {
-                    case "Json" -> writeTrialJson(jsonArticlePath, publicArticle);
-                    case "Csv" ->  writeTrialCsv(csvArticlePath, publicArticle);
-                }
-            } else if (t instanceof StudyMaster studyMaster) { // Casteo el t para usar las funcionas abstractas para el write
-                switch (format) {
-                    case "Json" -> writeTrialJson(jsonMasterPath, studyMaster);
-                    case "Csv" ->  writeTrialCsv(csvMasterPath, studyMaster);
-                }
-            } else if (t instanceof PhDefense phDefense) { // Casteo el t para usar las funcionas abstractas para el write
-                switch (format) {
-                    case "Json" -> writeTrialJson(jsonPHDPath, phDefense);
-                    case "Csv" ->  writeTrialCsv(csvPHDPath, phDefense);
-                }
-            } else if (t instanceof BudgedRequest budgedRequest) { // Casteo el t para usar las funcionas abstractas para el write
-                switch (format) {
-                    case "Json" -> writeTrialJson(jsonBudgetPath, budgedRequest);
-                    case "Csv" ->  writeTrialCsv(csvBudgetPath, budgedRequest);
-                }
+            switch (format) {
+                case "Json" -> writeTrialJson(t);
+                case "Csv" -> writeTrialCsv(t);
             }
         }
     }
