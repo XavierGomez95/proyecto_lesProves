@@ -1,19 +1,21 @@
 package presentation;
 
 import business.CompositorManager;
+import business.Edition;
 import business.trial.Trial;
 import persistence.TrialDAO;
 
 import java.util.List;
 
 public class CompositorController extends Controller {
-    CompositorManager compositorM;
-    String fileFormat; // COMPROBAR SI ESTO ESTA BIEN AQUI
-    List<Trial> trials;
+    private CompositorManager compositorM;
+    private String fileFormat;
+    private List<Trial> trials;
+    private List<Edition> editions;
 
-    public CompositorController(Menu menu, TrialDAO trialDAO, String fileFormat, List<Trial> trials) {
+    public CompositorController(Menu menu, TrialDAO trialDAO, String fileFormat, List<Trial> trials, List<Edition> editions) {
         super(menu, trialDAO);
-        this.compositorM = new CompositorManager();
+        this.compositorM = new CompositorManager(trials, editions);
         this.fileFormat = fileFormat;
         this.trials = trials;
     }
@@ -63,6 +65,7 @@ public class CompositorController extends Controller {
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")));
 
             System.out.println("SOME STUFF HERE"); // TEMPORAL
+
                     /*
                     switch (option) {
                         case 1 -> // option 1
@@ -117,12 +120,14 @@ public class CompositorController extends Controller {
         String trialName = menu.askString("Enter the trial’s name: ");
         String entityName = menu.askString("Enter the entity’s name: ");
         int budgetAmount = menu.askInteger("Enter the budget amount: ");
+        compositorM.createBudgetRequest(trialName, entityName, budgetAmount);
     }
 
     private void enterPHDefenseInfo() {
         String trialName = menu.askString("Enter the trial’s name: ");
         String fieldOfStudy = menu.askString("Enter the thesis field of study: ");
         int defenseDifficulty = menu.askInteger("Enter the defense difficulty: ");
+        compositorM.createPHD(trialName, fieldOfStudy, defenseDifficulty);
     }
 
     private void enterMasterInfo() {
@@ -130,6 +135,7 @@ public class CompositorController extends Controller {
         String mastersName = menu.askString("Enter the master’s name: ");
         int ectsNumber = menu.askInteger("Enter the master’s ECTS number: ");
         int creditPassProbability = menu.askInteger("Enter the credit pass probability: ");
+        compositorM.createMaster(trialName, mastersName, ectsNumber, creditPassProbability);
     }
 
     private void enterArticleInfo() {
@@ -139,33 +145,29 @@ public class CompositorController extends Controller {
         int acceptanceProbability = menu.askInteger("Enter the acceptance probability: ");
         int revisionProbability = menu.askInteger("Enter the revision probability: ");
         int rejectionProbability = menu.askInteger("Enter the rejection probability: ");
+        compositorM.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
     // REVISAR SI ESTO ESTA BIEN AQUI O VA EN LA CLASE TRIAL
     private void listTrial() {
-        List<String> list = trialListNames();
-        if (!list.isEmpty()) menu.showTrials(list);
+        List<String> list = compositorM.trialListInfo();
+        if (!list.isEmpty()) menu.showlist(list); // 4.3.1.2
         else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
     private void deleteTrial() {
-        List<String> list = trialListNames();
+        List<String> list = compositorM.trialListNames();
         if (!list.isEmpty()) {
-            menu.showTrials(list);
+            menu.menuTrials(list); // 4.3.1.3
             int indexTrialToDelete = menu.askInteger("Enter an option: ");
             String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
-            menu.showMessage("The trial was successfully deleted.");
+
+            boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
+
+            if (deleted) menu.showMessage("The trial was successfully deleted.");
+            else menu.errorInput("The trial has not been successfully deleted.");
         }
         else menu.showMessage("There are no trials. Please create first a trial.");
-    }
-
-    private List<String> trialListNames() {
-        List<String> list = null;
-        for (Trial t : trials) {
-            String name = t.getInfo();
-            list.add(name);
-        }
-        return list;
     }
 
     private void addPlayers() {

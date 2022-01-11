@@ -87,12 +87,12 @@ public class Menu {
     /**
      *
      */
-    public void showTrialTypesMenu () { // 4.3.1.1
-        System.out.println("--- Trial types ---"  + System.lineSeparator() +
+    public void showTrialTypesMenu() { // 4.3.1.1
+        System.out.println("--- Trial types ---" + System.lineSeparator() +
                 " 1) Paper publication" + System.lineSeparator() +
                 " 2) Master studies" + System.lineSeparator() +
                 " 3) Doctoral thesis defense" + System.lineSeparator() +
-                " 4) Budget request"  + System.lineSeparator());
+                " 4) Budget request" + System.lineSeparator());
     }
 
     /**
@@ -186,15 +186,20 @@ public class Menu {
     }
 
     /**
-     *
      * @param list
      */
-    public void showTrials(List<String> list) {
+    public void menuTrials(List<String> list) {
         int max = list.size();
         for (int i = 0; i < max; i++) {
-            System.out.println(i + ") " + list.get(i));
+            System.out.println(i + 1 + ") " + list.get(i));
         }
         System.out.println();
         System.out.println(max + ") Back" + System.lineSeparator());
+    }
+
+    public void showlist(List<String> list) {
+        for (String s : list) {
+            System.out.println(s);
+        }
     }
 }
