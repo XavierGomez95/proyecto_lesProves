@@ -6,6 +6,7 @@ import java.util.List;
 
 public class PublicArticle extends Trial {
     private String magazineName;
+    private String quartile;
     private int acceptanceProbability;
     private int revisionProbability;
     private int rejectionProbability;
@@ -18,7 +19,7 @@ public class PublicArticle extends Trial {
         this.revisionProbability = revisionProbability;
         this.rejectionProbability = rejectionProbability;
     }
-
+/*
     public static Trial fromLine(String line) {
         String name = line.split(",")[0];
         String magazineName = line.split(",")[1];
@@ -29,7 +30,7 @@ public class PublicArticle extends Trial {
         List<Player> playerList = Player.fromLine(players);
         return new PublicArticle(name, playerList, magazineName, acceptanceProbability, revisionProbability, rejectionProbability);
     }
-
+ */
     @Override
     public String getInfo() {
         return super.getInfo() + ", " + magazineName + ", " + acceptanceProbability;

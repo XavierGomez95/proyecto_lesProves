@@ -143,9 +143,11 @@ public class TrialDAO {
     }
 
     private List<Trial> readLines(Scanner scanFile, List<Trial> trials) {
+        /*
         while (scanFile.hasNextLine()) {
             trials.add(PublicArticle.fromLine(scanFile.nextLine()));
         }
+        */
         return trials;
     }
 

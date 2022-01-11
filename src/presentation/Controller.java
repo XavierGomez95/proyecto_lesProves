@@ -49,8 +49,8 @@ public class Controller {
                 menu.showTittle();
             }
             case "II" -> {
-                // trialDAO.writeJson();
                 trials = trialDAO.readJson();
+                // trialDAO.writeJson();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();
@@ -74,7 +74,7 @@ public class Controller {
     private void selectRole(String roleFormat, String fileFormat) {
         switch (roleFormat) {
             case "A" -> {
-                CompositorController compositorController = new CompositorController(this.menu, this.trialDAO, fileFormat);
+                CompositorController compositorController = new CompositorController(this.menu, this.trialDAO, fileFormat, trials);
                 compositorController.run();
             }
             case "B" -> {

@@ -12,7 +12,6 @@ public class Main {
         for (Trial t : trialDAO.readCsv()) {
             t = (PublicArticle) t;
             System.out.println(t.getInfo());
-
         }
         Controller controller = new Controller(menu, trialDAO);
 

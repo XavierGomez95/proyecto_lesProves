@@ -1,5 +1,7 @@
 package presentation;
 
+import business.trial.Trial;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -83,20 +85,23 @@ public class Menu {
     }
 
     /**
+     *
+     */
+    public void showTrialTypesMenu () { // 4.3.1.1
+        System.out.println("--- Trial types ---"  + System.lineSeparator() +
+                " 1) Paper publication" + System.lineSeparator() +
+                " 2) Master studies" + System.lineSeparator() +
+                " 3) Doctoral thesis defense" + System.lineSeparator() +
+                " 4) Budget request"  + System.lineSeparator());
+    }
+
+    /**
      * This method is called to show the delete trial menu on the screen.
      */
     public void showDeleteTrialMenu() {
         System.out.println();
     }
 
-    /**
-     * This method is called to show the list of trials.
-     */
-    public void showList(List<String> list) {
-        for (int i = 0; i < list.size(); i++) {
-            // ALGO
-        }
-    }
 
     /**
      * This method request information from the user and return the correct input value (integer data type).
@@ -178,5 +183,18 @@ public class Menu {
      */
     public void createNewLine() {
         System.out.println();
+    }
+
+    /**
+     *
+     * @param list
+     */
+    public void showTrials(List<String> list) {
+        int max = list.size();
+        for (int i = 0; i < max; i++) {
+            System.out.println(i + ") " + list.get(i));
+        }
+        System.out.println();
+        System.out.println(max + ") Back" + System.lineSeparator());
     }
 }
