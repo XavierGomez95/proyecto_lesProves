@@ -23,4 +23,17 @@ public class BudgedRequest extends Trial {
         list.add("Budget: " + amount + " €");
         return list;
     }
+
+    @Override
+    public String getInfo() {
+        return super.getInfo() + "," + entityName + "," + amount;
+    }
+
+    public static Trial fromLine(String line) {
+        String name = line.split(",")[0];
+        String entityName = line.split(",")[1];
+        long amount = Long.parseLong(line.split(",")[2]);
+
+        return new BudgedRequest(name, entityName, amount);
+    }
 }

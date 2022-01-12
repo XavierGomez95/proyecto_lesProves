@@ -3,7 +3,7 @@ package presentation;
 import business.CompositorManager;
 import business.Edition;
 import business.trial.Trial;
-import persistence.TrialDAO;
+import persistence.JsonTrialDAO;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public class CompositorController extends Controller {
     private List<Trial> trials;
     private List<Edition> editions;
 
-    public CompositorController(Menu menu, TrialDAO trialDAO, String fileFormat, List<Trial> trials, List<Edition> editions) {
-        super(menu, trialDAO);
+    public CompositorController(Menu menu, String fileFormat, List<Trial> trials, List<Edition> editions) {
+        super(menu);
         this.compositorM = new CompositorManager(trials, editions);
         this.fileFormat = fileFormat;
         this.trials = trials;
@@ -41,12 +41,12 @@ public class CompositorController extends Controller {
         switch (mode) {
             case 1 -> option = manageTrials(); // 4.3.1
             case 2 -> option = manageEditions();// 4.3.2
-            case 3 -> { // Exit del 4.3
+            case 3 -> { // Exit del 4.3 *** ESTA PARTE DE WRITE QUE SE HAGA EN  EL CONTROLLER PADRE
                 menu.showMessage("Shutting down...");
                 if (!trials.isEmpty()) {
                     switch (fileFormat) {
-                        case "I" -> trialDAO.writeCsv(trials);
-                        case "II" -> trialDAO.writeJson(trials);
+                        //       case "I" -> jsonTrialDAO.writeCsv(trials);
+                        //     case "II" -> jsonTrialDAO.writeJson(trials);
                     }
                 }
             }
@@ -109,10 +109,10 @@ public class CompositorController extends Controller {
         } while (!(option == 1 || option == 2 || option == 3 || option == 4 || option == 5));
 
         switch (option) {
-            case 1 ->  enterArticleInfo();
-            case 2 ->  enterMasterInfo();
-            case 3 ->  enterPHDefenseInfo();
-            case 4 ->  enterBudgetRequestInfo();
+            case 1 -> enterArticleInfo();
+            case 2 -> enterMasterInfo();
+            case 3 -> enterPHDefenseInfo();
+            case 4 -> enterBudgetRequestInfo();
         }
 
         if (option != 5) menu.showMessage("The trial was created successfully!");
@@ -168,8 +168,7 @@ public class CompositorController extends Controller {
 
             if (deleted) menu.showMessage("The trial was successfully deleted.");
             else menu.errorInput("The trial has not been successfully deleted.");
-        }
-        else menu.showMessage("There are no trials. Please create first a trial.");
+        } else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
     private void addPlayers() {

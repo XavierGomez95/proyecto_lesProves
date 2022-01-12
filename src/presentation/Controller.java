@@ -2,6 +2,8 @@ package presentation;
 
 import business.Edition;
 import business.trial.Trial;
+import persistence.CsvTrialDAO;
+import persistence.JsonTrialDAO;
 import persistence.TrialDAO;
 
 import java.util.List;
@@ -12,14 +14,14 @@ public class Controller {
     protected List<Trial> trials;
     private List<Edition> editions;
 
-    public Controller(Menu menu, TrialDAO lesProvesDAO) {
+    public Controller(Menu menu) {
         this.menu = menu;
-        this.trialDAO = lesProvesDAO;
     }
 
     public void run() {
         String format = chooseFormat();
         chooseRole(format);
+
     }
 
 
@@ -44,15 +46,17 @@ public class Controller {
     private void loadData(String format) {
         switch (format) {
             case "I" -> {
-                trials = trialDAO.readCsv(); // Falta por solucionar el problema
-                //trialDAO.writeCsv();
+                trialDAO = new CsvTrialDAO();
+                trials = trialDAO.readAll(); // Falta por solucionar el problema
+                //trialDAO.writeAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from CSV files...");
                 menu.showTittle();
             }
             case "II" -> {
-                trials = trialDAO.readJson();
-                //trialDAO.writeJson();
+                trialDAO = new JsonTrialDAO();
+                trials = trialDAO.readAll();
+                //trialDAO.writeAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();
@@ -76,13 +80,23 @@ public class Controller {
     private void selectRole(String roleFormat, String fileFormat) {
         switch (roleFormat) {
             case "A" -> {
-                CompositorController compositorController = new CompositorController(this.menu, this.trialDAO, fileFormat, trials, editions);
+                CompositorController compositorController = new CompositorController(this.menu, fileFormat, trials, editions);
                 compositorController.run();
+                exit();
             }
             case "B" -> {
-                ConductorController conductorController = new ConductorController(this.menu, this.trialDAO, fileFormat);
+                ConductorController conductorController = new ConductorController(this.menu, fileFormat);
                 conductorController.run();
+                exit();
             }
+        }
+    }
+
+    private void exit() {
+        if (!trials.isEmpty()) {
+            //quitar sout, es prueba
+            System.out.println("guardando");
+            trialDAO.writeAll(trials);
         }
     }
 }

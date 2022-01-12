@@ -1,67 +1,67 @@
 package presentation;
 
 import business.ConductorManager;
-import persistence.TrialDAO;
+import persistence.JsonTrialDAO;
 
-public class ConductorController extends Controller{
+public class ConductorController extends Controller {
     ConductorManager conductorM;
     String fileFormat;
 
-    public ConductorController(Menu menu, TrialDAO trialDAO, String fileFormat) {
-        super(menu, trialDAO);
+    public ConductorController(Menu menu, String fileFormat) {
+        super(menu);
         this.conductorM = new ConductorManager();
         this.fileFormat = fileFormat;
     }
 
-    public void run () {
+    public void run() {
         menu.showMessage("ENTERING THE CONDUCTOR CONTROLLER"); // Mensaaje temporal
     }
 
-    private void trialMenu () {
+    private void trialMenu() {
 
     }
 
-    private void createMenu () {
+    private void createMenu() {
 
     }
 
-    private void listMenu () {
+    private void listMenu() {
 
     }
 
-    private void deleteMenu () {
+    private void deleteMenu() {
 
     }
 
-    private void createPaper () {
+    private void createPaper() {
 
     }
 
-    private void createMaster () {
+    private void createMaster() {
 
     }
 
-    private void createPhD () {
+    private void createPhD() {
 
     }
 
-    private void createBudget () {
+    private void createBudget() {
 
     }
 
-    private void editionMenu () {
+    private void editionMenu() {
 
     }
 
-    private void createEdition () {
+    private void createEdition() {
 
     }
 
-    private void listEdition () {
+    private void listEdition() {
 
     }
 
-    private void deleteEdition () {
+    private void deleteEdition() {
 
     }
 }

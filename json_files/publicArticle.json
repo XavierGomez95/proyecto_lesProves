@@ -1,1 +1,8 @@
-[]
+{
+  "magazineName": "aiai",
+  "quartile": "Q1",
+  "acceptanceProbability": 34,
+  "revisionProbability": 54,
+  "rejectionProbability": 12,
+  "name": "prueba"
+}

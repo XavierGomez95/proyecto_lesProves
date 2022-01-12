@@ -22,6 +22,21 @@ public class PublicArticle extends Trial {
         this.rejectionProbability = rejectionProbability;
     }
 
+    @Override
+    public List<String> listInfo() {
+        List<String> list = new ArrayList<>();
+        list.add("Trial: " + name + " (Paper publication)");
+        list.add("Journal: " + magazineName + " (" + quartile + ")");
+        list.add("Chances: " + acceptanceProbability + "% acceptance, " + revisionProbability + "% revision, " + rejectionProbability + "% rejection");
+
+        return list;
+    }
+
+    @Override
+    public String getInfo() {
+        return super.getInfo() + "," + magazineName + "," + quartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability;
+    }
+
     public static Trial fromLine(String line) {
         String name = line.split(",")[0];
         String magazineName = line.split(",")[1];
@@ -29,20 +44,9 @@ public class PublicArticle extends Trial {
         int acceptanceProbability = Integer.parseInt(line.split(",")[3]);
         int revisionProbability = Integer.parseInt(line.split(",")[4]);
         int rejectionProbability = Integer.parseInt(line.split(",")[5]);
+
         return new PublicArticle(name, magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
-    @Override
-    public String getInfo() {
-        return super.getInfo() + ", " + magazineName + ", " + acceptanceProbability;
-    }
 
-    @Override
-    public List<String> listInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + " (Paper publication)");
-        list.add("Journal: " + magazineName + " (" + quartile +")");
-        list.add("Chances: " + acceptanceProbability + "% acceptance, " + revisionProbability + "% revision, " + rejectionProbability + "% rejection");
-        return list;
-    }
 }
