@@ -2,7 +2,10 @@ package business;
 
 import business.trial.*;
 
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 public class CompositorManager {
@@ -103,9 +106,37 @@ public class CompositorManager {
         List<String> list = new ArrayList<>();
         int cont = 0;
         for (Edition e : editions) {
-            if (cont == i) list = e.getNameTrials(list);
+            if (cont == i) list = e.getTrialsInfo(list);
             cont++;
         }
         return list;
+    }
+
+    public void duplicateEdition(int i, int editionsYear, int numberPlayers) {
+        ArrayList<String> listNameTrials = new ArrayList<>();
+        int cont = 0;
+        for (Edition e : editions) {
+            if (cont == i) {
+                listNameTrials = e.getNameTrials();
+            }
+            cont++;
+        }
+        editions.add(new Edition(editionsYear, numberPlayers, listNameTrials.size(), listNameTrials));
+    }
+
+    public boolean deleteEdition(int i, int year) {
+        boolean deleted = false;
+        int cont = 0;
+        Iterator<Edition> e = editions.iterator();
+        while (e.hasNext()) {
+            Edition edition = e.next();
+            if (edition.isYearCoincident(year) && i == cont) {
+                e.remove();
+                deleted = true;
+            }
+            cont++;
+        }
+
+        return deleted;
     }
 }

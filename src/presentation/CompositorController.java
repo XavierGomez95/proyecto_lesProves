@@ -70,26 +70,75 @@ public class CompositorController extends Controller {
     }
 
     private void DeleteEdition() {
+        List<String> list = compositorM.editionListInfo();
+        int year, numberPlayers;
+        if (!list.isEmpty()) {
+            menu.showMessage("Which edition do you want to clone?");
+            menu.createNewLine();
+            menu.menuTrials(list); // 4.3.2.3
 
+            int size = list.size() + 1; // back es list.size() + 1
+            int option = (int) askNumber("Enter an option: ",
+                    "Enter a correct opcion between " + 1 + " and " + size, 1, size);
+
+            if (option < size) {
+                menu.createNewLine();
+                year = menu.askInteger("Enter the edition's year for confirmation: ");
+
+                boolean deleted = compositorM.deleteEdition(option - 1, year);
+
+                if (deleted) {
+                    menu.createNewLine();
+                    menu.showMessage("The edition was succesfully deleted!");
+                }
+            }
+        }
     }
 
     private void duplicateEdition() {
+        List<String> list = compositorM.editionListInfo();
+        int year, numberPlayers;
+        if (!list.isEmpty()) {
+            menu.showMessage("Which edition do you want to clone?");
+            menu.createNewLine();
+            menu.menuTrials(list); // 4.3.2.3
 
+            int size = list.size() + 1;
+            int option = (int) askNumber("Enter an option: ",
+                    "Enter a correct opcion between " + 1 + " and " + size, 1, size);
+            if (option < size) {
+                //list = pickTrials(size, list, list.size());
+                menu.createNewLine();
+                do {
+                    year = menu.askInteger("Enter the edition's year: ");
+                    if (compositorM.isCoincident(year)) menu.errorInput("This year exists, please enter another year.");
+                    if (year < Year.now().getValue()) menu.errorInput("Enter the curremt year or upper (dont repeat existing year editions).");
+                } while (year < Year.now().getValue() || compositorM.isCoincident(year));
+                numberPlayers = (int) askNumber("Enter the initial number of players: ",
+                        "Enter a number between 1 and 5 (including both)", 1, 5);
+                compositorM.duplicateEdition(option - 1, year, numberPlayers);
+
+                menu.createNewLine();
+                menu.showMessage("The edition was duplicated succesfully!");
+            }
+        }
+        else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
     private void listEdition() {
-        List<String> list = compositorM.editionListInfo();
-        int option, size;
-        if (!list.isEmpty()) {
-            menu.menuTrials(list); // 4.3.2.2
+        List<String> listEditions = compositorM.editionListInfo();
+        if (!listEditions.isEmpty()) {
+            menu.showMessage("Here are the current editions, do you want to see more details or go back?");
+            menu.createNewLine();
+            menu.menuTrials(listEditions); // 4.3.2.2
 
-            size = list.size() + 1;
-            option = (int) askNumber("Enter an option: ",
+            int size = listEditions.size() + 1;
+            int option = (int) askNumber("Enter an option: ",
                     "Enter a correct opcion between " + 1 + " and " + size, 1, size);
             if (option < size) {
-                List<String> listEditions = compositorM.getYearEditionInfo(option - 1);
+                List<String> listEditionsInfo = compositorM.getYearEditionInfo(option - 1);
                 menu.createNewLine();
-                menu.showListEditionByYear(listEditions);
+                menu.showListEditionByYear(listEditionsInfo);
             }
 
         }

@@ -20,7 +20,7 @@ public class Edition {
         this.nameTrials = nameTrials;
     }
 
-    public List<String> getNameTrials (List<String> list ) {
+    public List<String> getTrialsInfo (List<String> list ) {
         list.add("Year: " + year);
         list.add("Players: " + numPlayers);
         list.add("Trials:");
@@ -36,5 +36,9 @@ public class Edition {
 
     public boolean isYearCoincident(int editionsYear) {
         return editionsYear == this.year;
+    }
+
+    public ArrayList<String> getNameTrials() {
+        return nameTrials;
     }
 }
