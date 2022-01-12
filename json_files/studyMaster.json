@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "masterName": "home",
+    "numCredits": 34,
+    "probability": 21,
+    "name": "TrialMaster"
+  }
+]

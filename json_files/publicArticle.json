@@ -1,26 +1,34 @@
 [
   {
-    "magazineName": "fads",
-    "quartile": "q2",
+    "magazineName": "hola",
+    "quartile": "Q3",
     "acceptanceProbability": 3,
     "revisionProbability": 4,
     "rejectionProbability": 5,
-    "name": "dsa"
+    "name": "Trial1"
   },
   {
-    "magazineName": "rwe",
-    "quartile": "q2",
+    "magazineName": "pepe",
+    "quartile": "Q1",
     "acceptanceProbability": 123,
     "revisionProbability": 213,
     "rejectionProbability": 43,
-    "name": "ewr"
+    "name": "Trial2"
   },
   {
-    "magazineName": "re",
-    "quartile": "q2",
+    "magazineName": "gson",
+    "quartile": "Q1",
     "acceptanceProbability": 2,
     "revisionProbability": 3,
     "rejectionProbability": 3,
-    "name": "sdaf"
+    "name": "Trial3"
+  },
+  {
+    "magazineName": "json",
+    "quartile": "Q2",
+    "acceptanceProbability": 12,
+    "revisionProbability": 21,
+    "rejectionProbability": 12,
+    "name": "Trial4"
   }
 ]

@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "studyField": "baby",
+    "difficulty": 24,
+    "name": "gugu"
+  },
+  {
+    "studyField": "numbers",
+    "difficulty": 12,
+    "name": "32"
+  }
+]
