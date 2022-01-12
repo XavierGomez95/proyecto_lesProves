@@ -21,11 +21,25 @@ public class CsvTrialDAO implements TrialDAO {
         return readTrials();
     }
 
+    /**
+     * @param trials
+     */
     @Override
     public void writeAll(List<Trial> trials) {
+        //primero vaciamos los 4 files
+        try {
+            new FileWriter(csvArticlePath).close();//para borrar content
+            new FileWriter(csvMasterPath).close();//para borrar content
+            new FileWriter(csvPHDPath).close();//para borrar content
+            new FileWriter(csvBudgetPath).close();//para borrar content
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for (int i = 0; i < trials.size(); i++) {
             writeTrial(trials.get(i));
         }
+
 
     }
 
@@ -124,13 +138,8 @@ public class CsvTrialDAO implements TrialDAO {
             checkDirectory(path);
             FileWriter writer = new FileWriter(file, true);
 
-            if (true) {
-                new FileWriter(file).close();//para borrar content
-                writer.write(t.getInfo());
-            } else {
-                writer.append(System.lineSeparator());
-                writer.append(t.getInfo());
-            }
+            writer.append(t.getInfo());
+            writer.append(System.lineSeparator());
 
             writer.close();
         } catch (IOException e) {

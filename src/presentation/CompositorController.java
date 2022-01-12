@@ -9,14 +9,13 @@ import java.util.List;
 
 public class CompositorController extends Controller {
     private CompositorManager compositorM;
-    private String fileFormat;
+
     private List<Trial> trials;
     private List<Edition> editions;
 
-    public CompositorController(Menu menu, String fileFormat, List<Trial> trials, List<Edition> editions) {
+    public CompositorController(Menu menu, List<Trial> trials, List<Edition> editions) {
         super(menu);
         this.compositorM = new CompositorManager(trials, editions);
-        this.fileFormat = fileFormat;
         this.trials = trials;
     }
 
@@ -41,15 +40,7 @@ public class CompositorController extends Controller {
         switch (mode) {
             case 1 -> option = manageTrials(); // 4.3.1
             case 2 -> option = manageEditions();// 4.3.2
-            case 3 -> { // Exit del 4.3 *** ESTA PARTE DE WRITE QUE SE HAGA EN  EL CONTROLLER PADRE
-                menu.showMessage("Shutting down...");
-                if (!trials.isEmpty()) {
-                    switch (fileFormat) {
-                        //       case "I" -> jsonTrialDAO.writeCsv(trials);
-                        //     case "II" -> jsonTrialDAO.writeJson(trials);
-                    }
-                }
-            }
+            case 3 -> menu.showMessage("Shutting down...");
         }
         return option;
     }

@@ -80,12 +80,12 @@ public class Controller {
     private void selectRole(String roleFormat, String fileFormat) {
         switch (roleFormat) {
             case "A" -> {
-                CompositorController compositorController = new CompositorController(this.menu, fileFormat, trials, editions);
+                CompositorController compositorController = new CompositorController(this.menu, trials, editions);
                 compositorController.run();
                 exit();
             }
             case "B" -> {
-                ConductorController conductorController = new ConductorController(this.menu, fileFormat);
+                ConductorController conductorController = new ConductorController(this.menu);
                 conductorController.run();
                 exit();
             }

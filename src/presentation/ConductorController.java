@@ -5,16 +5,15 @@ import persistence.JsonTrialDAO;
 
 public class ConductorController extends Controller {
     ConductorManager conductorM;
-    String fileFormat;
 
-    public ConductorController(Menu menu, String fileFormat) {
+    public ConductorController(Menu menu) {
         super(menu);
         this.conductorM = new ConductorManager();
-        this.fileFormat = fileFormat;
+
     }
 
     public void run() {
-        menu.showMessage("ENTERING THE CONDUCTOR CONTROLLER"); // Mensaaje temporal
+        menu.showMessage("ENTERING THE CONDUCTOR CONTROLLER"); // message temporal
     }
 
     private void trialMenu() {
