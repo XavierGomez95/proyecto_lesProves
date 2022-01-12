@@ -2,15 +2,15 @@ package business.trial;
 
 import business.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
-public class Trial {
-    private String name;
-    private List<Player> players;
+public abstract class Trial {
+    protected String name;
 
-    public Trial(String name, List<Player> players) {
+    public Trial(String name) {
         this.name = name;
-        this.players = players;
     }
 /*
     public List listTrials () {
@@ -37,6 +37,12 @@ public class Trial {
     }
 
     public String getInfo() {
+        return name;
+    }
+
+    public abstract List<String> listInfo();
+
+    public String getName() {
         return name;
     }
 }

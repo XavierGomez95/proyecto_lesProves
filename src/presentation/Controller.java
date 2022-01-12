@@ -1,5 +1,6 @@
 package presentation;
 
+import business.Edition;
 import business.trial.Trial;
 import persistence.TrialDAO;
 
@@ -9,6 +10,7 @@ public class Controller {
     protected Menu menu;
     protected TrialDAO trialDAO;
     protected List<Trial> trials;
+    private List<Edition> editions;
 
     public Controller(Menu menu, TrialDAO lesProvesDAO) {
         this.menu = menu;
@@ -50,7 +52,7 @@ public class Controller {
             }
             case "II" -> {
                 trials = trialDAO.readJson();
-                // trialDAO.writeJson();
+                //trialDAO.writeJson();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();
@@ -74,7 +76,7 @@ public class Controller {
     private void selectRole(String roleFormat, String fileFormat) {
         switch (roleFormat) {
             case "A" -> {
-                CompositorController compositorController = new CompositorController(this.menu, this.trialDAO, fileFormat, trials);
+                CompositorController compositorController = new CompositorController(this.menu, this.trialDAO, fileFormat, trials, editions);
                 compositorController.run();
             }
             case "B" -> {

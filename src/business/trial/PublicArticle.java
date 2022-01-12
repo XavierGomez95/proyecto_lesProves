@@ -2,6 +2,7 @@ package business.trial;
 
 import business.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PublicArticle extends Trial {
@@ -12,27 +13,36 @@ public class PublicArticle extends Trial {
     private int rejectionProbability;
 
 
-    public PublicArticle(String name, List<Player> players, String magazineName, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
-        super(name, players);
+    public PublicArticle(String name, String magazineName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+        super(name);
+        this.quartile = quartile;
         this.magazineName = magazineName;
         this.acceptanceProbability = acceptanceProbability;
         this.revisionProbability = revisionProbability;
         this.rejectionProbability = rejectionProbability;
     }
-/*
+
     public static Trial fromLine(String line) {
         String name = line.split(",")[0];
         String magazineName = line.split(",")[1];
-        int acceptanceProbability = Integer.parseInt(line.split(",")[2]);
-        int revisionProbability = Integer.parseInt(line.split(",")[3]);
-        int rejectionProbability = Integer.parseInt(line.split(",")[4]);
-        String players = line.substring(line.indexOf("["), line.indexOf("]"));
-        List<Player> playerList = Player.fromLine(players);
-        return new PublicArticle(name, playerList, magazineName, acceptanceProbability, revisionProbability, rejectionProbability);
+        String quartile = line.split(",")[2];
+        int acceptanceProbability = Integer.parseInt(line.split(",")[3]);
+        int revisionProbability = Integer.parseInt(line.split(",")[4]);
+        int rejectionProbability = Integer.parseInt(line.split(",")[5]);
+        return new PublicArticle(name, magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
- */
+
     @Override
     public String getInfo() {
         return super.getInfo() + ", " + magazineName + ", " + acceptanceProbability;
+    }
+
+    @Override
+    public List<String> listInfo() {
+        List<String> list = new ArrayList<>();
+        list.add("Trial: " + name + " (Paper publication)");
+        list.add("Journal: " + magazineName + " (" + quartile +")");
+        list.add("Chances: " + acceptanceProbability + "% acceptance, " + revisionProbability + "% revision, " + rejectionProbability + "% rejection");
+        return list;
     }
 }
