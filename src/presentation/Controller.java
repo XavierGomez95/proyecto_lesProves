@@ -45,14 +45,14 @@ public class Controller {
         switch (format) {
             case "I" -> {
                 trials = trialDAO.readCsv(); // Falta por solucionar el problema
-                //trialDAO.write();
+                //trialDAO.writeCsv();
                 menu.createNewLine();
                 menu.showMessage("Loading data from CSV files...");
                 menu.showTittle();
             }
             case "II" -> {
                 trials = trialDAO.readJson();
-                // trialDAO.write();
+                //trialDAO.writeJson();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();

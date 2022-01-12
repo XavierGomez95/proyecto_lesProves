@@ -1,10 +1,15 @@
 package persistence;
 
 import business.trial.*;
+import business.exceptions.CustomMessageException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +66,12 @@ public class TrialDAO {
         }
     }
 
-    private void checkDirectoryJson(String path) {
+    // Lo que esta comentado no va aqui, pero sirve para escribir los "[]" dentro de los JSONs.
+    // https://docs.oracle.com/javaee/7/api/javax/json/JsonArray.html
+    // private void checkDirectoryJson (String path) throws CustomMessageException {
+    private void checkDirectoryJson (String path) {
+        //JsonObject jsonObject = new JsonObject();
+        //JsonArray jsonArray = new JsonArray();
         File directory = new File("json_files");
         directory.mkdir();
         File file = new File(path);
@@ -69,8 +79,11 @@ public class TrialDAO {
         else if (!file.exists()) {
             try {
                 file.createNewFile();
+                //jsonObject.add("[]", jsonArray);
+                //Files.write(Paths.get(path), jsonObject.toString().getBytes());
             } catch (IOException ex) {
                 ex.printStackTrace();
+                //throw new CustomMessageException("Error trying to open" + System.lineSeparator());
             }
         }
     }

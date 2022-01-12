@@ -53,10 +53,23 @@ public class CompositorManager {
         return list;
     }
 
+
+    public boolean deleteTrial(int i, String trialsName) {
+        boolean deleted = false;
+        if (trials.get(i).getName().equals(trialsName)) {
+            trials.remove(i);
+            deleted = true;
+        }
+        return deleted;
+    }
+
+    // Lo he cambiado porque sino me peta (no se por que) :I
+    /*
     public boolean deleteTrial(int i, String trialsName) {
         if (trials.get(i).getName().equals(trialsName)) trials.remove(i);
         return trials.get(i).getName().equals(trialsName);
     }
+     */
 
     public List<String> trialListInfo() {
         List<String> list = new ArrayList<>();

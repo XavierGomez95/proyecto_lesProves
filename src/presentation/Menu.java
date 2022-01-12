@@ -194,7 +194,7 @@ public class Menu {
             System.out.println(i + 1 + ") " + list.get(i));
         }
         System.out.println();
-        System.out.println(max + ") Back" + System.lineSeparator());
+        System.out.println(max + 1 + ") Back" + System.lineSeparator());
     }
 
     public void showlist(List<String> list) {

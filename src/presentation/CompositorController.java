@@ -39,8 +39,8 @@ public class CompositorController extends Controller {
     private String enterMode(int mode) {
         String option = "";
         switch (mode) {
-            case 1 -> manageTrials(); // 4.3.1
-            case 2 -> manageEditions();// 4.3.2
+            case 1 -> option = manageTrials(); // 4.3.1
+            case 2 -> option = manageEditions();// 4.3.2
             case 3 -> { // Exit del 4.3
                 menu.showMessage("Shutting down...");
                 if (!trials.isEmpty()) {
@@ -54,8 +54,8 @@ public class CompositorController extends Controller {
         return option;
     }
 
-    private void manageEditions() {
-        String option;
+    private String manageEditions() {
+        String option = "";
         do {
             menu.showEditionsMenu();
             do {
@@ -75,10 +75,11 @@ public class CompositorController extends Controller {
                     }
                     */
         } while (!(option.equals("e")));
+        return option;
     }
 
-    private void manageTrials() {
-        String option;
+    private String manageTrials() {
+        String option = "";
         do {
             menu.showTrialsMenu();
             do {
@@ -95,6 +96,7 @@ public class CompositorController extends Controller {
                 case "c" -> deleteTrial();
             }
         } while (!(option.equals("e")));
+        return option;
     }
 
     private void createTrial() {
