@@ -210,4 +210,11 @@ public class Menu {
             System.out.println("\t" + (i + 1) + ") " + list.get(i));
         }
     }
+
+    public void showListEditionByYear(List<String> list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println(list.get(i));
+        }
+    }
 }

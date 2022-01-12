@@ -37,7 +37,7 @@ public class CompositorManager {
         return phDefense;
     }
 
-    public BudgedRequest createBudgetRequest(String trialName, String entityName, int budgetAmount) {
+    public BudgedRequest createBudgetRequest(String trialName, String entityName, long budgetAmount) {
         BudgedRequest budgedRequest = new BudgedRequest(trialName, entityName, budgetAmount);
         trials.add(budgedRequest);
         return budgedRequest;
@@ -83,4 +83,29 @@ public class CompositorManager {
         editions.add(new Edition(editionsYear, numberPlayers, numberTrials, list));
     }
 
+    public List<String> editionListInfo() {
+        List<String> list = new ArrayList<>();
+        for (Edition e : editions) {
+            list.add(e.getEditionsInfo());
+        }
+        return list;
+    }
+
+
+    public boolean isCoincident(int editionsYear) {
+        for (Edition e : editions) {
+            if (e.isYearCoincident(editionsYear)) return true;
+        }
+        return false;
+    }
+
+    public List<String> getYearEditionInfo(int i) {
+        List<String> list = new ArrayList<>();
+        int cont = 0;
+        for (Edition e : editions) {
+            if (cont == i) list = e.getNameTrials(list);
+            cont++;
+        }
+        return list;
+    }
 }
