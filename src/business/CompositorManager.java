@@ -77,4 +77,10 @@ public class CompositorManager {
         }
         return list;
     }
+
+
+    public void createEdition(int editionsYear, int numberPlayers, int numberTrials, ArrayList<String> list) {
+        editions.add(new Edition(editionsYear, numberPlayers, numberTrials, list));
+    }
+
 }

@@ -12,6 +12,10 @@ public abstract class Player {
         this.pi = pi;
     }
 
+
+
+
+
     public static List<Player> fromLine(String string) {
         String[] arrayPlayers = string.split("}");
         String p = string.substring(string.indexOf("{"), string.indexOf("}"));
