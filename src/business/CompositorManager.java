@@ -10,17 +10,17 @@ public class CompositorManager {
     private List<Trial> trials;
     // Como acceder a las subclases desde aqui o desde trial. se considera high compling o esta correcto
 
-    public CompositorManager (List<Trial> trials, List<Edition> editions) {
+    public CompositorManager(List<Trial> trials, List<Edition> editions) {
         this.trials = trials;
         this.editions = editions;
     }
 
-    public void trialManagement () {
+    public void trialManagement() {
 
     }
 
-    public PublicArticle createArticle (String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
-        PublicArticle publicArticle = new PublicArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
+    public PublicArticle createArticle(String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+        PublicArticle publicArticle = new PublicArticle(magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, trialName);
         trials.add(publicArticle);
         return publicArticle;
     }
@@ -42,7 +42,6 @@ public class CompositorManager {
         trials.add(budgedRequest);
         return budgedRequest;
     }
-
 
 
     public List<String> trialListNames() {

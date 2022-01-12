@@ -13,7 +13,7 @@ public class PublicArticle extends Trial {
     private int rejectionProbability;
 
 
-    public PublicArticle(String name, String magazineName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+    public PublicArticle(String magazineName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability, String name) {
         super(name);
         this.quartile = quartile;
         this.magazineName = magazineName;
@@ -45,7 +45,7 @@ public class PublicArticle extends Trial {
         int revisionProbability = Integer.parseInt(line.split(",")[4]);
         int rejectionProbability = Integer.parseInt(line.split(",")[5]);
 
-        return new PublicArticle(name, magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
+        return new PublicArticle(magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, name);
     }
 
 

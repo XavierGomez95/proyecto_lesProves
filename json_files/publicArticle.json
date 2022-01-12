@@ -1,8 +1,26 @@
-{
-  "magazineName": "fads",
-  "quartile": "q2",
-  "acceptanceProbability": 3,
-  "revisionProbability": 4,
-  "rejectionProbability": 5,
-  "name": "dsa"
-}
+[
+  {
+    "magazineName": "fads",
+    "quartile": "q2",
+    "acceptanceProbability": 3,
+    "revisionProbability": 4,
+    "rejectionProbability": 5,
+    "name": "dsa"
+  },
+  {
+    "magazineName": "rwe",
+    "quartile": "q2",
+    "acceptanceProbability": 123,
+    "revisionProbability": 213,
+    "rejectionProbability": 43,
+    "name": "ewr"
+  },
+  {
+    "magazineName": "re",
+    "quartile": "q2",
+    "acceptanceProbability": 2,
+    "revisionProbability": 3,
+    "rejectionProbability": 3,
+    "name": "sdaf"
+  }
+]

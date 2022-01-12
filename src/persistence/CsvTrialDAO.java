@@ -36,8 +36,8 @@ public class CsvTrialDAO implements TrialDAO {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < trials.size(); i++) {
-            writeTrial(trials.get(i));
+        for (Trial t : trials) {
+            writeTrial(t);
         }
 
 

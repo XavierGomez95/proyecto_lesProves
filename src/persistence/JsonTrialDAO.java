@@ -1,8 +1,8 @@
 package persistence;
 
 import business.trial.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,44 +23,52 @@ public class JsonTrialDAO implements TrialDAO {
     }
 
     @Override
-    public void writeAll(List<Trial> Trials) {
-        for (Trial t : Trials) {
-            writeTrial(t);
-        }
-    }
-
-    private void writeTrial(Trial t) {
+    public void writeAll(List<Trial> trials) {
         Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
         try {
-            if (t instanceof PublicArticle publicArticle) {
-                checkDirectory(jsonArticlePath);
-                OutputStream os = new FileOutputStream(jsonArticlePath);
-                os.write(gsonBuild.toJson(publicArticle).getBytes());
-                os.flush();
-                os.close();
-            } else if (t instanceof StudyMaster studyMaster) {
-                checkDirectory(jsonMasterPath);
-                OutputStream os = new FileOutputStream(jsonMasterPath);
-                os.write(gsonBuild.toJson(studyMaster).getBytes());
-                os.flush();
-                os.close();
-            } else if (t instanceof PhDefense phDefense) {
-                checkDirectory(jsonPHDPath);
-                OutputStream os = new FileOutputStream(jsonPHDPath);
-                os.write(gsonBuild.toJson(phDefense).getBytes());
-                os.flush();
-                os.close();
-            } else if (t instanceof BudgedRequest budgedRequest) {
-                checkDirectory(jsonBudgetPath);
-                OutputStream os = new FileOutputStream(jsonBudgetPath);
-                os.write(gsonBuild.toJson(budgedRequest).getBytes());
-                os.flush();
-                os.close();
-            }
+            new FileWriter(jsonArticlePath).close();//para borrar content
+            new FileWriter(jsonMasterPath).close();//para borrar content
+            new FileWriter(jsonPHDPath).close();//para borrar content
+            new FileWriter(jsonBudgetPath).close();//para borrar content
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        JsonArray array = new JsonArray();
+        for (Trial t : trials) {
+            JsonObject jsonObject = JsonParser.parseString(getObject(t)).getAsJsonObject();
+            array.add(jsonObject);
+        }
+
+        try {
+            OutputStream os = new FileOutputStream(jsonArticlePath, true);
+            os.write(gsonBuild.toJson(array).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private String getObject(Trial t) {
+        Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
+        String object = null;
+        if (t instanceof PublicArticle) {
+            checkDirectory(jsonArticlePath);
+            object = gson.toJson(t);
+        } else if (t instanceof StudyMaster) {
+            checkDirectory(jsonMasterPath);
+            object = gson.toJson(t);
+        } else if (t instanceof PhDefense) {
+            checkDirectory(jsonPHDPath);
+            object = gson.toJson(t);
+        } else if (t instanceof BudgedRequest) {
+            checkDirectory(jsonBudgetPath);
+            object = gson.toJson(t);
+        }
+
+        return object;
+    }
+
 
     // Lo que esta comentado no va aqui, pero sirve para escribir los "[]" dentro de los JSONs.
     // https://docs.oracle.com/javaee/7/api/javax/json/JsonArray.html
@@ -75,18 +83,19 @@ public class JsonTrialDAO implements TrialDAO {
         else if (!file.exists()) {
             try {
                 file.createNewFile();
-                /* NO HACE FALTA ESCRIBIR [] pq antes se comprueba que trials es not empty por lo tanto se escribe si o si
+                // NO HACE FALTA ESCRIBIR [] pq antes se comprueba que trials es not empty por lo tanto se escribe si o si
                 try {
                     FileWriter writer = new FileWriter(file);
-                    writer.append("{\"data\":[]}");
+                    writer.append("[{}]");
                     writer.flush();
                     writer.close();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     //throw new CustomMessageException("Error trying to write" + System.lineSeparator());
                 }
 
-                 */
+
                 //Files.write(Paths.get(path), jsonObject.toString().getBytes());
             } catch (IOException ex) {
                 ex.printStackTrace();
