@@ -202,4 +202,12 @@ public class Menu {
             System.out.println(s);
         }
     }
+
+    public void menuEditions(List<String> list) {
+        int max = list.size();
+        System.out.println("\t--- Trials ---" + System.lineSeparator());
+        for (int i = 0; i < max; i++) {
+            System.out.println("\t" + (i + 1) + ") " + list.get(i));
+        }
+    }
 }

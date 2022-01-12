@@ -6,13 +6,14 @@ import persistence.CsvTrialDAO;
 import persistence.JsonTrialDAO;
 import persistence.TrialDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
     protected Menu menu;
     protected TrialDAO trialDAO;
     protected List<Trial> trials;
-    private List<Edition> editions;
+    protected List<Edition> editions = new ArrayList<>();
 
     public Controller(Menu menu) {
         this.menu = menu;

@@ -5,18 +5,19 @@ import business.Edition;
 import business.trial.Trial;
 import persistence.JsonTrialDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompositorController extends Controller {
     private CompositorManager compositorM;
 
-    private List<Trial> trials;
-    private List<Edition> editions;
+    //private List<Trial> trials;
+    //private List<Edition> editions;
 
     public CompositorController(Menu menu, List<Trial> trials, List<Edition> editions) {
         super(menu);
         this.compositorM = new CompositorManager(trials, editions);
-        this.trials = trials;
+        //this.trials = trials;
     }
 
     public void run() {
@@ -39,7 +40,7 @@ public class CompositorController extends Controller {
         String option = "";
         switch (mode) {
             case 1 -> option = manageTrials(); // 4.3.1
-            case 2 -> option = manageEditions();// 4.3.2
+            case 2 -> option = manageEditions(); // 4.3.2
             case 3 -> menu.showMessage("Shutting down...");
         }
         return option;
@@ -55,19 +56,64 @@ public class CompositorController extends Controller {
                     menu.errorInput("Enter a letter.");
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")));
 
-            System.out.println("SOME STUFF HERE"); // TEMPORAL
+            menu.createNewLine();
 
-                    /*
-                    switch (option) {
-                        case 1 -> // option 1
-                        case 2 -> // option 2
-                        case 3 -> // option 3
-                        case 4 -> // option 4
-                    }
-                    */
+            switch (option) {
+                case "a" -> createEdition();
+                case "b" -> listEdition();
+                case "c" -> duplicateEdition();
+                case "d" -> DeleteEdition();
+            }
         } while (!(option.equals("e")));
         return option;
     }
+
+    private void DeleteEdition() {
+
+    }
+
+    private void duplicateEdition() {
+
+    }
+
+    private void listEdition() {
+
+    }
+
+    private void createEdition() {
+        List<String> list = compositorM.trialListNames();
+        int editionsYear = menu.askInteger("Enter the edition's year: ");
+        int numberPlayers = menu.askInteger("Enter the initial number of players: ");
+        int numberTrials = menu.askInteger("Enter the number of trials: ");
+
+        menu.createNewLine();
+        menu.menuEditions(list);
+        menu.createNewLine();
+
+        list = pickTrials(numberTrials, list);
+
+        compositorM.createEdition(editionsYear, numberPlayers, numberTrials, (ArrayList<String>)list);
+
+        menu.createNewLine();
+        menu.showMessage("The edition was created succesfully!");
+
+        // menu.showMessage("The edition was created successfully!");
+    }
+
+    private List<String> pickTrials(int maxTrials, List<String> listNames) {
+        List<String> list = new ArrayList<>();
+        int trial;
+        for (int i = 0; i < maxTrials; i++) {
+            do {
+            trial = menu.askInteger("Pick a trial (" + (i + 1) + "/" + maxTrials + "): ");
+            if (trial < 1 || trial > maxTrials) menu.errorInput("Enter a number between 1 and " + maxTrials + " (including both)");
+            } while(trial < 1 || trial > maxTrials);
+            list.add(listNames.get(trial - 1));
+        }
+        return list;
+    }
+
+
 
     private String manageTrials() {
         String option = "";
@@ -79,7 +125,7 @@ public class CompositorController extends Controller {
                     menu.errorInput("Enter a letter.");
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e")));
 
-            System.out.println("SOME STUFF HERE"); // TEMPORAL
+            menu.createNewLine();
 
             switch (option) {
                 case "a" -> createTrial();
@@ -153,12 +199,14 @@ public class CompositorController extends Controller {
         if (!list.isEmpty()) {
             menu.menuTrials(list); // 4.3.1.3
             int indexTrialToDelete = menu.askInteger("Enter an option: ");
-            String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
+            if (indexTrialToDelete < list.size()) {
+                String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
 
-            boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
+                boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
 
-            if (deleted) menu.showMessage("The trial was successfully deleted.");
-            else menu.errorInput("The trial has not been successfully deleted.");
+                if (deleted) menu.showMessage("The trial was successfully deleted.");
+                else menu.errorInput("The trial has not been successfully deleted.");
+            }
         } else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
