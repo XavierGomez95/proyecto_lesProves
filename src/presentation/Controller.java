@@ -86,7 +86,7 @@ public class Controller {
                 exit();
             }
             case "B" -> {
-                ConductorController conductorController = new ConductorController(this.menu);
+                ConductorController conductorController = new ConductorController(this.menu, trials, editions);
                 conductorController.run();
                 exit();
             }
