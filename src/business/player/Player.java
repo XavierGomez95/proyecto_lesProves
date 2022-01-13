@@ -5,11 +5,13 @@ import java.util.List;
 
 public abstract class Player {
     private String name;
-    private int pi;
+    protected int pi;
+    protected boolean alive;
 
     public Player(String name, int pi) {
         this.name = name;
         this.pi = pi;
+        this.alive = true;
     }
 
 

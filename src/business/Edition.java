@@ -9,7 +9,6 @@ public class Edition {
     private int numPlayers;
     private int numTrials;
     private ArrayList<String> nameTrials;
-    private ArrayList<String> namePlayers;
 
     public Edition(int year, int numPlayers, int numTrials, ArrayList<String> nameTrials) {
         this.year = year;
@@ -18,6 +17,11 @@ public class Edition {
         this.nameTrials = nameTrials;
     }
 
+    /**
+     *
+     * @param list
+     * @return
+     */
     public List<String> getTrialsInfo(List<String> list) {
         list.add("Year: " + year);
         list.add("Players: " + numPlayers);
@@ -28,14 +32,27 @@ public class Edition {
         return list;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getYear() {
         return "The trials " + this.year;
     }
 
+    /**
+     *
+     * @param editionsYear
+     * @return
+     */
     public boolean isYearCoincident(int editionsYear) {
         return editionsYear == this.year;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getNameTrials() {
         return nameTrials;
     }

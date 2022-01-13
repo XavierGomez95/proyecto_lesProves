@@ -45,4 +45,9 @@ public abstract class Trial {
     public String getName() {
         return name;
     }
+
+
+    public boolean checkName(String name) {
+        return name.equals(this.name);
+    }
 }

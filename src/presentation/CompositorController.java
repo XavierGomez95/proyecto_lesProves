@@ -20,6 +20,9 @@ public class CompositorController extends Controller {
         //this.trials = trials;
     }
 
+    /**
+     *
+     */
     public void run() {
         int mode;
         //String factionInput;
@@ -36,6 +39,11 @@ public class CompositorController extends Controller {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @return
+     */
     private String enterMode(int mode) {
         String option = "";
         switch (mode) {
@@ -46,6 +54,10 @@ public class CompositorController extends Controller {
         return option;
     }
 
+    /**
+     *
+     * @return
+     */
     private String manageEditions() {
         String option = "";
         do {
@@ -68,6 +80,9 @@ public class CompositorController extends Controller {
         return option;
     }
 
+    /**
+     *
+     */
     private void DeleteEdition() {
         List<String> list = compositorM.editionListInfo();
         int year, numberPlayers;
@@ -94,6 +109,9 @@ public class CompositorController extends Controller {
         }
     }
 
+    /**
+     *
+     */
     private void duplicateEdition() {
         List<String> list = compositorM.editionListInfo();
         int year, numberPlayers;
@@ -124,6 +142,9 @@ public class CompositorController extends Controller {
         else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
+    /**
+     *
+     */
     private void listEdition() {
         List<String> listEditions = compositorM.editionListInfo();
         if (!listEditions.isEmpty()) {
@@ -144,6 +165,9 @@ public class CompositorController extends Controller {
         else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
+    /**
+     *
+     */
     private void createEdition() {
         List<String> list = compositorM.trialListNames();
         int editionsYear, numberPlayers, numberTrials;
@@ -169,6 +193,13 @@ public class CompositorController extends Controller {
         menu.showMessage("The edition was created succesfully!");
     }
 
+    /**
+     *
+     * @param maxTrials
+     * @param listNames
+     * @param size
+     * @return
+     */
     private List<String> pickTrials(int maxTrials, List<String> listNames, int size) {
         List<String> list = new ArrayList<>();
         int trial;
@@ -180,7 +211,10 @@ public class CompositorController extends Controller {
         return list;
     }
 
-
+    /**
+     *
+     * @return
+     */
     private String manageTrials() {
         String option = "";
         do {
@@ -202,6 +236,9 @@ public class CompositorController extends Controller {
         return option;
     }
 
+    /**
+     *
+     */
     private void createTrial() {
         int option;
 
@@ -214,30 +251,41 @@ public class CompositorController extends Controller {
             case 3 -> enterPHDefenseInfo();
             case 4 -> enterBudgetRequestInfo();
         }
+        menu.createNewLine();
         menu.showMessage("The trial was created successfully!");
     }
 
+    /**
+     *
+     */
     private void enterBudgetRequestInfo() {
-        String trialName = menu.askString("Enter the trial’s name: ");
+        String trialName = askTrialName();
         String entityName = menu.askString("Enter the entity’s name: ");
         long budgetAmount = (int) askNumber("Enter the budget amount: ",
                 "Enter a correct value between 1000 and 2000000000 (including both)", 1000, 2000000000);
         compositorM.createBudgetRequest(trialName, entityName, budgetAmount);
     }
 
+    /**
+     *
+     */
     private void enterPHDefenseInfo() {
         int defenseDifficulty;
-        String trialName = menu.askString("Enter the trial’s name: ");
+        String trialName = askTrialName();
         String fieldOfStudy = menu.askString("Enter the thesis field of study: ");
         defenseDifficulty = (int) askNumber("Enter the defense difficulty: ",
-                "Enter a correct value between 0 and 100 (including both)", 1, 10);
+                "Enter a correct value between 1 and 10 (including both)", 1, 10);
         compositorM.createPHD(trialName, fieldOfStudy, defenseDifficulty);
     }
 
+    /**
+     *
+     */
     private void enterMasterInfo() {
         int ectsNumber, creditPassProbability;
-        String trialName = menu.askString("Enter the trial’s name: ");
-        String mastersName = menu.askString("Enter the master’s name: ");
+        String trialName = askTrialName();
+        String mastersName = askTypeTrialName("Enter the master’s name: ",
+                "The master's name must not be empty!");
         ectsNumber = (int) askNumber("Enter the master’s ECTS number: ",
                 "Enter a correct value between 60 and 120 (including both)", 60, 120);
         creditPassProbability = (int) askNumber("Enter the credit pass probability: ",
@@ -245,11 +293,15 @@ public class CompositorController extends Controller {
         compositorM.createMaster(trialName, mastersName, ectsNumber, creditPassProbability);
     }
 
+    /**
+     *
+     */
     private void enterArticleInfo() {
         int acceptanceProbability, revisionProbability, rejectionProbability;
-        String trialName = menu.askString("Enter the trial’s name: ");
-        String magazinesName = menu.askString("Enter the journal’s name: ");
-        String quartile = menu.askString("Enter the journal’s quartile: ");
+        String trialName = askTrialName();
+        String magazinesName = askTypeTrialName("Enter the journal’s name: ",
+                "The magazine's name must not be empty!");
+        String quartile = askQuartile();
         acceptanceProbability = (int) askNumber("Enter the acceptance probability: ",
                 "Enter a correct value between 0 and 100 (including both)", 0, 100);
         revisionProbability = (int) askNumber("Enter the revision probability: ",
@@ -259,6 +311,43 @@ public class CompositorController extends Controller {
         compositorM.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
+    private String askQuartile() {
+        String quartile;
+        do {
+            quartile = menu.askString("Enter the journal’s quartile: ");
+            if (!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"))
+                menu.errorInput("Enter a correct value (Q1, Q2, Q3, Q4).");
+        } while(!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"));
+        return quartile;
+    }
+
+    private String askTypeTrialName(String msg, String error) {
+        String magazine;
+        do {
+            magazine = menu.askString(msg);
+            if (magazine.isEmpty()) menu.errorInput(error);
+        } while(magazine.isEmpty());
+        return magazine;
+    }
+
+    private String askTrialName () {
+        String trialName;
+        do {
+            trialName = menu.askString("Enter the trial’s name: ");
+            if (trialName.isEmpty()) menu.errorInput("The trial's name must not be empty!");
+            if (!compositorM.isTrialNameUnique(trialName)) menu.errorInput("This name is already in use.");
+        } while(trialName.isEmpty() || !compositorM.isTrialNameUnique(trialName));
+        return trialName;
+    }
+
+    /**
+     *
+     * @param msg
+     * @param errMsg
+     * @param min
+     * @param max
+     * @return
+     */
     private long askNumber (String msg, String errMsg, long min, long max) {
         long num;
         do {
@@ -269,25 +358,36 @@ public class CompositorController extends Controller {
     }
 
     // REVISAR SI ESTO ESTA BIEN AQUI O VA EN LA CLASE TRIAL
+    /**
+     *
+     */
     private void listTrial() {
         List<String> list = compositorM.trialListInfo();
         if (!list.isEmpty()) menu.showlist(list); // 4.3.1.2
         else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
+    /**
+     *
+     */
     private void deleteTrial() {
+        int indexTrialToDelete;
         List<String> list = compositorM.trialListNames();
         if (!list.isEmpty()) {
             menu.menuTrials(list); // 4.3.1.3
-            int indexTrialToDelete = menu.askInteger("Enter an option: ");
-            if (indexTrialToDelete < list.size()) {
-                String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
+            do {
+                indexTrialToDelete = menu.askInteger("Enter an option: ");
+                if (indexTrialToDelete <= list.size() && indexTrialToDelete > 0) {
+                    String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
 
-                boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
+                    boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
 
-                if (deleted) menu.showMessage("The trial was successfully deleted.");
-                else menu.errorInput("The trial has not been successfully deleted.");
-            }
+                    if (deleted) menu.showMessage("The trial was successfully deleted.");
+                    else menu.errorInput("The trial has not been successfully deleted.");
+                }
+                if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1)
+                    menu.errorInput("Enter a value between 1 and " + (list.size() + 1));
+            } while (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1);
         } else menu.showMessage("There are no trials. Please create first a trial.");
     }
 

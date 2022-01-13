@@ -22,6 +22,10 @@ public class ConductorManager {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean checkCurrentYearEdition() {
         boolean existing = false;
         for (Edition e : editions) {

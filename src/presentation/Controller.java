@@ -19,13 +19,19 @@ public class Controller {
         this.menu = menu;
     }
 
+    /**
+     *
+     */
     public void run() {
         String format = chooseFormat();
         chooseRole(format);
 
     }
 
-
+    /**
+     *
+     * @return
+     */
     private String chooseFormat() {
         String format;
 
@@ -43,12 +49,15 @@ public class Controller {
         return format;
     }
 
-
+    /**
+     *
+     * @param format
+     */
     private void loadData(String format) {
         switch (format) {
             case "I" -> {
                 trialDAO = new CsvTrialDAO();
-                trials = trialDAO.readAll(); // Falta por solucionar el problema
+                trials = trialDAO.readAll();
                 //trialDAO.writeAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from CSV files...");
@@ -65,8 +74,11 @@ public class Controller {
         }
     }
 
-
-    private void chooseRole(String fileFormat) { // Este metodo en teoria recibe un ArrayList<String>
+    /**
+     *
+     * @param fileFormat
+     */
+    private void chooseRole(String fileFormat) {
         String format;
         menu.showMessage("Welcome to The Trials. Who are you?");
         menu.showRoleMenu();
@@ -77,7 +89,11 @@ public class Controller {
         selectRole(format, fileFormat);
     }
 
-    // Si quieres podemos fusionar este metodo y el loadData, y cambiar el nombre.
+    /**
+     *
+     * @param roleFormat
+     * @param fileFormat
+     */
     private void selectRole(String roleFormat, String fileFormat) {
         switch (roleFormat) {
             case "A" -> {
@@ -93,6 +109,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     private void exit() {
         if (!trials.isEmpty()) {
             //quitar sout, es prueba

@@ -20,31 +20,66 @@ public class CompositorManager {
 
     }
 
+    /**
+     *
+     * @param trialName
+     * @param magazinesName
+     * @param quartile
+     * @param acceptanceProbability
+     * @param revisionProbability
+     * @param rejectionProbability
+     * @return
+     */
     public PublicArticle createArticle(String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
         PublicArticle publicArticle = new PublicArticle(magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, trialName);
         trials.add(publicArticle);
         return publicArticle;
     }
 
+    /**
+     *
+     * @param trialName
+     * @param mastersName
+     * @param ectsNumber
+     * @param creditPassProbability
+     * @return
+     */
     public StudyMaster createMaster(String trialName, String mastersName, int ectsNumber, int creditPassProbability) {
         StudyMaster studyMaster = new StudyMaster(trialName, mastersName, ectsNumber, creditPassProbability);
         trials.add(studyMaster);
         return studyMaster;
     }
 
+    /**
+     *
+     * @param trialName
+     * @param fieldOfStudy
+     * @param defenseDifficulty
+     * @return
+     */
     public PhDefense createPHD(String trialName, String fieldOfStudy, int defenseDifficulty) {
         PhDefense phDefense = new PhDefense(trialName, fieldOfStudy, defenseDifficulty);
         trials.add(phDefense);
         return phDefense;
     }
 
+    /**
+     *
+     * @param trialName
+     * @param entityName
+     * @param budgetAmount
+     * @return
+     */
     public BudgedRequest createBudgetRequest(String trialName, String entityName, long budgetAmount) {
         BudgedRequest budgedRequest = new BudgedRequest(trialName, entityName, budgetAmount);
         trials.add(budgedRequest);
         return budgedRequest;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public List<String> trialListNames() {
         List<String> list = new ArrayList<>();
         for (Trial t : trials) {
@@ -53,7 +88,12 @@ public class CompositorManager {
         return list;
     }
 
-
+    /**
+     *
+     * @param i
+     * @param trialsName
+     * @return
+     */
     public boolean deleteTrial(int i, String trialsName) {
         boolean deleted = false;
         if (trials.get(i).getName().equals(trialsName)) {
@@ -71,6 +111,10 @@ public class CompositorManager {
     }
      */
 
+    /**
+     *
+     * @return
+     */
     public List<String> trialListInfo() {
         List<String> list = new ArrayList<>();
         for (Trial t : trials) {
@@ -79,11 +123,21 @@ public class CompositorManager {
         return list;
     }
 
-
+    /**
+     *
+     * @param editionsYear
+     * @param numberPlayers
+     * @param numberTrials
+     * @param list
+     */
     public void createEdition(int editionsYear, int numberPlayers, int numberTrials, ArrayList<String> list) {
         editions.add(new Edition(editionsYear, numberPlayers, numberTrials, list));
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> editionListInfo() {
         List<String> list = new ArrayList<>();
         for (Edition e : editions) {
@@ -92,7 +146,11 @@ public class CompositorManager {
         return list;
     }
 
-
+    /**
+     *
+     * @param editionsYear
+     * @return
+     */
     public boolean isCoincident(int editionsYear) {
         for (Edition e : editions) {
             if (e.isYearCoincident(editionsYear)) return true;
@@ -100,6 +158,11 @@ public class CompositorManager {
         return false;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     public List<String> getYearEditionInfo(int i) {
         List<String> list = new ArrayList<>();
         int cont = 0;
@@ -110,6 +173,12 @@ public class CompositorManager {
         return list;
     }
 
+    /**
+     *
+     * @param i
+     * @param editionsYear
+     * @param numberPlayers
+     */
     public void duplicateEdition(int i, int editionsYear, int numberPlayers) {
         ArrayList<String> listNameTrials = new ArrayList<>();
         int cont = 0;
@@ -122,13 +191,19 @@ public class CompositorManager {
         editions.add(new Edition(editionsYear, numberPlayers, listNameTrials.size(), listNameTrials));
     }
 
-    public boolean deleteEdition(int i, int year) {
+    /**
+     *
+     * @param index
+     * @param year
+     * @return
+     */
+    public boolean deleteEdition(int index, int year) {
         boolean deleted = false;
         int cont = 0;
         Iterator<Edition> e = editions.iterator();
         while (e.hasNext()) {
             Edition edition = e.next();
-            if (edition.isYearCoincident(year) && i == cont) {
+            if (edition.isYearCoincident(year) && index == cont) {
                 e.remove();
                 deleted = true;
             }
@@ -136,5 +211,13 @@ public class CompositorManager {
         }
 
         return deleted;
+    }
+
+    public boolean isTrialNameUnique(String trialName) {
+        boolean unique = true;
+        for (Trial t : trials) {
+            if(t.checkName(trialName)) unique = false;
+        }
+        return unique;
     }
 }
