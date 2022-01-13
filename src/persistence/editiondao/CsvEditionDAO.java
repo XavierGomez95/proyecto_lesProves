@@ -1,4 +1,4 @@
-package persistence;
+package persistence.editiondao;
 
 import business.Edition;
 
@@ -7,28 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class EditionDAO {
+public class CsvEditionDAO implements EditionDAO {
     private final String csvEditionPath = "csv_files/edition.csv";
-    private final String jsonEditionPath = "json_files/edition.json";
     private File file = new File(csvEditionPath);
 
     /**
-     * @param editions
+     * @return a list with all Editions
      */
-    public void writeCsv(List<Edition> editions) {
+    @Override
+    public List<Edition> readAll() {
+        return readTrials();
+    }
+
+    /**
+     * writes Editions in csv file
+     *
+     * @param editions updated Edition list
+     */
+    @Override
+    public void writeAll(List<Edition> editions) {
         try {
             new FileWriter(csvEditionPath).close();//para borrar content
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         for (Edition e : editions) {
             writeEditionCsv(e);
         }
-
-
     }
 
+    /**
+     * {@link #checkFile()} and{@link business.Edition#getInfo()} to write it in csv file.
+     *
+     * @param edition
+     */
     private void writeEditionCsv(Edition edition) {
         try {
             checkFile();

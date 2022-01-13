@@ -10,10 +10,10 @@ import java.util.List;
 
 public class JsonTrialDAO implements TrialDAO {
     private static Gson gson = new Gson();
-    JsonArray arrayArticle = new JsonArray();
-    JsonArray arrayMaster = new JsonArray();
-    JsonArray arrayPHD = new JsonArray();
-    JsonArray arrayBudget = new JsonArray();
+    private JsonArray arrayArticle = new JsonArray();
+    private JsonArray arrayMaster = new JsonArray();
+    private JsonArray arrayPHD = new JsonArray();
+    private JsonArray arrayBudget = new JsonArray();
 
     private final String jsonArticlePath = "json_files/publicArticle.json";
     private final String jsonMasterPath = "json_files/studyMaster.json";

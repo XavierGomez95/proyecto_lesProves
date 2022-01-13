@@ -2,6 +2,9 @@ package presentation;
 
 import business.Edition;
 import business.trial.Trial;
+import persistence.editiondao.CsvEditionDAO;
+import persistence.editiondao.EditionDAO;
+import persistence.editiondao.JsonEditionDAO;
 import persistence.trialdao.CsvTrialDAO;
 import persistence.trialdao.JsonTrialDAO;
 import persistence.trialdao.TrialDAO;
@@ -12,6 +15,7 @@ import java.util.List;
 public class Controller {
     protected Menu menu;
     protected TrialDAO trialDAO;
+    protected EditionDAO editionDAO;
     protected List<Trial> trials;
     protected List<Edition> editions = new ArrayList<>();
 
@@ -28,10 +32,7 @@ public class Controller {
 
     }
 
-    /**
-     *
-     * @return
-     */
+
     private String chooseFormat() {
         String format;
 
@@ -57,16 +58,19 @@ public class Controller {
         switch (format) {
             case "I" -> {
                 trialDAO = new CsvTrialDAO();
+                editionDAO = new CsvEditionDAO();
                 trials = trialDAO.readAll();
-                //trialDAO.writeAll();
+                editions = editionDAO.readAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from CSV files...");
                 menu.showTittle();
             }
             case "II" -> {
                 trialDAO = new JsonTrialDAO();
+                editionDAO = new JsonEditionDAO();
+                // editionDAO ;
                 trials = trialDAO.readAll();
-                //trialDAO.writeAll();
+                editions = editionDAO.readAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();
@@ -86,7 +90,7 @@ public class Controller {
             format = menu.askString("Enter a role: ");
             if (!format.equals("A") && !format.equals("B")) menu.errorInput("Error entry.");
         } while (!format.equals("A") && !format.equals("B"));
-        selectRole(format, fileFormat);
+        selectRole(format);
     }
 
     /**
@@ -94,7 +98,7 @@ public class Controller {
      * @param roleFormat
      * @param fileFormat
      */
-    private void selectRole(String roleFormat, String fileFormat) {
+    private void selectRole(String roleFormat) {
         switch (roleFormat) {
             case "A" -> {
                 CompositorController compositorController = new CompositorController(this.menu, trials, editions);
@@ -113,10 +117,10 @@ public class Controller {
      *
      */
     private void exit() {
-        if (!trials.isEmpty()) {
-            //quitar sout, es prueba
-            System.out.println("guardando");
-            trialDAO.writeAll(trials);
-        }
+        if (!trials.isEmpty()) trialDAO.writeAll(trials);
+
+        if (!editions.isEmpty()) editionDAO.writeAll(editions);
+
+
     }
 }

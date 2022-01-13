@@ -1,0 +1,12 @@
+[
+  {
+    "year": 2023,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "nameTrials": [
+      "Trial1",
+      "Trial2",
+      "Trial3"
+    ]
+  }
+]
