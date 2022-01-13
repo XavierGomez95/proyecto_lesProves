@@ -3,7 +3,6 @@ package presentation;
 import business.ConductorManager;
 import business.Edition;
 import business.trial.Trial;
-import persistence.JsonTrialDAO;
 
 import java.time.Year;
 import java.util.List;

@@ -1,6 +1,3 @@
-import business.trial.PublicArticle;
-import business.trial.Trial;
-import persistence.JsonTrialDAO;
 import presentation.Controller;
 import presentation.Menu;
 

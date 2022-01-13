@@ -2,9 +2,7 @@ package business;
 
 import business.trial.*;
 
-import java.time.Year;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -89,7 +87,7 @@ public class CompositorManager {
     public List<String> editionListInfo() {
         List<String> list = new ArrayList<>();
         for (Edition e : editions) {
-            list.add(e.getEditionsInfo());
+            list.add(e.getYear());
         }
         return list;
     }

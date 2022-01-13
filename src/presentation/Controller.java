@@ -2,9 +2,9 @@ package presentation;
 
 import business.Edition;
 import business.trial.Trial;
-import persistence.CsvTrialDAO;
-import persistence.JsonTrialDAO;
-import persistence.TrialDAO;
+import persistence.trialdao.CsvTrialDAO;
+import persistence.trialdao.JsonTrialDAO;
+import persistence.trialdao.TrialDAO;
 
 import java.util.ArrayList;
 import java.util.List;

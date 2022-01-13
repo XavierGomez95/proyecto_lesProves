@@ -1,4 +1,4 @@
-package persistence;
+package persistence.trialdao;
 
 import business.trial.*;
 import com.google.gson.*;

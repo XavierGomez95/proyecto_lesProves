@@ -1,7 +1,6 @@
-package persistence;
+package persistence.trialdao;
 
 import business.trial.*;
-import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CsvTrialDAO implements TrialDAO {
-    private static Gson gson = new Gson();
 
     private final String csvArticlePath = "csv_files/publicArticle.csv";
     private final String csvMasterPath = "csv_files/studyMaster.csv";
@@ -55,10 +53,9 @@ public class CsvTrialDAO implements TrialDAO {
         }
     }
 
-    private void checkDirectory(String path) {
+    private void checkDirectory(File file) {
         File directory = new File("csv_files");
         directory.mkdir();
-        File file = new File(path);
         if (!directory.exists()) directory.mkdirs();
         else if (!file.exists()) {
             try {
@@ -69,7 +66,7 @@ public class CsvTrialDAO implements TrialDAO {
         }
     }
 
-    private List<Trial> readTrials() { // Corregir esto
+    private List<Trial> readTrials() {
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
         try {
@@ -135,7 +132,7 @@ public class CsvTrialDAO implements TrialDAO {
     private void writeLine(String path, Trial t) {
         try {
             File file = new File(path);
-            checkDirectory(path);
+            checkDirectory(file);
             FileWriter writer = new FileWriter(file, true);
 
             writer.append(t.getInfo());
