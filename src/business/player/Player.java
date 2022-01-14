@@ -1,7 +1,7 @@
 package business.player;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public abstract class Player {
     private String name;
@@ -14,14 +14,20 @@ public abstract class Player {
         this.alive = true;
     }
 
+    public abstract void subtractPoints (int points);
+
+    public abstract void addPoints (int points);
+
+    public abstract void upGrade ();
+
     /**
      * To read from csv
      * @param s line with all Player Objects saved in csv
      * @return ArrayList of Players
      */
-    public static ArrayList<Player> fromLine(String s) {//NO ACABAT
+    public static ArrayList<Player> fromLine(String s) {
         String[] arrayPlayers = s.split("}");
-        //String p = s.substring(s.indexOf("{"), s.indexOf("}"));
+        //String p = string.substring(string.indexOf("{"), string.indexOf("}"));
         ArrayList<Player> players = new ArrayList<>();
         for (String player : arrayPlayers) {
             //falta comprobar els punts per saber quin tipues de player ésdependiendo del type
