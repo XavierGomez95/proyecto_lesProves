@@ -19,7 +19,7 @@ public class StudyMaster extends Trial {
     @Override
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + " (Master Studies)");
+        list.add("Trial: " + name + getType());
         list.add("Master: Master in " + masterName);
         list.add("ECTS: " + numCredits + " with a " + probability + "% chance to pass each one");
 
@@ -38,5 +38,10 @@ public class StudyMaster extends Trial {
         int probability = Integer.parseInt(line.split(",")[3]);
 
         return new StudyMaster(name, masterName, numCredits, probability);
+    }
+
+    @Override
+    public String getType() {
+        return " (Master Studies)";
     }
 }

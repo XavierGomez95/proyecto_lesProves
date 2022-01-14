@@ -19,13 +19,19 @@ public class Edition {
     }
 
     /**
-     * @param list
      * @return
      */
-    public List<String> getTrialsInfo(List<String> list) {
+    public List<String> listInfo() {
+        List<String> list = new ArrayList<>();
         list.add("Year: " + year);
         list.add("Players: " + numPlayers);
         list.add("Trials:");
+
+        return list;
+    }
+
+    public List<String> listTrials() {
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < numTrials; i++) {
             list.add("\t" + (i + 1) + "- " + nameTrials.get(i));
         }

@@ -17,7 +17,7 @@ public class PhDefense extends Trial {
     @Override
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + " (Doctoral thesis defense)");
+        list.add("Trial: " + name + getType());
         list.add("Field: " + studyField);
         list.add("Difficulty: " + difficulty);
 
@@ -35,6 +35,11 @@ public class PhDefense extends Trial {
         int difficulty = Integer.parseInt(line.split(",")[2]);
 
         return new PhDefense(name, studyField, difficulty);
+    }
+
+    @Override
+    public String getType() {
+        return " (Master Studies)";
     }
 
 

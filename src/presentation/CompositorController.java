@@ -41,7 +41,6 @@ public class CompositorController {
     }
 
     /**
-     *
      * @param mode
      * @return
      */
@@ -59,7 +58,6 @@ public class CompositorController {
     }
 
     /**
-     *
      * @return
      */
     private String manageEditions() {
@@ -150,8 +148,7 @@ public class CompositorController {
                 menu.createNewLine();
                 menu.showSuccess("The edition was duplicated succesfully!");
             }
-        }
-        else {
+        } else {
             menu.showError("There are no trials. Please create first a trial.");
         }
     }
@@ -169,8 +166,8 @@ public class CompositorController {
 
             int size = listEditions.size() + 1;
             int option = (int) askNumber("Enter an option: ",
-                    "Enter a correct opcion between " + 1 + " and " + size, 1, size);
-            if (option < size) {
+                    "Enter a correct option between " + 1 + " and " + size, 1, size);
+            if (option <= size) {
                 List<String> listEditionsInfo = compositorM.getYearEditionInfo(option - 1);
                 menu.createNewLine();
                 menu.showListEditionByYear(listEditionsInfo);
@@ -222,7 +219,6 @@ public class CompositorController {
     }
 
     /**
-     *
      * @param maxTrials
      * @param listNames
      * @param size
@@ -240,7 +236,6 @@ public class CompositorController {
     }
 
     /**
-     *
      * @return
      */
     private String manageTrials() {
@@ -349,7 +344,7 @@ public class CompositorController {
                 menu.showError("Enter a correct value (Q1, Q2, Q3, Q4).");
                 menu.createNewLine();
             }
-        } while(!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"));
+        } while (!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"));
         return quartile;
     }
 
@@ -361,11 +356,11 @@ public class CompositorController {
                 menu.showError(error);
                 menu.createNewLine();
             }
-        } while(magazine.isEmpty());
+        } while (magazine.isEmpty());
         return magazine;
     }
 
-    private String askTrialName () {
+    private String askTrialName() {
         String trialName;
         do {
             trialName = menu.askString("Enter the trial’s name: ");
@@ -377,19 +372,18 @@ public class CompositorController {
                 menu.showError("This name is already in use.");
                 menu.createNewLine();
             }
-        } while(trialName.isEmpty() || !compositorM.isTrialNameUnique(trialName));
+        } while (trialName.isEmpty() || !compositorM.isTrialNameUnique(trialName));
         return trialName;
     }
 
     /**
-     *
      * @param msg
      * @param errMsg
      * @param min
      * @param max
      * @return
      */
-    private long askNumber (String msg, String errMsg, long min, long max) {
+    private long askNumber(String msg, String errMsg, long min, long max) {
         long num;
         do {
             num = menu.askInteger(msg);
@@ -402,6 +396,7 @@ public class CompositorController {
     }
 
     // REVISAR SI ESTO ESTA BIEN AQUI O VA EN LA CLASE TRIAL
+
     /**
      *
      */
@@ -429,8 +424,7 @@ public class CompositorController {
                     if (deleted) {
                         menu.createNewLine();
                         menu.showSuccess("The trial was successfully deleted.");
-                    }
-                    else menu.showError("The trial has not been successfully deleted.");
+                    } else menu.showError("The trial has not been successfully deleted.");
                 }
                 if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1) {
                     menu.showError("Enter a value between 1 and " + (list.size() + 1));

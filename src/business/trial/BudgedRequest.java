@@ -18,7 +18,7 @@ public class BudgedRequest extends Trial {
     @Override
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + " (Budget request)");
+        list.add("Trial: " + name + getType());
         list.add("Entity: " + entityName);
         list.add("Budget: " + amount + " €");
         return list;
@@ -35,5 +35,10 @@ public class BudgedRequest extends Trial {
         long amount = Long.parseLong(line.split(",")[2]);
 
         return new BudgedRequest(name, entityName, amount);
+    }
+
+    @Override
+    public String getType() {
+        return " (Budget request)";
     }
 }

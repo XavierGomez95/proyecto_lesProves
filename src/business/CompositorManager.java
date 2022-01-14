@@ -21,7 +21,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param trialName
      * @param magazinesName
      * @param quartile
@@ -37,7 +36,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param trialName
      * @param mastersName
      * @param ectsNumber
@@ -51,7 +49,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param trialName
      * @param fieldOfStudy
      * @param defenseDifficulty
@@ -64,7 +61,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param trialName
      * @param entityName
      * @param budgetAmount
@@ -77,7 +73,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @return
      */
     public List<String> trialListNames() {
@@ -89,7 +84,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param i
      * @param trialsName
      * @return
@@ -112,7 +106,6 @@ public class CompositorManager {
      */
 
     /**
-     *
      * @return
      */
     public List<String> trialListInfo() {
@@ -124,7 +117,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param editionsYear
      * @param numberPlayers
      * @param numberTrials
@@ -135,7 +127,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @return
      */
     public List<String> editionListInfo() {
@@ -147,7 +138,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param editionsYear
      * @return
      */
@@ -159,22 +149,43 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param i
      * @return
      */
     public List<String> getYearEditionInfo(int i) {
         List<String> list = new ArrayList<>();
         int cont = 0;
-        for (Edition e : editions) {
-            if (cont == i) list = e.getTrialsInfo(list);
+        for (int j = 0; j < editions.size(); j++) {
+            // if (cont == i) list = editions.get(j).listInfo(list);
+            if (cont == i) {
+                list.addAll(editions.get(j).listInfo());
+                List<String> trials = editions.get(j).listTrials();
+                for (String s : trials) {
+                    String name = s.split(" ")[1];
+                    Trial trial = getByName(name);
+
+                    list.add(s + trial.getType());
+
+                }
+            }
             cont++;
         }
+
         return list;
     }
 
+
+    public Trial getByName(String s) {
+        Trial trial = null;
+        for (Trial t : trials) {
+            if (t.getName().equals(s)) {
+                trial = t;
+            }
+        }
+        return trial;
+    }
+
     /**
-     *
      * @param i
      * @param editionsYear
      * @param numberPlayers
@@ -192,7 +203,6 @@ public class CompositorManager {
     }
 
     /**
-     *
      * @param index
      * @param year
      * @return
@@ -216,7 +226,7 @@ public class CompositorManager {
     public boolean isTrialNameUnique(String trialName) {
         boolean unique = true;
         for (Trial t : trials) {
-            if(t.checkName(trialName)) unique = false;
+            if (t.checkName(trialName)) unique = false;
         }
         return unique;
     }

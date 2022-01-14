@@ -48,5 +48,8 @@ public class PublicArticle extends Trial {
         return new PublicArticle(magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, name);
     }
 
-
+    @Override
+    public String getType() {
+        return " (Paper publication)";
+    }
 }

@@ -2,9 +2,7 @@ package business.trial;
 
 import business.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 public abstract class Trial {
     protected String name;
@@ -33,7 +31,6 @@ public abstract class Trial {
     }
 
     public void playerUpgrade(Player p) {
-
     }
 
     public String getInfo() {
@@ -50,4 +47,7 @@ public abstract class Trial {
     public boolean checkName(String name) {
         return name.equals(this.name);
     }
+
+    public abstract String getType();
+
 }
