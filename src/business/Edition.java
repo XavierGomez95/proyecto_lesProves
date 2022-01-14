@@ -64,16 +64,17 @@ public class Edition {
      * @return String line with all data of Edition to save in CSV
      */
     public String getInfo() {
-        String data = year + "," + numPlayers + "," + numTrials + ",[";
+        StringBuilder sb = new StringBuilder();
+        sb.append(year).append(",").append(numPlayers).append(",").append(numTrials).append(",[");
         for (int i = 0; i < nameTrials.size(); i++) {
             if (i == 0) {
-                data += nameTrials.get(i);
+                sb.append(nameTrials.get(i));
             } else {
-                data += "," + nameTrials.get(i);
+                sb.append(",").append(nameTrials.get(i));
             }
         }
-        data += "]";
-        return data;
+        sb.append("]");
+        return sb.toString();
     }
 
     /**

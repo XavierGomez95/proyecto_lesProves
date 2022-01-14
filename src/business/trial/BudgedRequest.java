@@ -26,7 +26,8 @@ public class BudgedRequest extends Trial {
 
     @Override
     public String getInfo() {
-        return super.getInfo() + "," + entityName + "," + amount;
+        StringBuilder sb = new StringBuilder();
+        return sb.append(super.getInfo()).append(",").append(entityName).append(",").append(amount).toString();
     }
 
     public static Trial fromLine(String line) {

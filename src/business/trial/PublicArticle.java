@@ -34,7 +34,8 @@ public class PublicArticle extends Trial {
 
     @Override
     public String getInfo() {
-        return super.getInfo() + "," + magazineName + "," + quartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability;
+        StringBuilder sb = new StringBuilder();
+        return sb.append(super.getInfo()).append(",").append(magazineName).append(",").append(quartile).append(",").append(acceptanceProbability).append(",").append(revisionProbability).append(",").append(rejectionProbability).toString();
     }
 
     public static Trial fromLine(String line) {

@@ -1,6 +1,7 @@
 package presentation;
 
-import business.CompositorManager;
+import business.EditionManager;
+import business.TrialManager;
 import business.Edition;
 import business.trial.Trial;
 
@@ -9,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompositorController {
-    private CompositorManager compositorM;
+    private TrialManager trialManager;
+    private EditionManager editionManager;
     private Menu menu;
 
     public CompositorController(Menu menu, List<Trial> trials, List<Edition> editions) {
-        //super(menu);
-        this.compositorM = new CompositorManager(trials, editions);
+        this.trialManager = new TrialManager(trials);
+        this.editionManager = new EditionManager(editions);
         this.menu = menu;
     }
 
@@ -78,7 +80,7 @@ public class CompositorController {
                 case "a" -> createEdition();
                 case "b" -> listEdition();
                 case "c" -> duplicateEdition();
-                case "d" -> DeleteEdition();
+                case "d" -> deleteEdition();
             }
         } while (!(option.equals("e")));
         return option;
@@ -87,8 +89,8 @@ public class CompositorController {
     /**
      *
      */
-    private void DeleteEdition() {
-        List<String> list = compositorM.editionListInfo();
+    private void deleteEdition() {
+        List<String> list = editionManager.editionListInfo();
         int year, numberPlayers;
         if (!list.isEmpty()) {
             menu.showMessage("Which edition do you want to delete?");
@@ -103,7 +105,7 @@ public class CompositorController {
                 menu.createNewLine();
                 year = menu.askInteger("Enter the edition's year for confirmation: ");
 
-                boolean deleted = compositorM.deleteEdition(option - 1, year);
+                boolean deleted = editionManager.deleteEdition(option - 1, year);
 
                 if (deleted) {
                     menu.createNewLine();
@@ -117,7 +119,7 @@ public class CompositorController {
      *
      */
     private void duplicateEdition() {
-        List<String> list = compositorM.editionListInfo();
+        List<String> list = editionManager.editionListInfo();
         int year, numberPlayers;
         if (!list.isEmpty()) {
             menu.showMessage("Which edition do you want to clone?");
@@ -132,7 +134,7 @@ public class CompositorController {
                 menu.createNewLine();
                 do {
                     year = menu.askInteger("Enter the edition's year: ");
-                    if (compositorM.isCoincident(year)) {
+                    if (editionManager.isCoincident(year)) {
                         menu.showError("This year exists, please enter another year.");
                         menu.createNewLine();
                     }
@@ -140,10 +142,10 @@ public class CompositorController {
                         menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
                         menu.createNewLine();
                     }
-                } while (year < Year.now().getValue() || compositorM.isCoincident(year));
+                } while (year < Year.now().getValue() || editionManager.isCoincident(year));
                 numberPlayers = (int) askNumber("Enter the initial number of players: ",
                         "Enter a number between 1 and 5 (including both)", 1, 5);
-                compositorM.duplicateEdition(option - 1, year, numberPlayers);
+                editionManager.duplicateEdition(option - 1, year, numberPlayers);
 
                 menu.createNewLine();
                 menu.showSuccess("The edition was duplicated succesfully!");
@@ -157,7 +159,7 @@ public class CompositorController {
      *
      */
     private void listEdition() {
-        List<String> listEditions = compositorM.editionListInfo();
+        List<String> listEditions = editionManager.editionListInfo();
         if (!listEditions.isEmpty()) {
             menu.createNewLine();
             menu.showMessage("Here are the current editions, do you want to see more details or go back?");
@@ -168,7 +170,7 @@ public class CompositorController {
             int option = (int) askNumber("Enter an option: ",
                     "Enter a correct option between " + 1 + " and " + size, 1, size);
             if (option <= size) {
-                List<String> listEditionsInfo = compositorM.getYearEditionInfo(option - 1);
+                List<String> listEditionsInfo = editionManager.getYearEditionInfo(option - 1, trialManager);
                 menu.createNewLine();
                 menu.showListEditionByYear(listEditionsInfo);
             }
@@ -183,12 +185,12 @@ public class CompositorController {
      *
      */
     private void createEdition() {
-        List<String> list = compositorM.trialListNames();
+        List<String> list = trialManager.trialListNames();
         int editionsYear, numberPlayers, numberTrials;
         if (list.size() > 0) {
             do {
                 editionsYear = menu.askInteger("Enter the edition's year: ");
-                if (compositorM.isCoincident(editionsYear)) {
+                if (editionManager.isCoincident(editionsYear)) {
                     menu.showError("This year exists, please enter another year.");
                     menu.createNewLine();
                 }
@@ -196,7 +198,7 @@ public class CompositorController {
                     menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
                     menu.createNewLine();
                 }
-            } while (editionsYear < Year.now().getValue() || compositorM.isCoincident(editionsYear));
+            } while (editionsYear < Year.now().getValue() || editionManager.isCoincident(editionsYear));
 
             numberPlayers = (int) askNumber("Enter the initial number of players: ",
                     "Enter a number between 1 and 5 (including both)", 1, 5);
@@ -208,7 +210,7 @@ public class CompositorController {
 
             list = pickTrials(numberTrials, list, list.size());
 
-            compositorM.createEdition(editionsYear, numberPlayers, numberTrials, (ArrayList<String>) list);
+            editionManager.createEdition(editionsYear, numberPlayers, numberTrials, (ArrayList<String>) list);
 
             menu.createNewLine();
             menu.showSuccess("The edition was created succesfully!");
@@ -288,7 +290,7 @@ public class CompositorController {
         String entityName = menu.askString("Enter the entity’s name: ");
         long budgetAmount = (int) askNumber("Enter the budget amount: ",
                 "Enter a correct value between 1000 and 2000000000 (including both)", 1000, 2000000000);
-        compositorM.createBudgetRequest(trialName, entityName, budgetAmount);
+        trialManager.createBudgetRequest(trialName, entityName, budgetAmount);
     }
 
     /**
@@ -300,7 +302,7 @@ public class CompositorController {
         String fieldOfStudy = menu.askString("Enter the thesis field of study: ");
         defenseDifficulty = (int) askNumber("Enter the defense difficulty: ",
                 "Enter a correct value between 1 and 10 (including both)", 1, 10);
-        compositorM.createPHD(trialName, fieldOfStudy, defenseDifficulty);
+        trialManager.createPHD(trialName, fieldOfStudy, defenseDifficulty);
     }
 
     /**
@@ -315,7 +317,7 @@ public class CompositorController {
                 "Enter a correct value between 60 and 120 (including both)", 60, 120);
         creditPassProbability = (int) askNumber("Enter the credit pass probability: ",
                 "Enter a correct value between 0 and 100 (including both)", 0, 100);
-        compositorM.createMaster(trialName, mastersName, ectsNumber, creditPassProbability);
+        trialManager.createMaster(trialName, mastersName, ectsNumber, creditPassProbability);
     }
 
     /**
@@ -333,7 +335,7 @@ public class CompositorController {
                 "Enter a correct value between 0 and 100 (including both)", 0, 100);
         rejectionProbability = (int) askNumber("Enter the rejection probability: ",
                 "Enter a correct value between 0 and 100 (including both)", 0, 100);
-        compositorM.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
+        trialManager.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
     private String askQuartile() {
@@ -368,11 +370,11 @@ public class CompositorController {
                 menu.showError("The trial's name must not be empty!");
                 menu.createNewLine();
             }
-            if (!compositorM.isTrialNameUnique(trialName)) {
+            if (!trialManager.isTrialNameUnique(trialName)) {
                 menu.showError("This name is already in use.");
                 menu.createNewLine();
             }
-        } while (trialName.isEmpty() || !compositorM.isTrialNameUnique(trialName));
+        } while (trialName.isEmpty() || !trialManager.isTrialNameUnique(trialName));
         return trialName;
     }
 
@@ -401,7 +403,7 @@ public class CompositorController {
      *
      */
     private void listTrial() {
-        List<String> list = compositorM.trialListInfo();
+        List<String> list = trialManager.trialListInfo();
         if (!list.isEmpty()) menu.showlist(list); // 4.3.1.2
         else menu.showError("There are no trials. Please create first a trial.");
     }
@@ -411,20 +413,24 @@ public class CompositorController {
      */
     private void deleteTrial() {
         int indexTrialToDelete;
-        List<String> list = compositorM.trialListNames();
+        List<String> list = trialManager.trialListNames();
         if (!list.isEmpty()) {
             menu.menuTrials(list); // 4.3.1.3
             do {
                 indexTrialToDelete = menu.askInteger("Enter an option: ");
                 if (indexTrialToDelete <= list.size() && indexTrialToDelete > 0) {
                     String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
+                    if (editionManager.dependentTrial(trialsName)) {
+                        menu.showError("The trial cannot be deleted because one edition depends on it.");
+                    } else {
 
-                    boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
+                        boolean deleted = trialManager.deleteTrial(indexTrialToDelete - 1, trialsName);
 
-                    if (deleted) {
-                        menu.createNewLine();
-                        menu.showSuccess("The trial was successfully deleted.");
-                    } else menu.showError("The trial has not been successfully deleted.");
+                        if (deleted) {
+                            menu.createNewLine();
+                            menu.showSuccess("The trial was successfully deleted.");
+                        } else menu.showError("The trial has not been successfully deleted.");
+                    }
                 }
                 if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1) {
                     menu.showError("Enter a value between 1 and " + (list.size() + 1));

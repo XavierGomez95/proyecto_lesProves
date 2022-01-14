@@ -3,21 +3,13 @@ package business;
 import business.trial.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class CompositorManager {
-    private List<Edition> editions;
+public class TrialManager {
     private List<Trial> trials;
-    // Como acceder a las subclases desde aqui o desde trial. se considera high compling o esta correcto
 
-    public CompositorManager(List<Trial> trials, List<Edition> editions) {
+    public TrialManager(List<Trial> trials) {
         this.trials = trials;
-        this.editions = editions;
-    }
-
-    public void trialManagement() {
-
     }
 
     /**
@@ -116,64 +108,13 @@ public class CompositorManager {
         return list;
     }
 
-    /**
-     * @param editionsYear
-     * @param numberPlayers
-     * @param numberTrials
-     * @param list
-     */
-    public void createEdition(int editionsYear, int numberPlayers, int numberTrials, ArrayList<String> list) {
-        editions.add(new Edition(editionsYear, numberPlayers, numberTrials, list));
-    }
-
-    /**
-     * @return
-     */
-    public List<String> editionListInfo() {
-        List<String> list = new ArrayList<>();
-        for (Edition e : editions) {
-            list.add(e.getYear());
+    public boolean isTrialNameUnique(String trialName) {
+        boolean unique = true;
+        for (Trial t : trials) {
+            if (t.checkName(trialName)) unique = false;
         }
-        return list;
+        return unique;
     }
-
-    /**
-     * @param editionsYear
-     * @return
-     */
-    public boolean isCoincident(int editionsYear) {
-        for (Edition e : editions) {
-            if (e.isYearCoincident(editionsYear)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param i
-     * @return
-     */
-    public List<String> getYearEditionInfo(int i) {
-        List<String> list = new ArrayList<>();
-        int cont = 0;
-        for (int j = 0; j < editions.size(); j++) {
-            // if (cont == i) list = editions.get(j).listInfo(list);
-            if (cont == i) {
-                list.addAll(editions.get(j).listInfo());
-                List<String> trials = editions.get(j).listTrials();
-                for (String s : trials) {
-                    String name = s.split(" ")[1];
-                    Trial trial = getByName(name);
-
-                    list.add(s + trial.getType());
-
-                }
-            }
-            cont++;
-        }
-
-        return list;
-    }
-
 
     public Trial getByName(String s) {
         Trial trial = null;
@@ -183,51 +124,5 @@ public class CompositorManager {
             }
         }
         return trial;
-    }
-
-    /**
-     * @param i
-     * @param editionsYear
-     * @param numberPlayers
-     */
-    public void duplicateEdition(int i, int editionsYear, int numberPlayers) {
-        ArrayList<String> listNameTrials = new ArrayList<>();
-        int cont = 0;
-        for (Edition e : editions) {
-            if (cont == i) {
-                listNameTrials = e.getNameTrials();
-            }
-            cont++;
-        }
-        editions.add(new Edition(editionsYear, numberPlayers, listNameTrials.size(), listNameTrials));
-    }
-
-    /**
-     * @param index
-     * @param year
-     * @return
-     */
-    public boolean deleteEdition(int index, int year) {
-        boolean deleted = false;
-        int cont = 0;
-        Iterator<Edition> e = editions.iterator();
-        while (e.hasNext()) {
-            Edition edition = e.next();
-            if (edition.isYearCoincident(year) && index == cont) {
-                e.remove();
-                deleted = true;
-            }
-            cont++;
-        }
-
-        return deleted;
-    }
-
-    public boolean isTrialNameUnique(String trialName) {
-        boolean unique = true;
-        for (Trial t : trials) {
-            if (t.checkName(trialName)) unique = false;
-        }
-        return unique;
     }
 }

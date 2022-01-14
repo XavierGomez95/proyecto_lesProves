@@ -26,7 +26,8 @@ public class PhDefense extends Trial {
 
     @Override
     public String getInfo() {
-        return super.getInfo() + "," + studyField + "," + difficulty;
+        StringBuilder sb = new StringBuilder();
+        return sb.append(super.getInfo()).append(",").append(studyField).append(",").append(difficulty).toString();
     }
 
     public static Trial fromLine(String line) {
@@ -39,7 +40,7 @@ public class PhDefense extends Trial {
 
     @Override
     public String getType() {
-        return " (Master Studies)";
+        return " (Doctoral thesis defense)";
     }
 
 

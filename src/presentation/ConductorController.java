@@ -1,6 +1,6 @@
 package presentation;
 
-import business.ConductorManager;
+import business.EditionManager;
 import business.Edition;
 import business.trial.Trial;
 
@@ -8,12 +8,12 @@ import java.time.Year;
 import java.util.List;
 
 public class ConductorController {
-    ConductorManager conductorM;
+    EditionManager conductorM;
     private Menu menu;
 
     public ConductorController(Menu menu, List<Trial> trials, List<Edition> editions) {
         //super(menu);
-        this.conductorM = new ConductorManager(trials, editions);
+        this.conductorM = new EditionManager(editions);
         this.menu = menu;
     }
 
@@ -33,21 +33,6 @@ public class ConductorController {
         }
     }
 
-    private void trialMenu() {
-
-    }
-
-    private void createMenu() {
-
-    }
-
-    private void listMenu() {
-
-    }
-
-    private void deleteMenu() {
-
-    }
 
     private void createPaper() {
 

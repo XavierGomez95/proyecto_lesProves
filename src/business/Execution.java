@@ -17,26 +17,26 @@ public class Execution {
     }
 
     public String getInfo() {
-        String data = year + "," + currentExecution + ",[";
-
+        StringBuilder sb = new StringBuilder();
+        sb.append(year).append(",").append(currentExecution).append(",[");
         for (int i = 0; i < players.size(); i++) {
             if (i == 0) {
-                data += players.get(i).getInfo();
+                sb.append(players.get(i).getInfo());
             } else {
-                data += "," + players.get(i).getInfo();
+                sb.append(",").append(players.get(i).getInfo());
             }
         }
-        data += "]";
-        return data;
+        sb.append("]");
+
+        return sb.toString();
     }
 
     public static Execution fromLine(String line) {
         int year = Integer.parseInt(line.split(",")[0]);
         int currentExecution = Integer.parseInt(line.split(",")[1]);
-        //int currentExecution = Integer.parseInt(line.substring(line.indexOf(","), line.indexOf("[")).substring(1));
         String stringPlayers = line.substring(line.indexOf("["), line.indexOf("]")).substring(1);
 
-        return new Execution(year, currentExecution,Player.fromLine(stringPlayers) );
+        return new Execution(year, currentExecution, Player.fromLine(stringPlayers));
     }
 
 

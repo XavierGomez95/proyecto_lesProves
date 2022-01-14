@@ -20,7 +20,7 @@ public class StudyMaster extends Trial {
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
         list.add("Trial: " + name + getType());
-        list.add("Master: Master in " + masterName);
+        list.add("Master: " + masterName);
         list.add("ECTS: " + numCredits + " with a " + probability + "% chance to pass each one");
 
         return list;

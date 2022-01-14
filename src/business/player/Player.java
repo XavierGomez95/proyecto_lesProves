@@ -79,7 +79,8 @@ public class Player {
      * @return String line with all Player information
      */
     public String getInfo() {
-        return "{" + name + "," + pi + "," + alive + "," + type + "}";
+        StringBuilder sb = new StringBuilder();
+        return sb.append("{").append(name).append(",").append(pi).append(",").append(alive).append(",").append(type).append("}").toString();
     }
 
 }
