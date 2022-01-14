@@ -16,7 +16,7 @@ public class CsvEditionDAO implements EditionDAO {
      */
     @Override
     public List<Edition> readAll() {
-        return readTrials();
+        return readEditions();
     }
 
     /**
@@ -26,13 +26,9 @@ public class CsvEditionDAO implements EditionDAO {
      */
     @Override
     public void writeAll(List<Edition> editions) {
-        try {
-            new FileWriter(csvEditionPath).close();//para borrar content
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        deleteContent();
         for (Edition e : editions) {
-            writeEditionCsv(e);
+            writeEdition(e);
         }
     }
 
@@ -41,7 +37,7 @@ public class CsvEditionDAO implements EditionDAO {
      *
      * @param edition
      */
-    private void writeEditionCsv(Edition edition) {
+    private void writeEdition(Edition edition) {
         try {
             checkFile();
             FileWriter writer = new FileWriter(file, true);
@@ -65,7 +61,7 @@ public class CsvEditionDAO implements EditionDAO {
         }
     }
 
-    private List<Edition> readTrials() {
+    private List<Edition> readEditions() {
         Scanner scanFile = null;
         List<Edition> editions = new ArrayList<>();
         try {
@@ -95,5 +91,13 @@ public class CsvEditionDAO implements EditionDAO {
             e.printStackTrace();
         }
         return true;
+    }
+
+    private void deleteContent() {
+        try {
+            new FileWriter(file).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

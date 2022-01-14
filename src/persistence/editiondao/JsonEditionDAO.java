@@ -9,11 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JsonEditionDAO implements EditionDAO {
-    private static Gson gson = new Gson();
-    private static Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
-
-    JsonArray arrayEdition = new JsonArray();
     private final String jsonEditionPath = "json_files/edition.json";
+    private Gson gson = new Gson();
 
     @Override
     public List<Edition> readAll() {
@@ -22,22 +19,46 @@ public class JsonEditionDAO implements EditionDAO {
 
     @Override
     public void writeAll(List<Edition> editions) {
+        deleteContent();
+        writeArray(editions);
+    }
+
+
+    private List<Edition> readEditions() {
+        List<Edition> editions = new ArrayList<>();
+
+
         try {
-            new FileWriter(jsonEditionPath).append("[]").close();//para borrar content
-        } catch (IOException e) {
+            editions.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonEditionPath), Edition[].class)));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return editions;
+    }
+
+    private void writeArray(List<Edition> editions) {
+        JsonArray arrayEdition = new JsonArray();
+
+        Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
+
         for (Edition edition : editions) {
             checkFile();
             JsonObject jsonObject = JsonParser.parseString(gson.toJson(edition)).getAsJsonObject();
             arrayEdition.add(jsonObject);
+        }
+        try {
+            OutputStream osArticle = new FileOutputStream(jsonEditionPath);
+            osArticle.write(gsonBuild.toJson(arrayEdition).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            try {
-                OutputStream osArticle = new FileOutputStream(jsonEditionPath);
-                osArticle.write(gsonBuild.toJson(arrayEdition).getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void deleteContent() {
+        try {
+            new FileWriter(jsonEditionPath).append("[]").close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -63,15 +84,4 @@ public class JsonEditionDAO implements EditionDAO {
             }
         }
     }
-
-    private List<Edition> readEditions() {
-        List<Edition> editions = new ArrayList<>();
-        try {
-            editions.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonEditionPath), Edition[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return editions;
-    }
-
 }
