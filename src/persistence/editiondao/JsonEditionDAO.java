@@ -26,12 +26,14 @@ public class JsonEditionDAO implements EditionDAO {
 
     private List<Edition> readEditions() {
         List<Edition> editions = new ArrayList<>();
+        File file = new File(jsonEditionPath);
 
-
-        try {
-            editions.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonEditionPath), Edition[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (file.exists()) {
+            try {
+                editions.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonEditionPath), Edition[].class)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return editions;
     }

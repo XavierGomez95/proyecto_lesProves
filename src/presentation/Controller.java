@@ -8,6 +8,7 @@ import persistence.editiondao.EditionDAO;
 import persistence.editiondao.JsonEditionDAO;
 import persistence.executionDAO.CsvExecutionDAO;
 import persistence.executionDAO.ExecutionDAO;
+import persistence.executionDAO.JsonExecutionDAO;
 import persistence.trialdao.CsvTrialDAO;
 import persistence.trialdao.JsonTrialDAO;
 import persistence.trialdao.TrialDAO;
@@ -66,6 +67,7 @@ public class Controller {
                 trialDAO = new CsvTrialDAO();
                 editionDAO = new CsvEditionDAO();
                 executionDAO = new CsvExecutionDAO();
+
                 trials = trialDAO.readAll();
                 editions = editionDAO.readAll();
                 executions = executionDAO.readAll();
@@ -76,9 +78,11 @@ public class Controller {
             case "II" -> {
                 trialDAO = new JsonTrialDAO();
                 editionDAO = new JsonEditionDAO();
+                executionDAO = new JsonExecutionDAO();
 
                 trials = trialDAO.readAll();
                 editions = editionDAO.readAll();
+                executions = executionDAO.readAll();
                 menu.createNewLine();
                 menu.showMessage("Loading data from JSON files...");
                 menu.showTittle();
@@ -126,9 +130,7 @@ public class Controller {
      */
     private void exit() {
         if (!trials.isEmpty()) trialDAO.writeAll(trials);
-
         if (!editions.isEmpty()) editionDAO.writeAll(editions);
-        executionDAO.writeAll(executions);
-
+        if (!executions.isEmpty()) executionDAO.writeAll(executions);
     }
 }
