@@ -7,13 +7,14 @@ import business.trial.Trial;
 import java.time.Year;
 import java.util.List;
 
-public class ConductorController extends Controller {
+public class ConductorController {
     ConductorManager conductorM;
+    private Menu menu;
 
     public ConductorController(Menu menu, List<Trial> trials, List<Edition> editions) {
-        super(menu);
+        //super(menu);
         this.conductorM = new ConductorManager(trials, editions);
-
+        this.menu = menu;
     }
 
     /**

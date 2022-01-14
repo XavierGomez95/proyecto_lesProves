@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
-    protected Menu menu;
+    private Menu menu;
     private TrialDAO trialDAO;
     private EditionDAO editionDAO;
     private ExecutionDAO executionDAO;
-    protected List<Trial> trials;
-    protected List<Edition> editions = new ArrayList<>();
-    protected List<Execution> executions = new ArrayList<>();
+    private List<Trial> trials;
+    private List<Edition> editions = new ArrayList<>();
+    private List<Execution> executions = new ArrayList<>();
 
     public Controller(Menu menu) {
         this.menu = menu;

@@ -8,16 +8,14 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositorController extends Controller {
+public class CompositorController {
     private CompositorManager compositorM;
-
-    //private List<Trial> trials;
-    //private List<Edition> editions;
+    private Menu menu;
 
     public CompositorController(Menu menu, List<Trial> trials, List<Edition> editions) {
-        super(menu);
+        //super(menu);
         this.compositorM = new CompositorManager(trials, editions);
-        //this.trials = trials;
+        this.menu = menu;
     }
 
     /**

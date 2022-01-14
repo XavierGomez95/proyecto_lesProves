@@ -87,14 +87,6 @@ public class Menu {
     }
 
     /**
-     * This method is called to show the delete trial menu on the screen.
-     */
-    public void showDeleteTrialMenu() {
-        System.out.println();
-    }
-
-
-    /**
      * This method request information from the user and return the correct input value (integer data type).
      * {@link #showError(String)}.
      *
