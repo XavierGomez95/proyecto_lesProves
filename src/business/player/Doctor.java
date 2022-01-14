@@ -1,5 +1,5 @@
 package business.player;
-
+/*
 public class Doctor extends Master {
 
     public Doctor(String name, int pi) {
@@ -22,3 +22,4 @@ public class Doctor extends Master {
 
     }
 }
+ */

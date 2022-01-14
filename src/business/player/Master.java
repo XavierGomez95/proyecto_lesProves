@@ -1,5 +1,5 @@
 package business.player;
-
+/*
 import javax.print.Doc;
 
 public class Master extends Engineer {
@@ -24,3 +24,4 @@ public class Master extends Engineer {
         // Creo que ha de tener un return de tipo Master, del palo Master m = upGrade();
     }
 }
+ */
