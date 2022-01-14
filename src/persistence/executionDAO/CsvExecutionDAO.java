@@ -5,6 +5,7 @@ import business.Execution;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,11 +49,12 @@ public class CsvExecutionDAO implements ExecutionDAO {
         Scanner scanFile = null;
         List<Execution> executions = new ArrayList<>();
         try {
-
-            scanFile = new Scanner(file);
-            if (!isDirectoryEmpty(file)) {
-                while (scanFile.hasNextLine()) {
-                    executions.add(Execution.fromLine(scanFile.nextLine()));
+            if (file.exists()) {
+                if (!isDirectoryEmpty(file)) {
+                    scanFile = new Scanner(file);
+                    while (scanFile.hasNextLine()) {
+                        executions.add(Execution.fromLine(scanFile.nextLine()));
+                    }
                 }
             }
         } catch (IOException e) {

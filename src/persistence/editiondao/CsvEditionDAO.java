@@ -65,12 +65,13 @@ public class CsvEditionDAO implements EditionDAO {
         Scanner scanFile = null;
         List<Edition> editions = new ArrayList<>();
         try {
+            if (file.exists()) {
+                scanFile = new Scanner(file);
+                if (!isDirectoryEmpty(file)) {
+                    while (scanFile.hasNextLine()) {
+                        editions.add(Edition.fromLine(scanFile.nextLine()));
 
-            scanFile = new Scanner(file);
-            if (!isDirectoryEmpty(file)) {
-                while (scanFile.hasNextLine()) {
-                    editions.add(Edition.fromLine(scanFile.nextLine()));
-
+                    }
                 }
             }
         } catch (IOException e) {

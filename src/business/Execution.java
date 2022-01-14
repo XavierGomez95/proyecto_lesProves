@@ -33,6 +33,7 @@ public class Execution {
     public static Execution fromLine(String line) {
         int year = Integer.parseInt(line.split(",")[0]);
         int currentExecution = Integer.parseInt(line.split(",")[1]);
+        //int currentExecution = Integer.parseInt(line.substring(line.indexOf(","), line.indexOf("[")).substring(1));
         String stringPlayers = line.substring(line.indexOf("["), line.indexOf("]")).substring(1);
 
         return new Execution(year, currentExecution,Player.fromLine(stringPlayers) );
