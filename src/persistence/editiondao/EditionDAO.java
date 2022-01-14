@@ -7,5 +7,5 @@ import java.util.List;
 public interface EditionDAO {
     List<Edition> readAll();
 
-    void writeAll(List<Edition> jsonTrials);
+    void writeAll(List<Edition> editions);
 }

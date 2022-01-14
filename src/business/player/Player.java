@@ -49,10 +49,16 @@ public class Player {
         this.alive = false;
     }
 
-    public static List<Player> fromLine(String string) {
-        String[] arrayPlayers = string.split("}");
-        String p = string.substring(string.indexOf("{"), string.indexOf("}"));
-        List<Player> players = new ArrayList<>();
+    /**
+     * To read from csv
+     *
+     * @param s line with all Player Objects saved in csv
+     * @return ArrayList of Players
+     */
+    public static ArrayList<Player> fromLine(String s) {
+        String[] arrayPlayers = s.split("}");
+        //String p = string.substring(string.indexOf("{"), string.indexOf("}"));
+        ArrayList<Player> players = new ArrayList<>();
         for (String player : arrayPlayers) {
             //falta comprobar els punts per saber quin tipues de player és
             player = player.substring(1);
