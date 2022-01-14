@@ -41,8 +41,10 @@ public class Controller {
 
         do {
             format = menu.askString("Pick a faction: ");
-            if (!format.equals("I") && !format.equals("II"))
-                menu.errorInput("Error entry."); // Poner el mensaje que quieras.
+            if (!format.equals("I") && !format.equals("II")) {
+                menu.showError("Error entry."); // Poner el mensaje que quieras.
+                menu.createNewLine();
+            }
         } while (!format.equals("I") && !format.equals("II"));
 
         loadData(format);
@@ -88,7 +90,10 @@ public class Controller {
         menu.showRoleMenu();
         do {
             format = menu.askString("Enter a role: ");
-            if (!format.equals("A") && !format.equals("B")) menu.errorInput("Error entry.");
+            if (!format.equals("A") && !format.equals("B")) {
+                menu.showError("Error entry.");
+                menu.createNewLine();
+            }
         } while (!format.equals("A") && !format.equals("B"));
         selectRole(format);
     }
@@ -96,7 +101,6 @@ public class Controller {
     /**
      *
      * @param roleFormat
-     * @param fileFormat
      */
     private void selectRole(String roleFormat) {
         switch (roleFormat) {

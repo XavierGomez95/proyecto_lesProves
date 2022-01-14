@@ -14,9 +14,11 @@ public abstract class Player {
         this.alive = true;
     }
 
+    public abstract void subtractPoints (int points);
 
+    public abstract void addPoints (int points);
 
-
+    public abstract void upGrade ();
 
     public static List<Player> fromLine(String string) {
         String[] arrayPlayers = string.split("}");

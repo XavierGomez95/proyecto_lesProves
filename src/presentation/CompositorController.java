@@ -25,15 +25,18 @@ public class CompositorController extends Controller {
      */
     public void run() {
         int mode;
-        //String factionInput;
         String option = "e";
         // 4.3
         while (option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")) {
+            menu.createNewLine();
             menu.showMessage("Entering management mode...");
             menu.showManagerMenu(); // 4.3
             do {
                 mode = menu.askInteger("Enter an option: ");
-                if (mode < 1 || mode > 3) menu.errorInput("Enter a number between 1 and 3 (included).");
+                if (mode < 1 || mode > 3) {
+                    menu.showError("Enter a number between 1 and 3 (included).");
+                    menu.createNewLine();
+                }
             } while (mode < 1 || mode > 3);
             option = enterMode(mode);
         }
@@ -49,7 +52,10 @@ public class CompositorController extends Controller {
         switch (mode) {
             case 1 -> option = manageTrials(); // 4.3.1
             case 2 -> option = manageEditions(); // 4.3.2
-            case 3 -> menu.showMessage("Shutting down...");
+            case 3 -> {
+                menu.createNewLine();
+                menu.showSuccess("Shutting down...");
+            }
         }
         return option;
     }
@@ -64,11 +70,13 @@ public class CompositorController extends Controller {
             menu.showEditionsMenu();
             do {
                 option = menu.askString("Enter an option: ");
-                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")))
-                    menu.errorInput("Enter a letter.");
+                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e"))) {
+                    menu.showError("Enter a letter.");
+                    menu.createNewLine();
+                }
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")));
 
-            menu.createNewLine();
+            //menu.createNewLine();
 
             switch (option) {
                 case "a" -> createEdition();
@@ -87,7 +95,7 @@ public class CompositorController extends Controller {
         List<String> list = compositorM.editionListInfo();
         int year, numberPlayers;
         if (!list.isEmpty()) {
-            menu.showMessage("Which edition do you want to clone?");
+            menu.showMessage("Which edition do you want to delete?");
             menu.createNewLine();
             menu.menuTrials(list); // 4.3.2.3
 
@@ -103,7 +111,7 @@ public class CompositorController extends Controller {
 
                 if (deleted) {
                     menu.createNewLine();
-                    menu.showMessage("The edition was succesfully deleted!");
+                    menu.showSuccess("The edition was succesfully deleted!");
                 }
             }
         }
@@ -128,18 +136,26 @@ public class CompositorController extends Controller {
                 menu.createNewLine();
                 do {
                     year = menu.askInteger("Enter the edition's year: ");
-                    if (compositorM.isCoincident(year)) menu.errorInput("This year exists, please enter another year.");
-                    if (year < Year.now().getValue()) menu.errorInput("Enter the curremt year or upper (dont repeat existing year editions).");
+                    if (compositorM.isCoincident(year)) {
+                        menu.showError("This year exists, please enter another year.");
+                        menu.createNewLine();
+                    }
+                    if (year < Year.now().getValue()) {
+                        menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
+                        menu.createNewLine();
+                    }
                 } while (year < Year.now().getValue() || compositorM.isCoincident(year));
                 numberPlayers = (int) askNumber("Enter the initial number of players: ",
                         "Enter a number between 1 and 5 (including both)", 1, 5);
                 compositorM.duplicateEdition(option - 1, year, numberPlayers);
 
                 menu.createNewLine();
-                menu.showMessage("The edition was duplicated succesfully!");
+                menu.showSuccess("The edition was duplicated succesfully!");
             }
         }
-        else menu.showMessage("There are no trials. Please create first a trial.");
+        else {
+            menu.showError("There are no trials. Please create first a trial.");
+        }
     }
 
     /**
@@ -148,6 +164,7 @@ public class CompositorController extends Controller {
     private void listEdition() {
         List<String> listEditions = compositorM.editionListInfo();
         if (!listEditions.isEmpty()) {
+            menu.createNewLine();
             menu.showMessage("Here are the current editions, do you want to see more details or go back?");
             menu.createNewLine();
             menu.menuTrials(listEditions); // 4.3.2.2
@@ -161,8 +178,10 @@ public class CompositorController extends Controller {
                 menu.showListEditionByYear(listEditionsInfo);
             }
 
+        } else {
+            menu.createNewLine();
+            menu.showError("There are no trials. Please create first a trial.");
         }
-        else menu.showMessage("There are no trials. Please create first a trial.");
     }
 
     /**
@@ -171,26 +190,37 @@ public class CompositorController extends Controller {
     private void createEdition() {
         List<String> list = compositorM.trialListNames();
         int editionsYear, numberPlayers, numberTrials;
-        do {
-            editionsYear = menu.askInteger("Enter the edition's year: ");
-            if (compositorM.isCoincident(editionsYear)) menu.errorInput("This year exists, please enter another year.");
-            if (editionsYear < Year.now().getValue()) menu.errorInput("Enter the curremt year or upper (dont repeat existing year editions).");
-        } while (editionsYear < Year.now().getValue() || compositorM.isCoincident(editionsYear));
+        if (list.size() > 0) {
+            do {
+                editionsYear = menu.askInteger("Enter the edition's year: ");
+                if (compositorM.isCoincident(editionsYear)) {
+                    menu.showError("This year exists, please enter another year.");
+                    menu.createNewLine();
+                }
+                if (editionsYear < Year.now().getValue()) {
+                    menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
+                    menu.createNewLine();
+                }
+            } while (editionsYear < Year.now().getValue() || compositorM.isCoincident(editionsYear));
 
-        numberPlayers = (int) askNumber("Enter the initial number of players: ",
+            numberPlayers = (int) askNumber("Enter the initial number of players: ",
                     "Enter a number between 1 and 5 (including both)", 1, 5);
-        numberTrials = (int) askNumber("Enter the number of trials: ",
+            numberTrials = (int) askNumber("Enter the number of trials: ",
                     "Enter a number between 3 and 12 (including both)", 3, 12);
-        menu.createNewLine();
-        menu.menuEditions(list);
-        menu.createNewLine();
+            menu.createNewLine();
+            menu.menuEditions(list);
+            menu.createNewLine();
 
-        list = pickTrials(numberTrials, list, list.size());
+            list = pickTrials(numberTrials, list, list.size());
 
-        compositorM.createEdition(editionsYear, numberPlayers, numberTrials, (ArrayList<String>) list);
+            compositorM.createEdition(editionsYear, numberPlayers, numberTrials, (ArrayList<String>) list);
 
-        menu.createNewLine();
-        menu.showMessage("The edition was created succesfully!");
+            menu.createNewLine();
+            menu.showSuccess("The edition was created succesfully!");
+        } else {
+            menu.showError("To create an edition, first, you must create trials.");
+            menu.createNewLine();
+        }
     }
 
     /**
@@ -221,11 +251,13 @@ public class CompositorController extends Controller {
             menu.showTrialsMenu();
             do {
                 option = menu.askString("Enter an option: ");
-                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e")))
-                    menu.errorInput("Enter a letter.");
+                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e"))) {
+                    menu.showError("Enter a letter.");
+                    menu.createNewLine();
+                }
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e")));
 
-            menu.createNewLine();
+            if (!option.equals("e")) menu.createNewLine();
 
             switch (option) {
                 case "a" -> createTrial();
@@ -252,7 +284,7 @@ public class CompositorController extends Controller {
             case 4 -> enterBudgetRequestInfo();
         }
         menu.createNewLine();
-        menu.showMessage("The trial was created successfully!");
+        menu.showSuccess("The trial was created successfully!");
     }
 
     /**
@@ -315,8 +347,10 @@ public class CompositorController extends Controller {
         String quartile;
         do {
             quartile = menu.askString("Enter the journal’s quartile: ");
-            if (!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"))
-                menu.errorInput("Enter a correct value (Q1, Q2, Q3, Q4).");
+            if (!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4")) {
+                menu.showError("Enter a correct value (Q1, Q2, Q3, Q4).");
+                menu.createNewLine();
+            }
         } while(!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4"));
         return quartile;
     }
@@ -325,7 +359,10 @@ public class CompositorController extends Controller {
         String magazine;
         do {
             magazine = menu.askString(msg);
-            if (magazine.isEmpty()) menu.errorInput(error);
+            if (magazine.isEmpty()) {
+                menu.showError(error);
+                menu.createNewLine();
+            }
         } while(magazine.isEmpty());
         return magazine;
     }
@@ -334,8 +371,14 @@ public class CompositorController extends Controller {
         String trialName;
         do {
             trialName = menu.askString("Enter the trial’s name: ");
-            if (trialName.isEmpty()) menu.errorInput("The trial's name must not be empty!");
-            if (!compositorM.isTrialNameUnique(trialName)) menu.errorInput("This name is already in use.");
+            if (trialName.isEmpty()) {
+                menu.showError("The trial's name must not be empty!");
+                menu.createNewLine();
+            }
+            if (!compositorM.isTrialNameUnique(trialName)) {
+                menu.showError("This name is already in use.");
+                menu.createNewLine();
+            }
         } while(trialName.isEmpty() || !compositorM.isTrialNameUnique(trialName));
         return trialName;
     }
@@ -352,7 +395,10 @@ public class CompositorController extends Controller {
         long num;
         do {
             num = menu.askInteger(msg);
-            if (num < min || num > max) menu.errorInput(errMsg);
+            if (num < min || num > max) {
+                menu.showError(errMsg);
+                menu.createNewLine();
+            }
         } while (num < min || num > max);
         return num;
     }
@@ -364,7 +410,7 @@ public class CompositorController extends Controller {
     private void listTrial() {
         List<String> list = compositorM.trialListInfo();
         if (!list.isEmpty()) menu.showlist(list); // 4.3.1.2
-        else menu.showMessage("There are no trials. Please create first a trial.");
+        else menu.showError("There are no trials. Please create first a trial.");
     }
 
     /**
@@ -382,13 +428,18 @@ public class CompositorController extends Controller {
 
                     boolean deleted = compositorM.deleteTrial(indexTrialToDelete - 1, trialsName);
 
-                    if (deleted) menu.showMessage("The trial was successfully deleted.");
-                    else menu.errorInput("The trial has not been successfully deleted.");
+                    if (deleted) {
+                        menu.createNewLine();
+                        menu.showSuccess("The trial was successfully deleted.");
+                    }
+                    else menu.showError("The trial has not been successfully deleted.");
                 }
-                if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1)
-                    menu.errorInput("Enter a value between 1 and " + (list.size() + 1));
+                if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1) {
+                    menu.showError("Enter a value between 1 and " + (list.size() + 1));
+                    menu.createNewLine();
+                }
             } while (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1);
-        } else menu.showMessage("There are no trials. Please create first a trial.");
+        } else menu.showError("There are no trials. Please create first a trial.");
     }
 
     private void addPlayers() {

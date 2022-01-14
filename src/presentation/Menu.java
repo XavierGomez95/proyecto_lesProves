@@ -1,7 +1,5 @@
 package presentation;
 
-import business.trial.Trial;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -9,17 +7,10 @@ import java.util.Scanner;
 public class Menu {
     private Scanner sc;
 
-    /**
-     * Global variable that stores a code that generates bold letters.
-     */
+
     private static final String TEXT_BOLD = "\033[0;1m";
-    /**
-     * Global variable that stores a code that generates letters in red color.
-     */
     private static final String COLOR_RED = "\u001B[31m";
-    /**
-     * Global variable that stores a code that stops the generation of letters in red color.
-     */
+    private static final String COLOR_GREEN = "\u001B[32m";
     private static final String RESET_COLOR = "\u001B[0m";
 
     /**
@@ -105,7 +96,7 @@ public class Menu {
 
     /**
      * This method request information from the user and return the correct input value (integer data type).
-     * {@link #errorInput(String)}.
+     * {@link #showError(String)}.
      *
      * @param inputOption It is a String variable that we use to ask a user for information.
      * @return A value of primitive type integer entered by the user.
@@ -119,7 +110,7 @@ public class Menu {
                 number = sc.nextInt();
                 return number;
             } catch (InputMismatchException e) {
-                errorInput("Incorrect input! Enter a number.");
+                showError("Incorrect input! Enter a number." + System.lineSeparator());
             } finally {
                 sc.nextLine(); // Remove the \n from the buffer
             }
@@ -128,7 +119,7 @@ public class Menu {
 
     /**
      * This method request information from the user and return the correct input value (String data type).
-     * {@link #errorInput(String)}.
+     * {@link #showError(String)}.
      *
      * @param inputOption It is a String variable that we use to ask a user for information.
      * @return A value of non primitive type String entered by the user.
@@ -142,7 +133,7 @@ public class Menu {
                 answear = sc.nextLine();
                 return answear;
             } catch (InputMismatchException e) {
-                errorInput("Error, incorrect input data.");
+                showError("Error, incorrect input data.");
             }
         }
     }
@@ -152,9 +143,13 @@ public class Menu {
      *
      * @param message String that contains a message to be shown.
      */
-    public void errorInput(String message) {
-        System.out.println(TEXT_BOLD + COLOR_RED + System.lineSeparator() + message
-                + System.lineSeparator() + RESET_COLOR);
+    public void showError(String message) {
+        System.out.println(TEXT_BOLD + COLOR_RED + System.lineSeparator() + message + RESET_COLOR);
+    }
+
+
+    public void showSuccess(String message) {
+        System.out.println(TEXT_BOLD + COLOR_GREEN + message + RESET_COLOR);
     }
 
 
@@ -198,9 +193,15 @@ public class Menu {
     }
 
     public void showlist(List<String> list) {
-        for (String s : list) {
-            System.out.println(s);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+            if (((i + 1) % 3 == 0) && ((i + 1) < list.size())) System.out.println();
         }
+        /*
+        for (String s : list) {
+            System.out.println(s + System.lineSeparator());
+        }
+         */
     }
 
     public void menuEditions(List<String> list) {
