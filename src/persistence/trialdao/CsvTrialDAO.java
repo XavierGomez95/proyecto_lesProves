@@ -67,14 +67,18 @@ public class CsvTrialDAO implements TrialDAO {
     }
 
     private List<Trial> readTrials() {
+        File articleFile = new File(csvArticlePath);
+        File masterFile = new File(csvMasterPath);
+
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
         try {
-
-            scanFile = new Scanner(new File(csvArticlePath));
-            if (!isDirectoryEmpty(new File(csvArticlePath))) {
-                while (scanFile.hasNextLine()) {
-                    trials.add(PublicArticle.fromLine(scanFile.nextLine()));
+            if (articleFile.exists()) {
+                scanFile = new Scanner(articleFile);
+                if (!isDirectoryEmpty(articleFile)) {
+                    while (scanFile.hasNextLine()) {
+                        trials.add(PublicArticle.fromLine(scanFile.nextLine()));
+                    }
                 }
             }
 
