@@ -129,8 +129,8 @@ public class Controller {
      *
      */
     private void exit() {
-        if (!trials.isEmpty()) trialDAO.writeAll(trials);
-        if (!editions.isEmpty()) editionDAO.writeAll(editions);
-        if (!executions.isEmpty()) executionDAO.writeAll(executions);
+        trialDAO.writeAll(trials);
+        editionDAO.writeAll(editions);
+        executionDAO.writeAll(executions);
     }
 }

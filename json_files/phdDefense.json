@@ -1,12 +1,12 @@
 [
   {
-    "studyField": "baby",
-    "difficulty": 24,
-    "name": "gugu"
+    "studyField": "Data Science",
+    "difficulty": 4,
+    "name": "Advances in Provably Dense Superstructures"
   },
   {
-    "studyField": "numbers",
-    "difficulty": 12,
-    "name": "32"
+    "studyField": "Studies",
+    "difficulty": 3,
+    "name": "PHD"
   }
 ]

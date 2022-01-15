@@ -1,34 +1,10 @@
 [
   {
-    "magazineName": "hola",
-    "quartile": "Q3",
-    "acceptanceProbability": 3,
-    "revisionProbability": 4,
-    "rejectionProbability": 5,
-    "name": "Trial1"
-  },
-  {
-    "magazineName": "pepe",
-    "quartile": "Q1",
-    "acceptanceProbability": 123,
-    "revisionProbability": 213,
-    "rejectionProbability": 43,
-    "name": "Trial2"
-  },
-  {
-    "magazineName": "gson",
-    "quartile": "Q1",
-    "acceptanceProbability": 2,
-    "revisionProbability": 3,
-    "rejectionProbability": 3,
-    "name": "Trial3"
-  },
-  {
-    "magazineName": "json",
+    "magazineName": "Observatory Of Programming Developments",
     "quartile": "Q2",
-    "acceptanceProbability": 12,
-    "revisionProbability": 21,
-    "rejectionProbability": 12,
-    "name": "Trial4"
+    "acceptanceProbability": 20,
+    "revisionProbability": 50,
+    "rejectionProbability": 30,
+    "name": "Submitting to OOPD"
   }
 ]

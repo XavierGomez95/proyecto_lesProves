@@ -1,11 +1,9 @@
 package persistence.executionDAO;
 
-import business.Edition;
 import business.Execution;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +18,7 @@ public class CsvExecutionDAO implements ExecutionDAO {
 
     @Override
     public void writeAll(List<Execution> executions) {
+        deleteContent();
         try {
             new FileWriter(csvExecutionPath).close();
         } catch (IOException e) {

@@ -27,8 +27,10 @@ public class CsvEditionDAO implements EditionDAO {
     @Override
     public void writeAll(List<Edition> editions) {
         deleteContent();
-        for (Edition e : editions) {
-            writeEdition(e);
+        if (!editions.isEmpty()) {
+            for (Edition e : editions) {
+                writeEdition(e);
+            }
         }
     }
 

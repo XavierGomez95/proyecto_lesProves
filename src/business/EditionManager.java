@@ -58,13 +58,12 @@ public class EditionManager {
         int currentPosition = 0;
 
         for (int j = 0; j < editions.size(); j++) {
-            // if (cont == i) list = editions.get(j).listInfo(list);
             if (currentPosition == index) {
                 list.addAll(editions.get(j).listInfo());
                 List<String> trials = editions.get(j).listTrials();
                 for (String s : trials) {
-                    String name = s.split(" ")[1];
-                    Trial trial = trialManager.getByName(name);
+                    String name = s.substring(4);
+                    Trial trial = trialManager.getByName(name.split(",")[0]);
 
                     list.add(s + trial.getType());
 

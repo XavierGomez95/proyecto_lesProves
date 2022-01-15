@@ -1,8 +1,8 @@
 [
   {
-    "masterName": "home",
-    "numCredits": 34,
-    "probability": 21,
-    "name": "TrialMaster"
+    "masterName": "Master in High Performance Web Programming",
+    "numCredits": 60,
+    "probability": 40,
+    "name": "Studying the MPWAR"
   }
 ]

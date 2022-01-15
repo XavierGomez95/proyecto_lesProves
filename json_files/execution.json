@@ -1,0 +1,32 @@
+[
+  {
+    "year": 2022,
+    "currentTrialExecution": 0,
+    "players": [
+      {
+        "name": "Manolo",
+        "pi": 5,
+        "alive": true,
+        "type": "engineer"
+      },
+      {
+        "name": "Pepe",
+        "pi": 5,
+        "alive": true,
+        "type": "engineer"
+      },
+      {
+        "name": "Nina",
+        "pi": 5,
+        "alive": true,
+        "type": "engineer"
+      },
+      {
+        "name": "Salma",
+        "pi": 5,
+        "alive": true,
+        "type": "engineer"
+      }
+    ]
+  }
+]

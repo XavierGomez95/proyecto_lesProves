@@ -27,17 +27,18 @@ public class JsonExecutionDAO implements ExecutionDAO {
         JsonArray arrayExecution = new JsonArray();
 
         Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
-
-        for (Execution execution : executions) {
-            checkFile();
-            JsonObject jsonObject = JsonParser.parseString(gson.toJson(execution)).getAsJsonObject();
-            arrayExecution.add(jsonObject);
-        }
-        try {
-            OutputStream osArticle = new FileOutputStream(jsonExecutionPath);
-            osArticle.write(gsonBuild.toJson(arrayExecution).getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!executions.isEmpty()) {
+            for (Execution execution : executions) {
+                checkFile();
+                JsonObject jsonObject = JsonParser.parseString(gson.toJson(execution)).getAsJsonObject();
+                arrayExecution.add(jsonObject);
+            }
+            try {
+                OutputStream osArticle = new FileOutputStream(jsonExecutionPath);
+                osArticle.write(gsonBuild.toJson(arrayExecution).getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

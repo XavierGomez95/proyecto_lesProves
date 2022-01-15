@@ -26,29 +26,28 @@ public class CsvTrialDAO implements TrialDAO {
     public void writeAll(List<Trial> trials) {
         //primero vaciamos los 4 files
         try {
-            new FileWriter(csvArticlePath).close();//para borrar content
-            new FileWriter(csvMasterPath).close();//para borrar content
-            new FileWriter(csvPHDPath).close();//para borrar content
-            new FileWriter(csvBudgetPath).close();//para borrar content
+            new FileWriter(csvArticlePath).close();
+            new FileWriter(csvMasterPath).close();
+            new FileWriter(csvPHDPath).close();
+            new FileWriter(csvBudgetPath).close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        for (Trial t : trials) {
-            writeTrial(t);
+        if (!trials.isEmpty()) {
+            for (Trial t : trials) {
+                writeTrial(t);
+            }
         }
-
-
     }
 
     private void writeTrial(Trial t) {
         if (t instanceof PublicArticle) {
             writeLine(csvArticlePath, t);
-        } else if (t instanceof StudyMaster) { // Casteo el t para usar las funcionas abstractas para el write
+        } else if (t instanceof StudyMaster) {
             writeLine(csvMasterPath, t);
-        } else if (t instanceof PhDefense phDefense) { // Casteo el t para usar las funcionas abstractas para el write
+        } else if (t instanceof PhDefense) {
             writeLine(csvPHDPath, t);
-        } else if (t instanceof BudgedRequest budgedRequest) { // Casteo el t para usar las funcionas abstractas para el write
+        } else if (t instanceof BudgedRequest) {
             writeLine(csvBudgetPath, t);
         }
     }
@@ -67,11 +66,10 @@ public class CsvTrialDAO implements TrialDAO {
     }
 
     private List<Trial> readTrials() {
-        File articleFile = new File(csvArticlePath);
-        File masterFile = new File(csvMasterPath);
-
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
+
+        File articleFile = new File(csvArticlePath);
         try {
             if (articleFile.exists()) {
                 scanFile = new Scanner(articleFile);
@@ -82,28 +80,35 @@ public class CsvTrialDAO implements TrialDAO {
                 }
             }
 
-            scanFile = new Scanner(new File(csvMasterPath));
-            if (!isDirectoryEmpty(new File(csvMasterPath))) {
-                while (scanFile.hasNextLine()) {
-                    trials.add(StudyMaster.fromLine(scanFile.nextLine()));
+            File masterFile = new File(csvMasterPath);
+            scanFile = new Scanner(masterFile);
+            if (masterFile.exists()) {
+                if (!isDirectoryEmpty(masterFile)) {
+                    while (scanFile.hasNextLine()) {
+                        trials.add(StudyMaster.fromLine(scanFile.nextLine()));
+                    }
                 }
             }
 
-            scanFile = new Scanner(new File(csvPHDPath));
-            if (!isDirectoryEmpty(new File(csvPHDPath))) {
-                while (scanFile.hasNextLine()) {
-                    trials.add(PhDefense.fromLine(scanFile.nextLine()));
+            File phdFile = new File(csvPHDPath);
+            scanFile = new Scanner(phdFile);
+            if (phdFile.exists()) {
+                if (!isDirectoryEmpty(phdFile)) {
+                    while (scanFile.hasNextLine()) {
+                        trials.add(PhDefense.fromLine(scanFile.nextLine()));
+                    }
                 }
             }
 
-            scanFile = new Scanner(new File(csvBudgetPath));
-            if (!isDirectoryEmpty(new File(csvBudgetPath))) {
-                while (scanFile.hasNextLine()) {
-                    trials.add(BudgedRequest.fromLine(scanFile.nextLine()));
+            File budgetFile = new File(csvBudgetPath);
+            scanFile = new Scanner(budgetFile);
+            if (budgetFile.exists()) {
+                if (!isDirectoryEmpty(budgetFile)) {
+                    while (scanFile.hasNextLine()) {
+                        trials.add(BudgedRequest.fromLine(scanFile.nextLine()));
+                    }
                 }
             }
-
-            scanFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -122,15 +127,6 @@ public class CsvTrialDAO implements TrialDAO {
             e.printStackTrace();
         }
         return true;
-    }
-
-    private List<Trial> readLinesTrial(Scanner scanFile, List<Trial> trials) {
-        while (scanFile.hasNextLine()) {
-
-            trials.add(PublicArticle.fromLine(scanFile.nextLine()));//no sirve sino se tiene que comprobar el path y es mas lio
-
-        }
-        return trials;
     }
 
     private void writeLine(String path, Trial t) {

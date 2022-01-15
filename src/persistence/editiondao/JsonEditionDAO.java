@@ -42,17 +42,18 @@ public class JsonEditionDAO implements EditionDAO {
         JsonArray arrayEdition = new JsonArray();
 
         Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
-
-        for (Edition edition : editions) {
-            checkFile();
-            JsonObject jsonObject = JsonParser.parseString(gson.toJson(edition)).getAsJsonObject();
-            arrayEdition.add(jsonObject);
-        }
-        try {
-            OutputStream osArticle = new FileOutputStream(jsonEditionPath);
-            osArticle.write(gsonBuild.toJson(arrayEdition).getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!editions.isEmpty()) {
+            for (Edition edition : editions) {
+                checkFile();
+                JsonObject jsonObject = JsonParser.parseString(gson.toJson(edition)).getAsJsonObject();
+                arrayEdition.add(jsonObject);
+            }
+            try {
+                OutputStream osArticle = new FileOutputStream(jsonEditionPath);
+                osArticle.write(gsonBuild.toJson(arrayEdition).getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
