@@ -1,6 +1,7 @@
 package business.player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Player {
@@ -9,9 +10,9 @@ public class Player {
     private boolean alive;
     private String type;
 
-    public Player(String name, int pi) {
+    public Player(String name) {
         this.name = name;
-        this.pi = pi;
+        this.pi = 5;
         this.alive = true;
         this.type = "engineer";
     }
@@ -21,6 +22,14 @@ public class Player {
         this.pi = pi;
         this.alive = alive;
         this.type = type;
+    }
+
+    public static ArrayList<Player> createNewPlayers(List<String> names) {
+        ArrayList<Player> players = new ArrayList<>();
+        for (String name : names) {
+            players.add(new Player(name));
+        }
+        return players;
     }
 
     public void subtractPoints(int points) {

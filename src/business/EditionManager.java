@@ -138,4 +138,19 @@ public class EditionManager {
         }
         return exist;
     }
+
+    /**
+     * @return players number of current edition
+     */
+    public int checkNumPlayers() {
+        int numPlayers = 0;
+        for (Edition e : editions) {
+            if (e.isYearCoincident(Year.now().getValue())) {
+                numPlayers = e.getNumPlayers();
+            }
+
+        }
+        return numPlayers;
+
+    }
 }

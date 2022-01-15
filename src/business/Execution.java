@@ -7,18 +7,28 @@ import java.util.List;
 
 public class Execution {
     private int year;
-    private int currentExecution;
+    private int currentTrialExecution;
     private ArrayList<Player> players;
 
-    public Execution(int year, int currentExecution, ArrayList<Player> players) {
+    public Execution(int year, int currentTrialExecution, ArrayList<Player> players) {
         this.year = year;
-        this.currentExecution = currentExecution;
+        this.currentTrialExecution = currentTrialExecution;
         this.players = players;
+    }
+    public Execution(int year) {
+        this.year = year;
+    }
+    public void createPlayers(List<String> names) {
+        players=Player.createNewPlayers(names);
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(year).append(",").append(currentExecution).append(",[");
+        sb.append(year).append(",").append(currentTrialExecution).append(",[");
         for (int i = 0; i < players.size(); i++) {
             if (i == 0) {
                 sb.append(players.get(i).getInfo());

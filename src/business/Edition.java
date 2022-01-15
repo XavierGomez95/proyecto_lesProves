@@ -60,6 +60,10 @@ public class Edition {
         return nameTrials;
     }
 
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
     /**
      * @return String line with all data of Edition to save in CSV
      */

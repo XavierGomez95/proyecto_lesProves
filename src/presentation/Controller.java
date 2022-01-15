@@ -112,13 +112,13 @@ public class Controller {
      */
     private void selectRole(String roleFormat) {
         switch (roleFormat) {
-            case "A" -> {//porque pasas por param los lists y menu si los tienes en protected?
+            case "A" -> {
                 CompositorController compositorController = new CompositorController(this.menu, trials, editions);
                 compositorController.run();
                 exit();
             }
-            case "B" -> {//porque pasas por param los lists y menu si los tienes en protected?
-                ConductorController conductorController = new ConductorController(this.menu, trials, editions);
+            case "B" -> {
+                ConductorController conductorController = new ConductorController(this.menu, trials, editions, executions);
                 conductorController.run();
                 exit();
             }

@@ -117,13 +117,13 @@ public class Menu {
      * @return A value of non primitive type String entered by the user.
      */
     public String askString(String inputOption) {
-        String answear;
+        String answer;
 
         while (true) {
             try {
                 System.out.print(inputOption);
-                answear = sc.nextLine();
-                return answear;
+                answer = sc.nextLine();
+                return answer;
             } catch (InputMismatchException e) {
                 showError("Error, incorrect input data.");
             }
