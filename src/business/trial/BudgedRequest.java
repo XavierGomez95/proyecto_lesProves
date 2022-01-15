@@ -16,12 +16,10 @@ public class BudgedRequest extends Trial {
     }
 
     @Override
-    public List<String> listInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + getType());
-        list.add("Entity: " + entityName);
-        list.add("Budget: " + amount + " €");
-        return list;
+    public String listInfo() {
+        return new StringBuilder("Trial: ").append(name).append(getType()).append(System.lineSeparator())
+                .append("Entity: ").append(entityName).append(System.lineSeparator())
+                .append("Budget: ").append(amount).append(" €").append(System.lineSeparator()).toString();
     }
 
     @Override

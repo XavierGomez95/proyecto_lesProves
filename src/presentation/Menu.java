@@ -25,65 +25,66 @@ public class Menu {
      * This method is called to show the format menu options on the screen.
      */
     public void showFormatMenu() { // 4.1
-        System.out.println(System.lineSeparator() +
-                "I) People’s Front of Engineering (CSV)" + System.lineSeparator() +
-                "II) Engineering People’s Front (JSON)" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append("\t").append("I) People’s Front of Engineering (CSV)").append(System.lineSeparator())
+                .append("\t").append("II) Engineering People’s Front (JSON)").append(System.lineSeparator()));
     }
 
     /**
      * This method is called to show the role menu options on the screen.
      */
     public void showRoleMenu() { // 4.2
-        System.out.println(System.lineSeparator() +
-                "A) The Composer" + System.lineSeparator() +
-                "B) This year’s Conductor" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append("\t").append("A) The Composer").append(System.lineSeparator())
+                .append("\t").append("B) This year’s Conductor").append(System.lineSeparator()));
     }
 
     /**
      * This method is called to show the manager menu options on the screen.
      */
     public void showManagerMenu() { // 4.3
-        System.out.println(System.lineSeparator() +
-                "1) Manage Trials" + System.lineSeparator() +
-                "2) Manage Editions" + System.lineSeparator() +
-                System.lineSeparator() +
-                "3) Exit" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append("\t").append("1) Manage Trials").append(System.lineSeparator())
+                .append("\t").append("2) Manage Editions").append(System.lineSeparator())
+                .append(System.lineSeparator())
+                .append("\t").append("3) Exit").append(System.lineSeparator()));
     }
 
     /**
      * This method is called to show the trial menu options on the screen.
      */
     public void showTrialsMenu() { // 4.3.1
-        System.out.println(System.lineSeparator() +
-                "a) Create Trial" + System.lineSeparator() +
-                "b) List Trials" + System.lineSeparator() +
-                "c) Delete Trial" + System.lineSeparator() +
-                System.lineSeparator() +
-                "e) Back" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append("\t").append("a) Create Trial").append(System.lineSeparator())
+                .append("\t").append("b) List Trials").append(System.lineSeparator())
+                .append("\t").append("c) Delete Trial").append(System.lineSeparator())
+                .append(System.lineSeparator())
+                .append("\t").append("d) Back").append(System.lineSeparator()));
     }
 
     /**
      * This method is called to show the editions menu options on the screen.
      */
     public void showEditionsMenu() { // 4.3.2
-        System.out.println(System.lineSeparator() +
-                "a) Create Edition" + System.lineSeparator() +
-                "b) List Editions" + System.lineSeparator() +
-                "c) Duplicate Edition" + System.lineSeparator() +
-                "d) Delete Edition" + System.lineSeparator() +
-                System.lineSeparator() +
-                "e) Back" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append("\t").append("a) Create Edition").append(System.lineSeparator())
+                .append("\t").append("b) List Editions").append(System.lineSeparator())
+                .append("\t").append("c) Duplicate Edition").append(System.lineSeparator())
+                .append("\t").append("d) Delete Edition").append(System.lineSeparator())
+                .append(System.lineSeparator())
+                .append("\t").append("e) Back").append(System.lineSeparator()));
     }
 
     /**
      *
      */
     public void showTrialTypesMenu() { // 4.3.1.1
-        System.out.println("--- Trial types ---" + System.lineSeparator() +
-                " 1) Paper publication" + System.lineSeparator() +
-                " 2) Master studies" + System.lineSeparator() +
-                " 3) Doctoral thesis defense" + System.lineSeparator() +
-                " 4) Budget request" + System.lineSeparator());
+        System.out.println(new StringBuilder("\t").append("--- Trial types ---").append(System.lineSeparator())
+                .append(System.lineSeparator())
+                .append("\t").append(" 1) Paper publication").append(System.lineSeparator())
+                .append("\t").append(" 2) Master studies").append(System.lineSeparator())
+                .append("\t").append(" 3) Doctoral thesis defense").append(System.lineSeparator())
+                .append("\t").append(" 4) Budget request").append(System.lineSeparator()));
     }
 
     /**
@@ -102,7 +103,7 @@ public class Menu {
                 number = sc.nextInt();
                 return number;
             } catch (InputMismatchException e) {
-                showError("Incorrect input! Enter a number." + System.lineSeparator());
+                showError(new StringBuilder("Incorrect input! Enter a number.").append(System.lineSeparator()).toString());
             } finally {
                 sc.nextLine(); // Remove the \n from the buffer
             }
@@ -146,12 +147,12 @@ public class Menu {
 
 
     public void showTittle() {
-        System.out.println(System.lineSeparator() +
-                " _____ _             _____      _       _" + System.lineSeparator() +
-                "/__   \\ |__   ___   /__   \\_ __(_) __ _| |___" + System.lineSeparator() +
-                "  / /\\/ '_ \\ / _ \\    / /\\/ '__| |/ _` | / __|" + System.lineSeparator() +
-                " / /  | | | | ___/   / /  | |  | | (_| | \\__ \\" + System.lineSeparator() +
-                " \\/   |_| |_|\\___|   \\/   |_|  |_|\\__,_|_|___/" + System.lineSeparator());
+        System.out.println(new StringBuilder(System.lineSeparator())
+                .append(" _____ _             _____      _       _").append(System.lineSeparator())
+                .append("/__   \\ |__   ___   /__   \\_ __(_) __ _| |___").append(System.lineSeparator())
+                .append("  / /\\/ '_ \\ / _ \\    / /\\/ '__| |/ _` | / __|").append(System.lineSeparator())
+                .append(" / /  | | | | ___/   / /  | |  | | (_| | \\__ \\").append(System.lineSeparator())
+                .append(" \\/   |_| |_|\\___|   \\/   |_|  |_|\\__,_|_|___/").append(System.lineSeparator()));
     }
 
 
@@ -178,29 +179,29 @@ public class Menu {
     public void menuTrials(List<String> list) {
         int max = list.size();
         for (int i = 0; i < max; i++) {
-            System.out.println(i + 1 + ") " + list.get(i));
+            System.out.println(new StringBuilder("\t" + (i + 1)).append(") ").append(list.get(i)));
         }
         System.out.println();
-        System.out.println(max + 1 + ") Back" + System.lineSeparator());
+        System.out.println(new StringBuilder("\t" + (max + 1)).append(") Back").append(System.lineSeparator()));
     }
-
-    public void showlist(List<String> list) {
+/*
+    public void showList(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
-            if (((i + 1) % 3 == 0) && ((i + 1) < list.size())) System.out.println();
+            //if (((i + 1) % 3 == 0) && ((i + 1) < list.size())) System.out.println(); // Si sobra tiempo corregir esta chapuza
         }
         /*
         for (String s : list) {
             System.out.println(s + System.lineSeparator());
         }
-         */
     }
+ */
 
     public void menuEditions(List<String> list) {
         int max = list.size();
         System.out.println("\t--- Trials ---" + System.lineSeparator());
         for (int i = 0; i < max; i++) {
-            System.out.println("\t" + (i + 1) + ") " + list.get(i));
+            System.out.println(new StringBuilder("\t" + (i + 1)).append(") ").append(list.get(i)));
         }
     }
 

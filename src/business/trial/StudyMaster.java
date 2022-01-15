@@ -17,13 +17,12 @@ public class StudyMaster extends Trial {
 
 
     @Override
-    public List<String> listInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + getType());
-        list.add("Master: " + masterName);
-        list.add("ECTS: " + numCredits + " with a " + probability + "% chance to pass each one");
-
-        return list;
+    public String listInfo() {
+        return new StringBuilder("Trial: ").append(name).append(getType()).append(System.lineSeparator())
+                .append("Master: Master in ").append(masterName).append(System.lineSeparator())
+                .append("ECTS: ").append(numCredits).append(" with a ").append(probability)
+                .append("% chance to pass each one").append(System.lineSeparator()).toString();
+        //return list;
     }
 
     @Override

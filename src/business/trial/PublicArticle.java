@@ -23,13 +23,11 @@ public class PublicArticle extends Trial {
     }
 
     @Override
-    public List<String> listInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + " (Paper publication)");
-        list.add("Journal: " + magazineName + " (" + quartile + ")");
-        list.add("Chances: " + acceptanceProbability + "% acceptance, " + revisionProbability + "% revision, " + rejectionProbability + "% rejection");
-
-        return list;
+    public String listInfo() {
+        return new StringBuilder("Trial: ").append(name).append(" (Paper publication)").append(System.lineSeparator())
+                .append("Journal: ").append(magazineName).append(" (").append(quartile).append(")").append(System.lineSeparator())
+                .append("Chances: ").append(acceptanceProbability).append("% acceptance, ").append(revisionProbability)
+                .append("% revision, ").append(rejectionProbability).append("% rejection").append(System.lineSeparator()).toString();
     }
 
     @Override

@@ -37,7 +37,7 @@ public abstract class Trial {
         return name;
     }
 
-    public abstract List<String> listInfo();
+    public abstract String listInfo();
 
     public String getName() {
         return name;

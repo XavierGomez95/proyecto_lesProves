@@ -50,15 +50,16 @@ public class EditionManager {
     }
 
     /**
-     * @param i
+     * @param index
      * @return
      */
-    public List<String> getYearEditionInfo(int i, TrialManager trialManager) {
+    public List<String> getYearEditionInfo(int index, TrialManager trialManager) {
         List<String> list = new ArrayList<>();
-        int cont = 0;
+        int currentPosition = 0;
+
         for (int j = 0; j < editions.size(); j++) {
             // if (cont == i) list = editions.get(j).listInfo(list);
-            if (cont == i) {
+            if (currentPosition == index) {
                 list.addAll(editions.get(j).listInfo());
                 List<String> trials = editions.get(j).listTrials();
                 for (String s : trials) {
@@ -69,7 +70,7 @@ public class EditionManager {
 
                 }
             }
-            cont++;
+            currentPosition++;
         }
 
         return list;

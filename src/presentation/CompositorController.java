@@ -189,6 +189,7 @@ public class CompositorController {
         int editionsYear, numberPlayers, numberTrials;
         if (list.size() > 0) {
             do {
+                menu.createNewLine();
                 editionsYear = menu.askInteger("Enter the edition's year: ");
                 if (editionManager.isCoincident(editionsYear)) {
                     menu.showError("This year exists, please enter another year.");
@@ -246,20 +247,20 @@ public class CompositorController {
             menu.showTrialsMenu();
             do {
                 option = menu.askString("Enter an option: ");
-                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e"))) {
+                if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d"))) {
                     menu.showError("Enter a letter.");
                     menu.createNewLine();
                 }
-            } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("e")));
+            } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d")));
 
-            if (!option.equals("e")) menu.createNewLine();
+            if (!option.equals("d")) menu.createNewLine();
 
             switch (option) {
                 case "a" -> createTrial();
                 case "b" -> listTrial();
                 case "c" -> deleteTrial();
             }
-        } while (!(option.equals("e")));
+        } while (!(option.equals("d")));
         return option;
     }
 
@@ -272,6 +273,7 @@ public class CompositorController {
         menu.showTrialTypesMenu();
         option = (int) askNumber("Enter an option: ",
                 "Enter a number between 1 and 4 (including both).", 1, 4);
+        menu.createNewLine();
         switch (option) {
             case 1 -> enterArticleInfo();
             case 2 -> enterMasterInfo();
@@ -403,9 +405,34 @@ public class CompositorController {
      *
      */
     private void listTrial() {
-        List<String> list = trialManager.trialListInfo();
-        if (!list.isEmpty()) menu.showlist(list); // 4.3.1.2
-        else menu.showError("There are no trials. Please create first a trial.");
+        int inputOption, backOption;
+
+        menu.showMessage("Here are the current trials, do you want to see more details or go back?");
+        menu.createNewLine();
+
+        List<String> listNames = trialManager.trialListNames();
+
+        backOption = listNames.size() + 1;
+
+        if (!listNames.isEmpty()) {
+            menu.menuTrials(listNames);
+
+            do {
+                inputOption = (int) askNumber("Enter an option: ",  new StringBuilder("Incorrect input. Enter a number between ")
+                        .append(1).append(" and ").append(backOption).toString(), 1, backOption);
+            } while (inputOption > backOption || inputOption < 1);
+            if (inputOption != backOption) menu.createNewLine();
+
+
+
+            // ¡¡¡AQUI ES DONDE HE DE HACER EL FILTRO SOLO PARA MOSTRAR LA INFORMACION DE LA OPCION SELECCIONADA!!!
+
+            if (inputOption != backOption) {
+                String info = trialManager.trialStringInfo(inputOption - 1);
+                if (!info.isEmpty()) menu.showMessage(info); // 4.3.1.2
+                else menu.showError("There are no trials. Please create first a trial.");
+            }
+        }
     }
 
     /**
@@ -414,11 +441,16 @@ public class CompositorController {
     private void deleteTrial() {
         int indexTrialToDelete;
         List<String> list = trialManager.trialListNames();
+
+        menu.showMessage("Which trial do you want to delete?");
+        menu.createNewLine();
+
         if (!list.isEmpty()) {
             menu.menuTrials(list); // 4.3.1.3
             do {
                 indexTrialToDelete = menu.askInteger("Enter an option: ");
                 if (indexTrialToDelete <= list.size() && indexTrialToDelete > 0) {
+                    menu.createNewLine();
                     String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
                     if (editionManager.dependentTrial(trialsName)) {
                         menu.showError("The trial cannot be deleted because one edition depends on it.");

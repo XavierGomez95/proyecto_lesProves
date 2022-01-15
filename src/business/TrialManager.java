@@ -100,10 +100,13 @@ public class TrialManager {
     /**
      * @return
      */
-    public List<String> trialListInfo() {
-        List<String> list = new ArrayList<>();
-        for (Trial t : trials) {
-            list.addAll(t.listInfo());
+    public String trialStringInfo(int index) {
+        String list = "";
+
+        int len = trials.size();
+        for (int i = 0; i < len; i++) {
+            if (index == i) list = trials.get(i).listInfo();
+            //list.addAll(t.listInfo());
         }
         return list;
     }

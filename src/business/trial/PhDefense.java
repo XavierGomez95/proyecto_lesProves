@@ -15,13 +15,10 @@ public class PhDefense extends Trial {
 
 
     @Override
-    public List<String> listInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("Trial: " + name + getType());
-        list.add("Field: " + studyField);
-        list.add("Difficulty: " + difficulty);
-
-        return list;
+    public String listInfo() {
+        return new StringBuilder("Trial: ").append(name).append(getType()).append(System.lineSeparator())
+                .append("Field: ").append(studyField).append(System.lineSeparator())
+                .append("Difficulty: ").append(difficulty).append(System.lineSeparator()).toString();
     }
 
     @Override
