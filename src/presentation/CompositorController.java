@@ -109,7 +109,10 @@ public class CompositorController {
 
                 if (deleted) {
                     menu.createNewLine();
-                    menu.showSuccess("The edition was succesfully deleted!");
+                    menu.showSuccess("The edition was successfully deleted!");
+                } else {
+                    menu.createNewLine();
+                    menu.showSuccess("The edition has not been deleted!");
                 }
             }
         }
@@ -174,7 +177,6 @@ public class CompositorController {
                 menu.createNewLine();
                 menu.showListEditionByYear(listEditionsInfo);
             }
-
         } else {
             menu.createNewLine();
             menu.showError("There are no trials. Please create first a trial.");
@@ -188,8 +190,8 @@ public class CompositorController {
         List<String> list = trialManager.trialListNames();
         int editionsYear, numberPlayers, numberTrials;
         if (list.size() > 0) {
+            menu.createNewLine();
             do {
-                menu.createNewLine();
                 editionsYear = menu.askInteger("Enter the edition's year: ");
                 if (editionManager.isCoincident(editionsYear)) {
                     menu.showError("This year exists, please enter another year.");

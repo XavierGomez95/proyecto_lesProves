@@ -57,7 +57,8 @@ public class EditionManager {
         List<String> list = new ArrayList<>();
         int currentPosition = 0;
 
-        for (int j = 0; j < editions.size(); j++) {
+        int Size = editions.size();
+        for (int j = 0; j < Size; j++) {
             if (currentPosition == index) {
                 list.addAll(editions.get(j).listInfo());
                 List<String> trials = editions.get(j).listTrials();

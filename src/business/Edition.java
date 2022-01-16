@@ -23,8 +23,8 @@ public class Edition {
      */
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
-        list.add("Year: " + year);
-        list.add("Players: " + numPlayers);
+        list.add(new StringBuilder("Year: ").append(year).toString());
+        list.add(new StringBuilder("Players: ").append(numPlayers).toString());
         list.add("Trials:");
 
         return list;
@@ -33,7 +33,7 @@ public class Edition {
     public List<String> listTrials() {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < numTrials; i++) {
-            list.add("\t" + (i + 1) + "- " + nameTrials.get(i));
+            list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).toString());
         }
         return list;
     }
@@ -42,7 +42,7 @@ public class Edition {
      * @return
      */
     public String getYear() {
-        return "The trials " + this.year;
+        return new StringBuilder("The trials ").append(this.year).toString();
     }
 
     /**
