@@ -1,7 +1,7 @@
 package business.trial;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class StudyMaster extends Trial {
     private String masterName;
@@ -15,6 +15,16 @@ public class StudyMaster extends Trial {
         this.probability = probability;
     }
 
+
+    public boolean execute() {
+        int approvedCredits = 0;
+        for (int i = 0; i < numCredits; i++) {
+            Random rand = new Random();
+            //if inventado, checkear que no la lie
+            if (rand.nextInt(100) <= probability) approvedCredits++;
+        }
+        return approvedCredits > (numCredits / 2);
+    }
 
     @Override
     public String listInfo() {

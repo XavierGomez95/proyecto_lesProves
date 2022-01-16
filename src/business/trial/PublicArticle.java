@@ -1,9 +1,6 @@
 package business.trial;
 
-import business.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 public class PublicArticle extends Trial {
     private String magazineName;
@@ -20,6 +17,16 @@ public class PublicArticle extends Trial {
         this.acceptanceProbability = acceptanceProbability;
         this.revisionProbability = revisionProbability;
         this.rejectionProbability = rejectionProbability;
+    }
+
+
+    public boolean execute() {
+        boolean done = false;
+        Random rand = new Random();
+        if (rand.nextInt(100) <= acceptanceProbability) {//comparar con rejection probability? 3 if?
+            done = true;
+        }
+        return done;
     }
 
     @Override

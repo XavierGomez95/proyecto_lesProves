@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Player {
+public class Player{
     private String name;
     private int pi;
     private boolean alive;

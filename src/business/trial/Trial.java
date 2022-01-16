@@ -2,7 +2,6 @@ package business.trial;
 
 import business.player.Player;
 
-import java.util.List;
 
 public abstract class Trial {
     protected String name;
@@ -10,21 +9,8 @@ public abstract class Trial {
     public Trial(String name) {
         this.name = name;
     }
-/*
-    public List listTrials () {
 
-        return ;
-    }
 
-    public boolean deleteTrial () {
-
-        return ;
-    }
- */
-
-    public void createTrial() {
-
-    }
 
     public void incrementPoints() {
 

@@ -1,10 +1,5 @@
 package business.trial;
 
-import business.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class BudgedRequest extends Trial {
     private String entityName;
     private long amount;
@@ -13,6 +8,11 @@ public class BudgedRequest extends Trial {
         super(name);
         this.entityName = entityName;
         this.amount = amount;
+    }
+
+
+    public void execute() {
+        //pag 9 logaritmo en base de todos los PI de los players sumados
     }
 
     @Override

@@ -1,8 +1,5 @@
 package business.trial;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PhDefense extends Trial {
     private String studyField;
     private int difficulty;
@@ -13,6 +10,10 @@ public class PhDefense extends Trial {
         this.difficulty = difficulty;
     }
 
+
+    public void execute(int pi) {
+        //pagina 8 pdf sumatorio raro, mi no entender
+    }
 
     @Override
     public String listInfo() {
