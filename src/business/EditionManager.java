@@ -61,12 +61,13 @@ public class EditionManager {
         for (int j = 0; j < Size; j++) {
             if (currentPosition == index) {
                 list.addAll(editions.get(j).listInfo());
-                List<String> trials = editions.get(j).listTrials();
-                for (String s : trials) {
-                    String name = s.substring(4);
-                    Trial trial = trialManager.getByName(name.split(",")[0]);
+                List<String> nameTrials = editions.get(j).listTrials();
+                for (int i = 0; i < nameTrials.size(); i++) {
+                    Trial trial = trialManager.getByName(nameTrials.get(i).split(",")[0]);
+                    list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
+                    //  list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
 
-                    list.add(s + trial.getType());
+                    // list.add(nameTrials.get(i)  + trial.getType());
 
                 }
             }

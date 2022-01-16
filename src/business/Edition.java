@@ -32,9 +32,13 @@ public class Edition {
 
     public List<String> listTrials() {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < numTrials; i++) {
-            list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).toString());
-        }
+       // for (int i = 0; i < numTrials; i++) {
+            for (String nameTrial:nameTrials) {
+                list.add(nameTrial);
+            }
+
+        //    list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).toString());
+       // }
         return list;
     }
 
