@@ -42,7 +42,7 @@ public class ExecutionManager {
         //llama a x threads dependiendo de los players , falta saber como averigua que player es cada uno para puntuar
         List<Thread> list = new ArrayList<>();
         for (int i = 0; i < players.size(); i++) {
-            System.out.println(i + "num players:" + players.size());
+            System.out.println(i + "num players:" + players.size()); // TEMPORAL
             Thread thread = new Thread(new Work(players.get(i), t));
             list.add(thread);
             thread.start();

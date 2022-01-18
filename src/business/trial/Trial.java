@@ -10,8 +10,6 @@ public abstract class Trial {
         this.name = name;
     }
 
-
-
     public void incrementPoints() {
 
     }

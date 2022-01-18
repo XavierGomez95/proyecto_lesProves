@@ -333,12 +333,15 @@ public class CompositorController {
         String magazinesName = askTypeTrialName("Enter the journal’s name: ",
                 "The magazine's name must not be empty!");
         String quartile = askQuartile();
+        int max = 100;
         acceptanceProbability = (int) askNumber("Enter the acceptance probability: ",
-                "Enter a correct value between 0 and 100 (including both)", 0, 100);
+                "Enter a correct value between 0 and " + max + " (including both)", 0, max);
+        max = 100 - acceptanceProbability;
         revisionProbability = (int) askNumber("Enter the revision probability: ",
-                "Enter a correct value between 0 and 100 (including both)", 0, 100);
+                "Enter a correct value between 0 and " + max + " (including both)", 0, max);
+        max = 100 - acceptanceProbability - revisionProbability;
         rejectionProbability = (int) askNumber("Enter the rejection probability: ",
-                "Enter a correct value between 0 and 100 (including both)", 0, 100);
+                "Enter a correct value between 0 and " + max +" (including both)", 0, max);
         trialManager.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
@@ -394,7 +397,8 @@ public class CompositorController {
         do {
             num = menu.askInteger(msg);
             if (num < min || num > max) {
-                menu.showError(errMsg);
+                if (max > 0) menu.showError(errMsg);
+                else menu.showMessage("The probability must be 0.");
                 menu.createNewLine();
             }
         } while (num < min || num > max);

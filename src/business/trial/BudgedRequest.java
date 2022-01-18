@@ -11,9 +11,11 @@ public class BudgedRequest extends Trial {
     }
 
 
-    public void execute() {
+/*
+    public boolean calculateFormula() {
         //pag 9 logaritmo en base de todos los PI de los players sumados
     }
+ */
 
     @Override
     public String listInfo() {

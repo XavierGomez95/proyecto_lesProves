@@ -8,6 +8,8 @@ import java.util.List;
 public class TrialManager {
     private List<Trial> trials;
 
+
+
     public TrialManager(List<Trial> trials) {
         this.trials = trials;
     }

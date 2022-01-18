@@ -20,13 +20,19 @@ public class PublicArticle extends Trial {
     }
 
 
-    public boolean execute() {
-        boolean done = false;
-        Random rand = new Random();
-        if (rand.nextInt(100) <= acceptanceProbability) {//comparar con rejection probability? 3 if?
-            done = true;
-        }
-        return done;
+    // TEMPORAL
+    public boolean isArticlePublished() {
+        return (new Random().nextInt(100) <= acceptanceProbability);
+    }
+
+    // TEMPORAL
+    public boolean isReviewAccepted (boolean testPassed) { // Llamada al metodo: if (!isTestPassed) bool = isReviewAccepted(isTestPassed);
+        return (new Random().nextInt(100) <= revisionProbability);
+    }
+
+    // TEMPORAL
+    public boolean isRejected (boolean rejected) {// Llamada al metodo: if (isReviewAccepted()) bool = isRejected(isReviewAccepted());
+            return (new Random().nextInt(100) <= rejectionProbability);
     }
 
     @Override

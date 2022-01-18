@@ -11,8 +11,13 @@ public class PhDefense extends Trial {
     }
 
 
-    public void execute(int pi) {
-        //pagina 8 pdf sumatorio raro, mi no entender
+
+    public int calculateFormula() {
+        int result = 0;
+        for (int i = 0; i < difficulty; i++) {
+            result++;
+        }
+        return result;
     }
 
     @Override

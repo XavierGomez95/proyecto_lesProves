@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player{
     private String name;
-    private int pi;
+    protected int pi;
     private boolean alive;
     private String type;
 
@@ -92,4 +92,8 @@ public class Player{
         return sb.append("{").append(name).append(",").append(pi).append(",").append(alive).append(",").append(type).append("}").toString();
     }
 
+    // TEMPORAL
+    public String getName() {
+        return name;
+    }
 }
