@@ -16,7 +16,7 @@ public class ConductorController {
     private Menu menu;
 
     public ConductorController(Menu menu, /*List<Trial> trials,*/ List<Edition> editions, List<Execution> executions) {
-        this.editionManager = new EditionManager(editions);
+        this.editionManager = new EditionManager(editions);//es buena idea o mejor pasar el manager?
         this.executionManager = new ExecutionManager(executions);
         this.menu = menu;
     }

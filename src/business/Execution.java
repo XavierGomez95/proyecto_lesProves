@@ -6,8 +6,9 @@ import business.trial.Trial;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Execution implements Runnable {
+public class Execution {
     private int year;
+
     private int currentTrialExecution;
     private ArrayList<Player> players;
 
@@ -21,16 +22,6 @@ public class Execution implements Runnable {
         this.year = year;
     }
 
-    @Override
-    public void run() {
-       // Edition e = Edition.getByName();
-
-        for (Player p : players) {
-
-        }
-
-
-    }
 
     public void createPlayers(List<String> names) {
         players = Player.createNewPlayers(names);
