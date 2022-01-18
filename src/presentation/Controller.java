@@ -118,7 +118,7 @@ public class Controller {
                 exit();
             }
             case "B" -> {
-                ConductorController conductorController = new ConductorController(this.menu, editions, executions);
+                ConductorController conductorController = new ConductorController(this.menu, trials, editions, executions);
                 conductorController.run();
                 exit();
             }

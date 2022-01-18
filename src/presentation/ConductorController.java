@@ -1,9 +1,7 @@
 package presentation;
 
-import business.EditionManager;
-import business.Edition;
-import business.Execution;
-import business.ExecutionManager;
+import business.*;
+import business.trial.BudgedRequest;
 import business.trial.Trial;
 
 import java.time.Year;
@@ -13,11 +11,13 @@ import java.util.List;
 public class ConductorController {
     EditionManager editionManager;
     ExecutionManager executionManager;
+    TrialManager trialManager;
     private Menu menu;
 
-    public ConductorController(Menu menu, /*List<Trial> trials,*/ List<Edition> editions, List<Execution> executions) {
-        this.editionManager = new EditionManager(editions);//es buena idea o mejor pasar el manager?
+    public ConductorController(Menu menu, List<Trial> trials, List<Edition> editions, List<Execution> executions) {
+        this.editionManager = new EditionManager(editions);
         this.executionManager = new ExecutionManager(executions);
+        this.trialManager = new TrialManager(trials);
         this.menu = menu;
     }
 
@@ -32,8 +32,8 @@ public class ConductorController {
             // menu.showMessage("Existing edition for " + Year.now().getValue()); // TEMPORAL
             menu.showMessage("--- The Trials " + Year.now().getValue() + " ---");
             boolean newExecution = checkPlayers();
-            if (newExecution) {
-                execute(1);//hacer cosas y pasar el num del trial?
+            if (!newExecution) {
+                execute();
             }
 
         } else {
@@ -81,13 +81,60 @@ public class ConductorController {
     }
 
 
-    private Trial selectTrialExecution() {
-        return null;
+    private List<Trial> getListTrialsExecution() {
+        List<String> listNamesTrials = editionManager.listTrialsEdition(Year.now().getValue());
+        List<Trial> listTrialsExecution = new ArrayList<>();
+        for (String s : listNamesTrials) {
+            listTrialsExecution.add(trialManager.getByName(s));
+        }
+
+        return listTrialsExecution;
     }
 
-    private void execute(int num) {//param: num del trial o Objeto trial
-        //executionManager.start();
+    private void execute() {
+        int num = executionManager.getNumTrial();
+        Trial currentTrial = getListTrialsExecution().get(num);
+        if (!isBudgedRequest(currentTrial)) {
+            menu.showMessage("Trial #" + num + 1 + " - " + currentTrial.getName());
+            executionManager.start(currentTrial);
+        } else {
+            startBudgetRequest();
+            menu.showMessage("Budget request hacer cosis");
+        }
+        executionManager.addNumTrial();
+        //comprobar que no sea el ultimo tial
+        if (isLastTrial(num))
+        askToContinue();
+    }
 
+    public boolean isBudgedRequest(Trial t) {
+        return t instanceof BudgedRequest;
+    }
+
+    public boolean isLastTrial(int num) {
+        return getListTrialsExecution().size() > num;
+    }
+
+    public void startBudgetRequest() {
+        //sumar todos los PI de todos los Players en execution Manager
+        //llamar a manager trial execute budgetRequest para calgular el logaritmo
+
+    }
+
+    private String askToContinue() {
+        String answer;
+        do {
+            answer = menu.askString("Continue the execution? [yes/no]:");
+            if (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
+                menu.showError("Enter a correct value [yes/no].");
+                menu.createNewLine();
+            }
+        } while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no"));
+
+        if (answer.equalsIgnoreCase("YES")) {
+            execute();
+        }
+        return answer;
     }
 
 

@@ -1,6 +1,5 @@
 package business;
 
-
 import business.trial.Trial;
 
 import java.time.Year;
@@ -154,5 +153,18 @@ public class EditionManager {
         }
         return numPlayers;
 
+    }
+
+    /**
+     * For {@link ExecutionManager}
+     *
+     * @param editionsYear current year
+     * @return names of all trials edition
+     */
+    public List<String> listTrialsEdition(int editionsYear) {
+        for (Edition e : editions) {
+            if (e.isYearCoincident(editionsYear)) return e.listTrials();
+        }
+        return null;
     }
 }

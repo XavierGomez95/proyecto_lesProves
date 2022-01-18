@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Execution {
     private int year;
-
     private int currentTrialExecution;
     private ArrayList<Player> players;
 
@@ -29,6 +28,18 @@ public class Execution {
 
     public int getYear() {
         return year;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public int getCurrentTrialExecution() {
+        return currentTrialExecution;
+    }
+
+    public void addCurrentTrialExecution() {
+        this.currentTrialExecution++;
     }
 
     /**

@@ -1,7 +1,6 @@
 package business;
 
 import business.player.Player;
-import business.trial.BudgedRequest;
 import business.trial.Trial;
 
 import java.time.Year;
@@ -11,7 +10,7 @@ import java.util.List;
 public class ExecutionManager {
     private List<Execution> executions;
     private Execution currentExecution;//la execution que estamos usando
-    private List<Trial> trialsExecution;
+
 
     public ExecutionManager(List<Execution> executions) {
         this.executions = executions;
@@ -38,20 +37,34 @@ public class ExecutionManager {
         currentExecution.createPlayers(names);
     }
 
-    public void start(List<Player> players, Trial t) {
-        //llama a x threads dependiendo de los players , falta saber como averigua que player es cada uno para puntuar
-        List<Thread> list = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println(i + "num players:" + players.size()); // TEMPORAL
-            Thread thread = new Thread(new Work(players.get(i), t));
-            list.add(thread);
+    public List<String> start(Trial t) {
+        List<Player> players = currentExecution.getPlayers();
+        List<Work> list = new ArrayList<>();
+        for (Player player : players) {
+            Work w = new Work(player, t);
+            Thread thread = new Thread(w);
             thread.start();
+            list.add(w);
         }
+        return getInfo(list);
     }
 
-    public boolean isBudgedRequest(Trial t) {
-        return t instanceof BudgedRequest;
+    public List<String> getInfo(List<Work> works) {
+        List<String> data = new ArrayList<>();
+        for (Work w : works) {
+            //data.add(w.getInfo());
+        }
+        return data;
     }
 
+    public int getNumTrial() {
+        return currentExecution.getCurrentTrialExecution();
+    }
 
+    /**
+     * Add +1 to {@link Execution} current trial
+     */
+    public void addNumTrial() {
+        currentExecution.addCurrentTrialExecution();
+    }
 }
