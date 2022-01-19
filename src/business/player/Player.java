@@ -9,12 +9,14 @@ public class Player{
     protected int pi;
     private boolean alive;
     private String type;
+    private boolean[] upGraded;
 
     public Player(String name) {
         this.name = name;
         this.pi = 5;
         this.alive = true;
         this.type = "engineer";
+        this.upGraded = new boolean[2];
     }
 
     public Player(String name, int pi, boolean alive, String type) {
@@ -37,6 +39,7 @@ public class Player{
             case "engineer" -> this.pi -= points;
             case "master", "doctor" -> this.pi -= (points / 2);
         }
+        if (pi < 0) pi = 0;
     }
 
     public void addPoints(int points) {
@@ -46,11 +49,22 @@ public class Player{
         }
     }
 
+    // Antes de preguntar: Continue the execution? [yes/no]:
+    public String requestStringUpGrade() {
+        return name + " is now a " + type + " (with " + pi + " PI). ";
+    }
+
     public void upGrade() {
         this.pi = 5;
         switch (type) {
-            case "engineer" -> type = "master";
-            case "master" -> type = "doctor";
+            case "engineer" -> {
+                type = "master";
+                upGraded[0] = true;
+            }
+            case "master" -> {
+                type = "doctor";
+                upGraded[1] = true;
+            }
         }
     }
 
@@ -92,8 +106,39 @@ public class Player{
         return sb.append("{").append(name).append(",").append(pi).append(",").append(alive).append(",").append(type).append("}").toString();
     }
 
-    // TEMPORAL
     public String getName() {
         return name;
+    }
+
+    public int getPi() {
+        return pi;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isTypeMaster() {
+        return type.equals("master");
+    }
+
+    public boolean isTypeEngineer() {
+        return type.equals("engineer");
+    }
+
+    public boolean isTypeDoctor() {
+        return type.equals("doctor");
+    }
+
+    public boolean isUpgradeable() {
+        return pi >= 10;
+    }
+
+    public boolean isKillable() {
+        return pi == 0;
+    }
+
+    public boolean successfulPhD(int summation) {
+        return pi > summation;
     }
 }

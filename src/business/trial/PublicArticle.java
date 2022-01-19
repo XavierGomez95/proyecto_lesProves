@@ -19,6 +19,27 @@ public class PublicArticle extends Trial {
         this.rejectionProbability = rejectionProbability;
     }
 
+    public  int rewardPi() {
+        int pi = 0;
+        switch (quartile) {
+            case "Q1" -> pi = 4;
+            case "Q2" -> pi = 3;
+            case "Q3" -> pi = 2;
+            case "Q4" -> pi = 1;
+        }
+        return pi;
+    }
+
+    public  int penaltyPi() {
+        int pi = 0;
+        switch (quartile) {
+            case "Q1" -> pi = 5;
+            case "Q2" -> pi = 4;
+            case "Q3" -> pi = 3;
+            case "Q4" -> pi = 2;
+        }
+        return pi;
+    }
 
     // TEMPORAL
     public boolean isArticlePublished() {

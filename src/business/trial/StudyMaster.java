@@ -15,13 +15,8 @@ public class StudyMaster extends Trial {
         this.probability = probability;
     }
 
-
-    public boolean isMasterPassed() {
-        int approvedCredits = 0;
-        for (int i = 0; i < numCredits; i++) {
-            if (new Random().nextInt(100) <= probability) approvedCredits++;
-        }
-        return approvedCredits > (numCredits / 2);
+    public int getNumCredits() {
+        return numCredits;
     }
 
     @Override
@@ -50,5 +45,17 @@ public class StudyMaster extends Trial {
     @Override
     public String getType() {
         return " (Master Studies)";
+    }
+
+    public int approvedCredits() {
+        int approved = 0;
+        for (int i = 0; i < numCredits; i++) {
+            if (new Random().nextInt(100) <= probability) approved++;
+        }
+        return approved;
+    }
+
+    public boolean isMasterPassed(int approvedCredits) {
+        return approvedCredits > (numCredits / 2);
     }
 }

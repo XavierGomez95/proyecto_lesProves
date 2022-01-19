@@ -33,5 +33,4 @@ public abstract class Trial {
     }
 
     public abstract String getType();
-
 }
