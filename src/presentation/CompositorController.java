@@ -345,6 +345,10 @@ public class CompositorController {
         trialManager.createArticle(trialName, magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
+    /**
+     *
+     * @return
+     */
     private String askQuartile() {
         String quartile;
         do {
@@ -357,6 +361,12 @@ public class CompositorController {
         return quartile;
     }
 
+    /**
+     *
+     * @param msg
+     * @param error
+     * @return
+     */
     private String askTypeTrialName(String msg, String error) {
         String magazine;
         do {
@@ -369,6 +379,10 @@ public class CompositorController {
         return magazine;
     }
 
+    /**
+     *
+     * @return
+     */
     private String askTrialName() {
         String trialName;
         do {
@@ -477,10 +491,4 @@ public class CompositorController {
             } while (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1);
         } else menu.showError("There are no trials. Please create first a trial.");
     }
-
-    private void addPlayers() {
-
-    }
-
-
 }

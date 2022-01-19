@@ -26,18 +26,33 @@ public class Execution {
         players = Player.createNewPlayers(names);
     }
 
+    /**
+     *
+     * @return the year of the current Execution.
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCurrentTrialExecution() {
         return currentTrialExecution;
     }
 
+    /**
+     *
+     */
     public void addCurrentTrialExecution() {
         this.currentTrialExecution++;
     }

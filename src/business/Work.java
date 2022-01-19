@@ -15,6 +15,10 @@ public class Work implements Runnable {
         info = "";
     }
 
+    /**
+     * Method that represents the operation followed by each thread. Depending on the type of trial on which
+     * each player depends, the run() method does one thing or another.
+     */
     @Override
     public void run() {
         if (trial instanceof PhDefense phd) {
@@ -34,7 +38,7 @@ public class Work implements Runnable {
                 if (reviewAccepted) info += " Revisions...";
 
                 else {
-                    if (p.isRejected(false)) info = rejectedArticle(p);
+                    if (p.isArticleRejected(false)) info = rejectedArticle(p);
                     else info = acceptedArticle(p);
                 }
             }
@@ -48,9 +52,12 @@ public class Work implements Runnable {
             if (s.isMasterPassed(creditsPassed)) info = masterPassed();
             else info = masterNotPassed();
         }
-//instance of phdefense
     }
 
+    /**
+     *
+     * @return A String with information about the execution of trials (Master not passed).
+     */
     private String masterNotPassed() {
         player.subtractPoints(3);
         info += " Sorry... PI count: " + player.getPi();
@@ -61,6 +68,10 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @return A String with information about the execution of trials (Master passed).
+     */
     private String masterPassed() {
         if (player.isTypeEngineer()) player.upGrade();
         else player.addPoints(3);
@@ -68,6 +79,10 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @return A String with information about the execution of trials (PhD Defense unsuccessfully done).
+     */
     private String phdNotPassed() {
         player.subtractPoints(5);
         info += " was unsuccessful. Sorry... PI count: " + player.getPi();
@@ -78,6 +93,10 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @return A String with information about the execution of trials (PhD Defense successfully done).
+     */
     private String phdPassed() {
         if (player.isTypeEngineer()) player.upGrade();
         else player.addPoints(5);
@@ -85,6 +104,10 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @return A String with the name depending on the type of studies the player has.
+     */
     private String infoConcatName() {
         if (player.isTypeMaster()) info = player.getType() + " " + player.getName();
         else if (player.isTypeDoctor()) info = player.getName() + ", PhD. ";
@@ -92,6 +115,11 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @param p PublicArticle class object.
+     * @return A String with information about the execution of trials (rejection of the article).
+     */
     private String rejectedArticle(PublicArticle p) {
         int pi = p.penaltyPi();
         player.subtractPoints(pi);
@@ -103,6 +131,11 @@ public class Work implements Runnable {
         return info;
     }
 
+    /**
+     *
+     * @param p PublicArticle class object.
+     * @return A String with information about the execution of trials (acceptance of the article).
+     */
     private String acceptedArticle(PublicArticle p) {
         int pi = p.rewardPi();
         player.addPoints(pi);
@@ -110,6 +143,7 @@ public class Work implements Runnable {
         info += " Accepted! PI count: " + player.getPi();
         return info;
     }
+
 
     public void stopWork(){
 

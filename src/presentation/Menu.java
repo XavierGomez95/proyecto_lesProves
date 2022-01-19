@@ -22,7 +22,7 @@ public class Menu {
 
 
     /**
-     * This method is called to show the format menu options on the screen.
+     * Show the format menu options on the screen.
      */
     public void showFormatMenu() { // 4.1
         System.out.println(new StringBuilder(System.lineSeparator())
@@ -31,7 +31,7 @@ public class Menu {
     }
 
     /**
-     * This method is called to show the role menu options on the screen.
+     * Show the role menu options on the screen.
      */
     public void showRoleMenu() { // 4.2
         System.out.println(new StringBuilder(System.lineSeparator())
@@ -40,7 +40,7 @@ public class Menu {
     }
 
     /**
-     * This method is called to show the manager menu options on the screen.
+     * Show the manager menu options on the screen.
      */
     public void showManagerMenu() { // 4.3
         System.out.println(new StringBuilder(System.lineSeparator())
@@ -51,7 +51,7 @@ public class Menu {
     }
 
     /**
-     * This method is called to show the trial menu options on the screen.
+     * Show the trial menu options on the screen.
      */
     public void showTrialsMenu() { // 4.3.1
         System.out.println(new StringBuilder(System.lineSeparator())
@@ -63,7 +63,7 @@ public class Menu {
     }
 
     /**
-     * This method is called to show the editions menu options on the screen.
+     * Show the edition's menu options on the screen.
      */
     public void showEditionsMenu() { // 4.3.2
         System.out.println(new StringBuilder(System.lineSeparator())
@@ -76,7 +76,7 @@ public class Menu {
     }
 
     /**
-     *
+     * Show the Trial type's menu options on the screen.
      */
     public void showTrialTypesMenu() { // 4.3.1.1
         System.out.println(new StringBuilder("\t").append("--- Trial types ---").append(System.lineSeparator())
@@ -133,6 +133,7 @@ public class Menu {
 
     /**
      * This method display an error message.
+     * Is displayed on the screen in red and bold.
      *
      * @param message String that contains a message to be shown.
      */
@@ -140,12 +141,18 @@ public class Menu {
         System.out.println(TEXT_BOLD + COLOR_RED + System.lineSeparator() + message + RESET_COLOR);
     }
 
-
+    /**
+     * String that is displayed on the screen in green and bold.
+     *
+     * @param message String message
+     */
     public void showSuccess(String message) {
         System.out.println(TEXT_BOLD + COLOR_GREEN + message + RESET_COLOR);
     }
 
-
+    /**
+     * Displays "THE TRICKS" tittle.
+     */
     public void showTittle() {
         System.out.println(new StringBuilder(System.lineSeparator())
                 .append(" _____ _             _____      _       _").append(System.lineSeparator())
@@ -155,7 +162,6 @@ public class Menu {
                 .append(" \\/   |_| |_|\\___|   \\/   |_|  |_|\\__,_|_|___/").append(System.lineSeparator()));
     }
 
-
     /**
      * Displays a message.
      *
@@ -164,7 +170,6 @@ public class Menu {
     public void showMessage(String message) {
         System.out.println(message);
     }
-
 
     /**
      * It generates a new line space.
@@ -184,19 +189,10 @@ public class Menu {
         System.out.println();
         System.out.println(new StringBuilder("\t" + (max + 1)).append(") Back").append(System.lineSeparator()));
     }
-/*
-    public void showList(List<String> list) {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-            //if (((i + 1) % 3 == 0) && ((i + 1) < list.size())) System.out.println(); // Si sobra tiempo corregir esta chapuza
-        }
-        /*
-        for (String s : list) {
-            System.out.println(s + System.lineSeparator());
-        }
-    }
- */
 
+    /**
+     * @param list that is displayed on the screen as a menu.
+     */
     public void menuEditions(List<String> list) {
         int max = list.size();
         System.out.println("\t--- Trials ---" + System.lineSeparator());
@@ -205,6 +201,9 @@ public class Menu {
         }
     }
 
+    /**
+     * @param list that is displayed on the screen.
+     */
     public void showListEditionByYear(List<String> list) {
         int size = list.size();
         for (int i = 0; i < size; i++) {

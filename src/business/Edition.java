@@ -19,7 +19,7 @@ public class Edition {
     }
 
     /**
-     * @return
+     * @return a list withe information of an Edition.
      */
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
@@ -30,6 +30,10 @@ public class Edition {
         return list;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> listTrials() {
         List<String> list = new ArrayList<>();
         // for (int i = 0; i < numTrials; i++) {
@@ -43,27 +47,31 @@ public class Edition {
     }
 
     /**
-     * @return
+     * @return a String with the year and other information.
      */
     public String getYear() {
         return new StringBuilder("The trials ").append(this.year).toString();
     }
 
     /**
-     * @param editionsYear
-     * @return
+     * @param editionsYear represents a year
+     * @return Returns if the year received is the same as the year of the current Edition.
      */
     public boolean isYearCoincident(int editionsYear) {
         return editionsYear == this.year;
     }
 
     /**
-     * @return
+     * @return a list with the name of the Trials.
      */
     public ArrayList<String> getNameTrials() {
         return nameTrials;
     }
 
+    /**
+     * Getter
+     * @return the number of players.
+     */
     public int getNumPlayers() {
         return numPlayers;
     }

@@ -29,16 +29,18 @@ public class Controller {
         this.menu = menu;
     }
 
-    /**
-     *
-     */
+
     public void run() {
         String format = chooseFormat();
         chooseRole(format);
 
     }
 
-
+    /**
+     * The user choose the format to persist the information.
+     *
+     * @return a String to detect whether the user has chosen to persist the project in Json or in Csv.
+     */
     private String chooseFormat() {
         String format;
 
@@ -59,7 +61,7 @@ public class Controller {
     }
 
     /**
-     * @param format
+     * @param format a String to detect whether the user has chosen to persist the project in Json or in Csv.
      */
     private void loadData(String format) {
         switch (format) {
@@ -91,7 +93,9 @@ public class Controller {
     }
 
     /**
-     * @param fileFormat
+     * The user decides whether to access the management menu or the execution menu.
+     *
+     * @param fileFormat a String to detect whether the user has chosen to persist the project in Json or in Csv.
      */
     private void chooseRole(String fileFormat) {
         String format;
@@ -108,7 +112,9 @@ public class Controller {
     }
 
     /**
-     * @param roleFormat
+     * Starts the operation of the menu selected by the user.
+     *
+     * @param roleFormat String representing the user's choice of menu type (management or execution).
      */
     private void selectRole(String roleFormat) {
         switch (roleFormat) {
@@ -126,7 +132,7 @@ public class Controller {
     }
 
     /**
-     *
+     * When the program stops, the information is saved.
      */
     private void exit() {
         trialDAO.writeAll(trials);

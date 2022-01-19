@@ -16,6 +16,10 @@ public class ExecutionManager {
         this.executions = executions;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean checkCurrentYear() {
         boolean exists = false;
         for (Execution execution : executions) {
@@ -33,10 +37,19 @@ public class ExecutionManager {
     }
 
 
+    /**
+     *
+     * @param names
+     */
     public void createPlayers(List<String> names) {
         currentExecution.createPlayers(names);
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public List<String> start(Trial t) {
         List<Player> players = currentExecution.getPlayers();
         List<Work> list = new ArrayList<>();
@@ -49,6 +62,11 @@ public class ExecutionManager {
         return getInfo(list);
     }
 
+    /**
+     *
+     * @param works
+     * @return
+     */
     public List<String> getInfo(List<Work> works) {
         List<String> data = new ArrayList<>();
         for (Work w : works) {
@@ -57,6 +75,10 @@ public class ExecutionManager {
         return data;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumTrial() {
         return currentExecution.getCurrentTrialExecution();
     }

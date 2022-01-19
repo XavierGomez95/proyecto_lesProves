@@ -127,6 +127,11 @@ public class EditionManager {
         return deleted;
     }
 
+    /**
+     *
+     * @param trialsName
+     * @return
+     */
     public boolean dependentTrial(String trialsName) {
         boolean exist = false;
         for (Edition edition : editions) {

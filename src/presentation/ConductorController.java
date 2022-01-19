@@ -80,7 +80,10 @@ public class ConductorController {
         executionManager.createPlayers(names);
     }
 
-
+    /**
+     *
+     * @return
+     */
     private List<Trial> getListTrialsExecution() {
         List<String> listNamesTrials = editionManager.listTrialsEdition(Year.now().getValue());
         List<Trial> listTrialsExecution = new ArrayList<>();
@@ -91,6 +94,9 @@ public class ConductorController {
         return listTrialsExecution;
     }
 
+    /**
+     *
+     */
     private void execute() {
         int num = executionManager.getNumTrial();
         Trial currentTrial = getListTrialsExecution().get(num);
@@ -107,20 +113,37 @@ public class ConductorController {
         askToContinue();
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public boolean isBudgedRequest(Trial t) {
         return t instanceof BudgedRequest;
     }
 
+    /**
+     *
+     * @param num
+     * @return
+     */
     public boolean isLastTrial(int num) {
         return getListTrialsExecution().size() > num;
     }
 
+    /**
+     *
+     */
     public void startBudgetRequest() {
         //sumar todos los PI de todos los Players en execution Manager
         //llamar a manager trial execute budgetRequest para calgular el logaritmo
 
     }
 
+    /**
+     *
+     * @return
+     */
     private String askToContinue() {
         String answer;
         do {

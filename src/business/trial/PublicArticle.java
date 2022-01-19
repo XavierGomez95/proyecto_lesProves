@@ -19,7 +19,11 @@ public class PublicArticle extends Trial {
         this.rejectionProbability = rejectionProbability;
     }
 
-    public  int rewardPi() {
+    /**
+     *
+     * @return a number corresponding to the quartile that has the test.
+     */
+    public int rewardPi() {
         int pi = 0;
         switch (quartile) {
             case "Q1" -> pi = 4;
@@ -30,7 +34,11 @@ public class PublicArticle extends Trial {
         return pi;
     }
 
-    public  int penaltyPi() {
+    /**
+     *
+     * @return a number corresponding to the quartile that has the test.
+     */
+    public int penaltyPi() {
         int pi = 0;
         switch (quartile) {
             case "Q1" -> pi = 5;
@@ -42,20 +50,38 @@ public class PublicArticle extends Trial {
     }
 
     // TEMPORAL
+    /**
+     *
+     * @return whether the article has been published or not.
+     */
     public boolean isArticlePublished() {
         return (new Random().nextInt(100) <= acceptanceProbability);
     }
 
     // TEMPORAL
+    /**
+     *
+     * @param testPassed
+     * @return whether the review has been accepted or not.
+     */
     public boolean isReviewAccepted (boolean testPassed) { // Llamada al metodo: if (!isTestPassed) bool = isReviewAccepted(isTestPassed);
         return (new Random().nextInt(100) <= revisionProbability);
     }
 
     // TEMPORAL
-    public boolean isRejected (boolean rejected) {// Llamada al metodo: if (isReviewAccepted()) bool = isRejected(isReviewAccepted());
+    /**
+     *
+     * @param rejected
+     * @return whether the article has been rejected or not.
+     */
+    public boolean isArticleRejected(boolean rejected) {
             return (new Random().nextInt(100) <= rejectionProbability);
     }
 
+    /**
+     *
+     * @return a String with all the information of a public article ready to be displayed on the screen.
+     */
     @Override
     public String listInfo() {
         return new StringBuilder("Trial: ").append(name).append(" (Paper publication)").append(System.lineSeparator())
@@ -64,12 +90,24 @@ public class PublicArticle extends Trial {
                 .append("% revision, ").append(rejectionProbability).append("% rejection").append(System.lineSeparator()).toString();
     }
 
+    /**
+     *
+     * @return a String with all the information of a public article ready to be persisted.
+     */
     @Override
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        return sb.append(super.getInfo()).append(",").append(magazineName).append(",").append(quartile).append(",").append(acceptanceProbability).append(",").append(revisionProbability).append(",").append(rejectionProbability).toString();
+        return sb.append(super.getInfo()).append(",").append(magazineName).append(",").append(quartile).append(",")
+                .append(acceptanceProbability).append(",").append(revisionProbability).append(",")
+                .append(rejectionProbability).toString();
     }
 
+    /**
+     * From a String it receives, it separates the information into variables and creates a new instance of the
+     * class itself.
+     * @param line String with information about the public article.
+     * @return an instance of the PublicArticle class.
+     */
     public static Trial fromLine(String line) {
         String name = line.split(",")[0];
         String magazineName = line.split(",")[1];
@@ -81,6 +119,10 @@ public class PublicArticle extends Trial {
         return new PublicArticle(magazineName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, name);
     }
 
+    /**
+     *
+     * @return a String representing the trial type.
+     */
     @Override
     public String getType() {
         return " (Paper publication)";

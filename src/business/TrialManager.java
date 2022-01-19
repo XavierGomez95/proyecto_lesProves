@@ -84,12 +84,23 @@ public class TrialManager {
      */
     public boolean deleteTrial(int i, String trialsName) {
         boolean deleted = false;
+        if (trials.get(i).isNameEqual(trialsName)) {
+            trials.remove(i);
+            deleted = true;
+        }
+        return deleted;
+    }
+
+    /*
+    public boolean deleteTrial(int i, String trialsName) {
+        boolean deleted = false;
         if (trials.get(i).getName().equals(trialsName)) {
             trials.remove(i);
             deleted = true;
         }
         return deleted;
     }
+     */
 
     // Lo he cambiado porque sino me peta (no se por que) :I
     /*
@@ -100,7 +111,7 @@ public class TrialManager {
      */
 
     /**
-     * @return
+     * @return a list of a specific trial.
      */
     public String trialStringInfo(int index) {
         String list = "";
@@ -113,6 +124,11 @@ public class TrialManager {
         return list;
     }
 
+    /**
+     *
+     * @param trialName
+     * @return
+     */
     public boolean isTrialNameUnique(String trialName) {
         boolean unique = true;
         for (Trial t : trials) {
@@ -121,10 +137,15 @@ public class TrialManager {
         return unique;
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public Trial getByName(String s) {
         Trial trial = null;
         for (Trial t : trials) {
-            if (t.getName().equals(s)) {
+            if (t.isNameEqual(s)) {
                 trial = t;
             }
         }
