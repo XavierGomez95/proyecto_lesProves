@@ -52,7 +52,7 @@ public class Player {
     /**
      * @param points numerical value with which the final increment value is to be calculated.
      */
-    public boolean addPoints(int points) {//TODO Que devuelva un boolean y llame a upgrade si sube de LVL
+    public boolean addPoints(int points) {
         switch (type) {
             case "engineer", "master" -> this.pi += points;
             case "doctor" -> this.pi += (points * 2);
