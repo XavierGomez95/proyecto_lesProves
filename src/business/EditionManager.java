@@ -59,10 +59,10 @@ public class EditionManager {
         for (Edition edition : editions) {
             if (currentPosition == index) {
                 list.addAll(edition.listInfo());
-                List<String> nameTrials = edition.listTrials();
+                List<String> nameTrials = edition.getNameTrials();
                 for (int i = 0; i < nameTrials.size(); i++) {
                     Trial trial = trialManager.getByName(nameTrials.get(i).split(",")[0]);
-                    list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
+                    list.add("\t" + (i + 1) + "- " + nameTrials.get(i) + trial.getType());
                 }
             }
             currentPosition++;
@@ -148,7 +148,7 @@ public class EditionManager {
      */
     public List<String> listTrialsEdition(int editionsYear) {
         for (Edition e : editions) {
-            if (e.isYearCoincident(editionsYear)) return e.listTrials();
+            if (e.isYearCoincident(editionsYear)) return e.getNameTrials();
         }
         return null;
     }

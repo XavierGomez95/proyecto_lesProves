@@ -23,21 +23,10 @@ public class Edition {
      */
     public List<String> listInfo() {
         List<String> list = new ArrayList<>();
-        list.add(new StringBuilder("Year: ").append(year).toString());
-        list.add(new StringBuilder("Players: ").append(numPlayers).toString());
+        list.add("Year: " + year);
+        list.add("Players: " + numPlayers);
         list.add("Trials:");
 
-        return list;
-    }
-
-    /**
-     * @return
-     */
-    public List<String> listTrials() {
-        List<String> list = new ArrayList<>();
-        for (String nameTrial : nameTrials) {
-            list.add(nameTrial);
-        }
         return list;
     }
 
@@ -45,7 +34,7 @@ public class Edition {
      * @return a String with the year and other information.
      */
     public String getYear() {
-        return new StringBuilder("The trials ").append(this.year).toString();
+        return "The trials " + this.year;
     }
 
     /**

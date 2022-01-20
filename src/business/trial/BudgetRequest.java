@@ -10,21 +10,27 @@ public class BudgetRequest extends Trial {
         this.amount = amount;
     }
 
-
     public boolean calculateFormula(int pi) {
         int result = (int) (Math.log(amount) / Math.log(2));
         return result < pi;
     }
 
+    /**
+     * @return a String representing the trial type.
+     */
+    @Override
+    public String getType() {
+        return " (Budget request)";
+    }
 
     /**
      * @return a String with all the information of a budget request ready to be displayed on the screen.
      */
     @Override
     public String listInfo() {
-        return new StringBuilder("Trial: ").append(name).append(getType()).append(System.lineSeparator())
-                .append("Entity: ").append(entityName).append(System.lineSeparator())
-                .append("Budget: ").append(amount).append(" €").append(System.lineSeparator()).toString();
+        return "Trial: " + name + getType() + System.lineSeparator() +
+                "Entity: " + entityName + System.lineSeparator() +
+                "Budget: " + amount + " €" + System.lineSeparator();
     }
 
     /**
@@ -32,8 +38,7 @@ public class BudgetRequest extends Trial {
      */
     @Override
     public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(super.getInfo()).append(",").append(entityName).append(",").append(amount).toString();
+        return super.getInfo() + "," + entityName + "," + amount;
     }
 
     /**
@@ -49,13 +54,5 @@ public class BudgetRequest extends Trial {
         long amount = Long.parseLong(line.split(",")[2]);
 
         return new BudgetRequest(name, entityName, amount);
-    }
-
-    /**
-     * @return a String representing the trial type.
-     */
-    @Override
-    public String getType() {
-        return " (Budget request)";
     }
 }

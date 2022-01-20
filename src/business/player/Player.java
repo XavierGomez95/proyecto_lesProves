@@ -27,8 +27,10 @@ public class Player {
     }
 
     /**
-     * @param names
-     * @return
+     * it creates the Players of the execution
+     *
+     * @param names of players
+     * @return ArrayList of all the created Players
      */
     public static ArrayList<Player> createNewPlayers(List<String> names) {
         ArrayList<Player> players = new ArrayList<>();
@@ -126,8 +128,7 @@ public class Player {
      * @return String line with all Player information
      */
     public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        return sb.append("{").append(name).append(",").append(pi).append(",").append(alive).append(",").append(type).append("}").toString();
+        return "{" + name + "," + pi + "," + alive + "," + type + "}";
     }
 
     public boolean isUpGraded() {
@@ -191,7 +192,7 @@ public class Player {
     }
 
     /**
-     * @param summation
+     * @param summation to compare with the PI
      * @return true (if an integer attribute is greater than summation), or false (if is not)
      */
     public boolean successfulPhD(int summation) {
