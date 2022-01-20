@@ -34,10 +34,15 @@ public class Work implements Runnable {
             boolean articlePublished = p.isArticlePublished();
             if (articlePublished) info = acceptedArticle(p);
             else {
+                info += " Revisions...";
                 boolean reviewAccepted = p.isReviewAccepted(false);
-                if (reviewAccepted) info += " Revisions...";
+                if (reviewAccepted) {
                     if (p.isArticleRejected(false)) info = rejectedArticle(p);
                     else info = acceptedArticle(p);
+                } else {
+                    info = rejectedArticle(p);
+                }
+
             }
         }
 
@@ -70,9 +75,16 @@ public class Work implements Runnable {
      * @return A String with information about the execution of trials (Master passed).
      */
     private String masterPassed() {
-        info += " Congrats! PI count: " + player.getPi();
-        if (player.isTypeEngineer()) player.upGrade();
-        else player.addPoints(3);
+        if (player.isTypeEngineer()) {
+            player.addPoints(5);
+            info += " Congrats! PI count: " + player.getPi();
+            player.upGrade();
+        }
+        else {
+            player.addPoints(3);
+            info += " Congrats! PI count: " + player.getPi();
+            if (player.isUpgradeable()) player.upGrade(); // REVISAR ESTO
+        }
         return info;
     }
 
@@ -95,9 +107,16 @@ public class Work implements Runnable {
      * @return A String with information about the execution of trials (PhD Defense successfully done).
      */
     private String phdPassed() {
-        info += " was successful. Congrats! PI count: " + player.getPi();
-        if (player.isTypeEngineer()) player.upGrade();
-        else player.addPoints(5);
+        if (player.isTypeEngineer()) {
+            player.addPoints(5);
+            info += " was successful. Congrats! PI count: " + player.getPi();
+            player.upGrade();
+        }
+        else {
+            player.addPoints(5);
+            info += " was successful. Congrats! PI count: " + player.getPi();
+            if (player.isUpgradeable()) player.upGrade();
+        }
         return info;
     }
 
@@ -107,7 +126,7 @@ public class Work implements Runnable {
      */
     private String infoConcatName() {
         if (player.isTypeMaster()) info = "\t" + player.getType() + " " + player.getName();
-        else if (player.isTypeDoctor()) info = "\t" + player.getName() + ", PhD. ";
+        else if (player.isTypeDoctor()) info = "\t" + player.getName() + ", PhD.";
         else if (player.isTypeEngineer()) info = "\t" + player.getName();
         return info;
     }
@@ -120,7 +139,8 @@ public class Work implements Runnable {
     private String rejectedArticle(PublicArticle p) {
         int pi = p.penaltyPi();
         player.subtractPoints(pi);
-        info += player.getName() + " is submitting..." + " Rejected. PI count: " + player.getPi();
+        //info += player.getName() + " is submitting..." + " Rejected. PI count: " + player.getPi();
+        info += " Revisions... Rejected. PI count: " + player.getPi();
         if (player.isKillable()) {
             player.killPlayer();
             info += " - Disqualified!";

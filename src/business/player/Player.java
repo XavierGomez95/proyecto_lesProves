@@ -46,6 +46,7 @@ public class Player {
             case "engineer" -> this.pi -= points;
             case "master", "doctor" -> this.pi -= (points / 2);
         }
+        upGraded = false;
         if (pi < 0) pi = 0;
     }
 
@@ -57,6 +58,7 @@ public class Player {
             case "engineer", "master" -> this.pi += points;
             case "doctor" -> this.pi += (points * 2);
         }
+        upGraded = false;
     }
 
     // Antes de preguntar: Continue the execution? [yes/no]:
@@ -123,6 +125,10 @@ public class Player {
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
         return sb.append("{").append(name).append(",").append(pi).append(",").append(alive).append(",").append(type).append("}").toString();
+    }
+
+    public boolean isUpGraded() {
+        return upGraded;
     }
 
     /**
