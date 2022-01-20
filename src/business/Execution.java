@@ -10,6 +10,13 @@ public class Execution {
     private int currentTrialExecution;
     private ArrayList<Player> players;
 
+    /**
+     * Constructor to create saved Executions.
+     *
+     * @param year                  to identify the edition
+     * @param currentTrialExecution to identify the next trial execution
+     * @param players               list
+     */
     public Execution(int year, int currentTrialExecution, ArrayList<Player> players) {
         this.year = year;
         this.currentTrialExecution = currentTrialExecution;
@@ -20,7 +27,11 @@ public class Execution {
         this.year = year;
     }
 
-
+    /**
+     * {@link Player#createNewPlayers(List names)}
+     *
+     * @param names of all players
+     */
     public void createPlayers(List<String> names) {
         players = Player.createNewPlayers(names);
     }
@@ -33,24 +44,41 @@ public class Execution {
     }
 
     /**
-     * @return
+     * @return players list
      */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
     /**
-     * @return
+     * @return currentTrialExecution
      */
     public int getCurrentTrialExecution() {
         return currentTrialExecution;
     }
 
     /**
-     *
+     * add +1 to currentTrialExecution
      */
     public void addCurrentTrialExecution() {
         this.currentTrialExecution++;
+    }
+
+
+    /**
+     * Sets the currentTrialExecution to -1
+     */
+    public void finish() {
+        currentTrialExecution = -1;
+    }
+
+    /**
+     * if the currentTrialExecution is -1  the execution has finished.
+     *
+     * @return if the execution has finished.
+     */
+    public boolean isFinished() {
+        return currentTrialExecution == -1;
     }
 
     /**
@@ -82,14 +110,4 @@ public class Execution {
 
         return new Execution(year, currentExecution, Player.fromLine(stringPlayers));
     }
-
-    public void finish() {
-        currentTrialExecution = -1;
-    }
-
-    public boolean isFinished() {
-        return currentTrialExecution == -1;
-    }
-
-
 }

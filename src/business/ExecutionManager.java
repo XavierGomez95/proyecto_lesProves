@@ -17,6 +17,9 @@ public class ExecutionManager {
         this.executions = executions;
     }
 
+    /**
+     * @return if it exists true or false.
+     */
     public boolean checkCurrentYear() {
         boolean exists = false;
         for (Execution execution : executions) {
@@ -33,11 +36,19 @@ public class ExecutionManager {
         return exists;
     }
 
-
+    /**
+     * {@link Execution#createPlayers(List names)}.
+     *
+     * @param names of all players
+     */
     public void createPlayers(List<String> names) {
         currentExecution.createPlayers(names);
     }
 
+    /**
+     * @param t current Trial
+     * @return list {@link #getData(List works)}
+     */
     public List<String> start(Trial t) {
         List<Player> players = currentExecution.getPlayers();
         List<Work> works = new ArrayList<>();
@@ -55,9 +66,12 @@ public class ExecutionManager {
             e.printStackTrace();
         }
 
-        return getInfo(works);
+        return getData(works);
     }
 
+    /**
+     * @return String with all players that are upgraded {@link Player#isUpGraded()}
+     */
     public String checkUpgrade() {
         List<Player> players = currentExecution.getPlayers();
         StringBuilder lastData = new StringBuilder();
@@ -69,8 +83,11 @@ public class ExecutionManager {
         return lastData.toString();
     }
 
-
-    public List<String> getInfo(List<Work> works) {
+    /**
+     * @param works list to get the information of each thread.
+     * @return list of all the information
+     */
+    public List<String> getData(List<Work> works) {
         List<String> data = new ArrayList<>();
         for (Work w : works) {
             data.add(w.getInfo());
@@ -78,6 +95,9 @@ public class ExecutionManager {
         return data;
     }
 
+    /**
+     * @return {@link Execution#getCurrentTrialExecution()}
+     */
     public int getNumTrial() {
         return currentExecution.getCurrentTrialExecution();
     }
@@ -98,6 +118,9 @@ public class ExecutionManager {
         return currentExecution.isFinished();
     }
 
+    /**
+     * {@link Execution#finish()}
+     */
     public void finishExecution() {
         currentExecution.finish();
     }
@@ -110,11 +133,16 @@ public class ExecutionManager {
         ArrayList<Player> players = currentExecution.getPlayers();
         int total = 0;
         for (Player p : players) {
-            //total+=p.getPI();
+            total += p.getPi();
         }
         return total;
     }
 
+    /**
+     * In case the players lose we subtract 2 points to each player.
+     *
+     * @return list with all information of each player.
+     */
     public List<String> subtractPiBudget() {
         ArrayList<Player> players = currentExecution.getPlayers();
         List<String> results = new ArrayList<>();
@@ -123,7 +151,7 @@ public class ExecutionManager {
         }
 
         for (Player p : players) {
-            String info = "";
+            String info;
             if (p.getType().equals("engineer")) {
                 info = "\t" + p.getName() + ". " + " PI count: " + p.getPi();
             } else {
@@ -140,7 +168,9 @@ public class ExecutionManager {
     }
 
     /**
-     * In case the players win we add half of their current points
+     * In case the players win we add half of their current points.
+     *
+     * @return list with all information of each player.
      */
     public List<String> addPiBudget() {
         ArrayList<Player> players = currentExecution.getPlayers();
@@ -156,11 +186,8 @@ public class ExecutionManager {
                 } else {
                     results.add("\t" + players.get(i).getName() + ", " + players.get(i).getType() + ". PI count: " + players.get(i).getPi());
                 }
-
-                lastString.append(checkUpgradeBudgetRequest(players.get(i)));
+                upgradeBudgetPlayer(players.get(i));
             }
-            results.add(lastString.toString());
-
         }
         return results;
     }
@@ -169,17 +196,17 @@ public class ExecutionManager {
      * For BudgetRequest Trial, checks if the {@link Player#isUpgradeable()} and {@link Player#upGrade()} it.
      *
      * @param p player
-     * @return data of the player upgraded
      */
-    private String checkUpgradeBudgetRequest(Player p) {
+    private void upgradeBudgetPlayer(Player p) {
         if (p.isUpgradeable()) {
             p.upGrade();
-            return p.getName() + "is now a " + p.getType() + " (with 5 PI)";
         }
-        return "";
-
     }
 
+    /**
+     * @param players list
+     * @return points of each player in order
+     */
     private int[] getPiPerPlayer(List<Player> players) {
         int[] points = new int[players.size()];
         for (int i = 0; i < points.length; i++) {
@@ -188,13 +215,16 @@ public class ExecutionManager {
         return points;
     }
 
-
+    /**
+     * @return true if there are players alive.
+     */
     public boolean checkWin() {
         ArrayList<Player> players = currentExecution.getPlayers();
         boolean playersAlive = false;
         for (Player p : players) {
             if (p.isAlive()) {
                 playersAlive = true;
+                break;
             }
         }
         return playersAlive;

@@ -8,9 +8,6 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class ConductorController {
     private EditionManager editionManager;
     private ExecutionManager executionManager;
@@ -26,7 +23,8 @@ public class ConductorController {
     }
 
     /**
-     * Runs the execution mode if the current year has an edition
+     * Runs the execution mode if the current year has an edition, {@link #addPlayers()} if is it a new Execution
+     * and {@link #execute()} to execute the current trial.
      */
     public void run() {
         menu.createNewLine();
@@ -56,7 +54,7 @@ public class ConductorController {
 
 
     /**
-     * Loop of {@link Menu#askString(String name)} to {@link ExecutionManager#createPlayers(List names)} of the Edition
+     * Loop of {@link Menu#askString(String name)} to {@link ExecutionManager#createPlayers(List names)} of the Edition.
      */
     private void addPlayers() {
         int numPlayers = editionManager.checkNumPlayers();
@@ -70,7 +68,7 @@ public class ConductorController {
 
 
     /**
-     * @return
+     * @return List of execution trials using {@link TrialManager#getByName(String name)}.
      */
     private List<Trial> getListTrialsExecution() {
         List<String> listNamesTrials = editionManager.listTrialsEdition(YEAR);
@@ -84,7 +82,8 @@ public class ConductorController {
     }
 
     /**
-     *
+     * it executes the Trial if it is a Budget request {@link #startBudgetRequest(BudgetRequest)}
+     * otherwise it calls{@link ExecutionManager#start(Trial)} to start the threads.
      */
     private void execute() {
         int num = executionManager.getNumTrial();
@@ -109,6 +108,11 @@ public class ConductorController {
 
     }
 
+    /**
+     * {@link Menu#showMessage(String results)}
+     *
+     * @param results of the {@link Execution}
+     */
     private void listResults(List<String> results) {
         for (String line : results) {
             menu.showMessage(line);
@@ -116,6 +120,9 @@ public class ConductorController {
 
     }
 
+    /**
+     * asks to continue the execution and {@link ExecutionManager#checkUpgrade()}.
+     */
     private void askToContinue() {
         String answer;
         menu.createNewLine();
@@ -133,8 +140,8 @@ public class ConductorController {
     }
 
     /**
-     * @param num
-     * @return
+     * @param num next trial number
+     * @return if there is more trials.
      */
     public boolean isLastTrial(int num) {
         return getListTrialsExecution().size() <= num;
@@ -154,15 +161,18 @@ public class ConductorController {
     }
 
     /**
-     * @param t
-     * @return
+     * @param t current trial.
+     * @return if the Trial is an instance of Budget Request.
      */
     public boolean isBudgedRequest(Trial t) {
         return t instanceof BudgetRequest;
     }
 
     /**
+     * Starts the execution of the Budget request
+     * {@link ExecutionManager#addPiBudget()} or {@link ExecutionManager#subtractPiBudget()} if the group won or not.
      *
+     * @param currentTrial Budgetequest to execute {@link TrialManager#executeBudgetRequest(int, BudgetRequest)}
      */
     public void startBudgetRequest(BudgetRequest currentTrial) {
         int totalPI = executionManager.getTotalPI();
