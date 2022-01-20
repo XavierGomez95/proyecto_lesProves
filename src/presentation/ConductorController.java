@@ -31,11 +31,12 @@ public class ConductorController {
     public void run() {
         menu.createNewLine();
         menu.showMessage("Entering execution mode...");
-
+        //menu.createNewLine();
         if (editionManager.isCoincident(YEAR)) {
             boolean exist = executionManager.checkCurrentYear();
-            menu.showMessage("--- The Trials " + YEAR + " ---");
             menu.createNewLine();
+            menu.showMessage("--- The Trials " + YEAR + " ---");
+            //menu.createNewLine();
             if (!exist) {
                 addPlayers();
                 execute();
@@ -88,7 +89,7 @@ public class ConductorController {
     private void execute() {
         int num = executionManager.getNumTrial();
         Trial currentTrial = getListTrialsExecution().get(num);
-
+        menu.createNewLine();
         menu.showMessage("Trial #" + (num + 1) + " - " + currentTrial.getName());
         menu.createNewLine();
         if (!isBudgedRequest(currentTrial)) {

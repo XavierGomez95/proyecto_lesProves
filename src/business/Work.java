@@ -31,14 +31,15 @@ public class Work implements Runnable {
             info = infoConcatName();
             info += " is submitting...";
 
-            boolean articlePublished = p.isArticlePublished();
-            if (articlePublished) info = acceptedArticle(p);
+            if (p.isArticlePublished()) info = acceptedArticle(p);
             else {
+
                 info += " Revisions...";
-                boolean reviewAccepted = p.isReviewAccepted(false);
-                if (reviewAccepted) {
-                    if (p.isArticleRejected(false)) info = rejectedArticle(p);
+                if (p.isReviewAccepted()) {
+
+                    if (p.isArticleRejected()) info = rejectedArticle(p);
                     else info = acceptedArticle(p);
+
                 } else {
                     info = rejectedArticle(p);
                 }

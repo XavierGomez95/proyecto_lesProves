@@ -55,27 +55,25 @@ public class PublicArticle extends Trial {
      * @return whether the article has been published or not.
      */
     public boolean isArticlePublished() {
-        return (new Random().nextInt(100) <= acceptanceProbability);
+        return (new Random().nextInt(101) <= acceptanceProbability);
     }
 
     // TEMPORAL
     /**
      *
-     * @param testPassed
      * @return whether the review has been accepted or not.
      */
-    public boolean isReviewAccepted (boolean testPassed) { // Llamada al metodo: if (!isTestPassed) bool = isReviewAccepted(isTestPassed);
-        return (new Random().nextInt(100) <= revisionProbability);
+    public boolean isReviewAccepted () {
+        return (new Random().nextInt(101) <= revisionProbability);
     }
 
     // TEMPORAL
     /**
      *
-     * @param rejected
      * @return whether the article has been rejected or not.
      */
-    public boolean isArticleRejected(boolean rejected) {
-            return (new Random().nextInt(100) <= rejectionProbability);
+    public boolean isArticleRejected() {
+            return (new Random().nextInt(101) < rejectionProbability);
     }
 
     /**
