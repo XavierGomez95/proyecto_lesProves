@@ -89,6 +89,9 @@ public class Player {
         }
     }
 
+    /**
+     *
+     */
     public void killPlayer() {
         this.alive = false;
     }

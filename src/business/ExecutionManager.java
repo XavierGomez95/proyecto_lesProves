@@ -152,8 +152,8 @@ public class ExecutionManager {
 
         for (Player p : players) {
             String info;
-            if (p.getType().equals("engineer")) {
-                info = "\t" + p.getName() + ". " + " PI count: " + p.getPi();
+            if (p.isTypeEngineer()) {
+                info = "\t" + p.getName() + ". " + "PI count: " + p.getPi();
             } else {
                 info = "\t" + p.getName() + ", " + p.getType() + ". PI count: " + p.getPi();
             }
@@ -175,14 +175,13 @@ public class ExecutionManager {
     public List<String> addPiBudget() {
         ArrayList<Player> players = currentExecution.getPlayers();
         List<String> results = new ArrayList<>();
-        StringBuilder lastString = new StringBuilder();
         int[] points = getPiPerPlayer(players);
+        //results.add(System.lineSeparator()); // TEMPORAL
         for (int i = 0; i < points.length; i++) {
             if (players.get(i).isAlive()) {
                 players.get(i).addPoints(points[i] / 2);
-                results.add(System.lineSeparator());
-                if (players.get(i).getType().equals("engineer")) {
-                    results.add("\t" + players.get(i).getName() + ". " + " PI count: " + players.get(i).getPi());
+                if (players.get(i).isTypeEngineer()) {
+                    results.add("\t" + players.get(i).getName() + ". " + "PI count: " + players.get(i).getPi());
                 } else {
                     results.add("\t" + players.get(i).getName() + ", " + players.get(i).getType() + ". PI count: " + players.get(i).getPi());
                 }

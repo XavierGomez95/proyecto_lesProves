@@ -162,11 +162,10 @@ public class Work implements Runnable {
         return info;
     }
 
-
-    public void stopWork(){
-
-    }
-
+    /**
+     *
+     * @return
+     */
     public String getInfo() {
         return info;
     }

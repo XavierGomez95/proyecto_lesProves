@@ -179,9 +179,11 @@ public class ConductorController {
         boolean win = trialManager.executeBudgetRequest(totalPI, currentTrial);
         if (win) {
             menu.showMessage("The research group got the budget!");
+            menu.createNewLine();
             listResults(executionManager.addPiBudget());
         } else {
             menu.showMessage("The research group didn't get the budget...");
+            menu.createNewLine();
             listResults(executionManager.subtractPiBudget());
         }
 
