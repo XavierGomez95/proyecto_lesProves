@@ -112,7 +112,7 @@ public class ConductorController {
         }
 
 
-        if (!isLastTrial(num + 2)) {
+        if (!isLastTrial(num + 1)) {
             executionManager.addNumTrial();
             askToContinue();
         } else {
