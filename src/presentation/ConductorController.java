@@ -1,18 +1,22 @@
 package presentation;
 
 import business.*;
-import business.trial.BudgedRequest;
+import business.trial.BudgetRequest;
 import business.trial.Trial;
 
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class ConductorController {
-    EditionManager editionManager;
-    ExecutionManager executionManager;
-    TrialManager trialManager;
+    private EditionManager editionManager;
+    private ExecutionManager executionManager;
+    private TrialManager trialManager;
     private Menu menu;
+    private final int YEAR = Year.now().getValue();
 
     public ConductorController(Menu menu, List<Trial> trials, List<Edition> editions, List<Execution> executions) {
         this.editionManager = new EditionManager(editions);
@@ -28,33 +32,32 @@ public class ConductorController {
         menu.createNewLine();
         menu.showMessage("Entering execution mode...");
 
-        if (editionManager.checkCurrentYearEdition()) {
-            // menu.showMessage("Existing edition for " + Year.now().getValue()); // TEMPORAL
-            menu.showMessage("--- The Trials " + Year.now().getValue() + " ---");
-            boolean newExecution = checkPlayers();
-            if (!newExecution) {
+        if (editionManager.isCoincident(YEAR)) {
+            boolean exist = executionManager.checkCurrentYear();
+            menu.showMessage("--- The Trials " + YEAR + " ---");
+            if (!exist) {
+                addPlayers();
                 execute();
+            } else if (!executionManager.isFinished()) {
+                execute();
+            } else {
+                //comprobar quien ha ganado, si algun player sigue vivo TODO
+                menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED - PLAYERS WON");
             }
 
         } else {
             menu.createNewLine();
-            menu.showMessage("No edition defined for the current year " + Year.now().getValue());
+            menu.showError("No edition defined for the current year " + YEAR);
             menu.createNewLine();
         }
     }
 
     /**
-     * {@link ExecutionManager#checkCurrentYear()} to know if there is information about this year Execution to execute
-     * the trials, otherwise we ask to {@link #enterPlayers(int num)} and we create them
+     * We ask to {@link #enterPlayers(int num)} and we create them
      */
-    private boolean checkPlayers() {
-        boolean newExecution = false;
-        if (!executionManager.checkCurrentYear()) {
-            newExecution = true;
-            int numPlayers = editionManager.checkNumPlayers();
-            enterPlayers(numPlayers);
-        }
-        return newExecution;
+    private void addPlayers() {
+        int numPlayers = editionManager.checkNumPlayers();
+        enterPlayers(numPlayers);
     }
 
     /**
@@ -81,11 +84,11 @@ public class ConductorController {
     }
 
     /**
-     *
      * @return
      */
     private List<Trial> getListTrialsExecution() {
-        List<String> listNamesTrials = editionManager.listTrialsEdition(Year.now().getValue());
+        List<String> listNamesTrials = editionManager.listTrialsEdition(YEAR);
+
         List<Trial> listTrialsExecution = new ArrayList<>();
         for (String s : listNamesTrials) {
             listTrialsExecution.add(trialManager.getByName(s));
@@ -101,50 +104,65 @@ public class ConductorController {
         int num = executionManager.getNumTrial();
         Trial currentTrial = getListTrialsExecution().get(num);
         if (!isBudgedRequest(currentTrial)) {
-            menu.showMessage("Trial #" + num + 1 + " - " + currentTrial.getName());
-            executionManager.start(currentTrial);
+            menu.showMessage("Trial #" + (num + 1) + " - " + currentTrial.getName());
+            listResults(executionManager.start(currentTrial));
+
         } else {
-            startBudgetRequest();
-            menu.showMessage("Budget request hacer cosis");
+            startBudgetRequest((BudgetRequest) currentTrial);
         }
-        executionManager.addNumTrial();
-        //comprobar que no sea el ultimo tial
-        if (isLastTrial(num))
-        askToContinue();
+
+
+        if (!isLastTrial(num + 2)) {
+            executionManager.addNumTrial();
+            askToContinue();
+        } else {
+            executionManager.finishExecution();
+            menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED");
+        }
+
+    }
+
+    private void listResults(List<String> results) {
+        for (String line : results) {
+            menu.showMessage(line);
+        }
+
     }
 
     /**
-     *
      * @param t
      * @return
      */
     public boolean isBudgedRequest(Trial t) {
-        return t instanceof BudgedRequest;
+        return t instanceof BudgetRequest;
     }
 
     /**
-     *
      * @param num
      * @return
      */
     public boolean isLastTrial(int num) {
-        return getListTrialsExecution().size() > num;
+        return getListTrialsExecution().size() <= num;
     }
 
     /**
      *
      */
-    public void startBudgetRequest() {
-        //sumar todos los PI de todos los Players en execution Manager
-        //llamar a manager trial execute budgetRequest para calgular el logaritmo
+    public void startBudgetRequest(BudgetRequest currentTrial) {
+        int totalPI = executionManager.getTotalPI();
+        boolean win = trialManager.executeBudgetRequest(totalPI, currentTrial);
+        if (win) {
+            menu.showMessage("The research group got the budget!");
+            executionManager.addPiBudget();
+
+        } else {
+            executionManager.subtractPiBudget();
+        }
 
     }
 
-    /**
-     *
-     * @return
-     */
-    private String askToContinue() {
+
+    private void askToContinue() {
         String answer;
         do {
             answer = menu.askString("Continue the execution? [yes/no]:");
@@ -157,8 +175,6 @@ public class ConductorController {
         if (answer.equalsIgnoreCase("YES")) {
             execute();
         }
-        return answer;
     }
-
 
 }

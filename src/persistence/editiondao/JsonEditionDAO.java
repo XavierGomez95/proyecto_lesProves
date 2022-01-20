@@ -12,18 +12,30 @@ public class JsonEditionDAO implements EditionDAO {
     private final String jsonEditionPath = "json_files/edition.json";
     private Gson gson = new Gson();
 
+    /**
+     * @return list of {@link Edition} read on json.
+     */
     @Override
     public List<Edition> readAll() {
         return readEditions();
     }
 
+    /**
+     * writes Editions in json file
+     *
+     * @param editions updated Edition list
+     */
     @Override
     public void writeAll(List<Edition> editions) {
         deleteContent();
         writeArray(editions);
     }
 
-
+    /**
+     * it reads the json file.
+     *
+     * @return the list of {@link Edition} read from file.
+     */
     private List<Edition> readEditions() {
         List<Edition> editions = new ArrayList<>();
         File file = new File(jsonEditionPath);
@@ -38,6 +50,11 @@ public class JsonEditionDAO implements EditionDAO {
         return editions;
     }
 
+    /**
+     * it adds in arrayEdition the json object of each {@link Edition}.
+     *
+     * @param editions we want to write.
+     */
     private void writeArray(List<Edition> editions) {
         JsonArray arrayEdition = new JsonArray();
 
@@ -57,6 +74,9 @@ public class JsonEditionDAO implements EditionDAO {
         }
     }
 
+    /**
+     * it erases the document to overwrite on it.
+     */
     private void deleteContent() {
         try {
             new FileWriter(jsonEditionPath).append("[]").close();
@@ -65,6 +85,9 @@ public class JsonEditionDAO implements EditionDAO {
         }
     }
 
+    /**
+     * checks if the file exists, otherwise we create it.
+     */
     private void checkFile() {
         File file = new File(jsonEditionPath);
         if (!file.exists()) {

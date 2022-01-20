@@ -1,7 +1,6 @@
 package business;
 
 import business.player.Player;
-import business.trial.Trial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ public class Execution {
     }
 
     /**
-     *
      * @return the year of the current Execution.
      */
     public int getYear() {
@@ -35,7 +33,6 @@ public class Execution {
     }
 
     /**
-     *
      * @return
      */
     public ArrayList<Player> getPlayers() {
@@ -43,7 +40,6 @@ public class Execution {
     }
 
     /**
-     *
      * @return
      */
     public int getCurrentTrialExecution() {
@@ -85,6 +81,14 @@ public class Execution {
         String stringPlayers = line.substring(line.indexOf("["), line.indexOf("]")).substring(1);
 
         return new Execution(year, currentExecution, Player.fromLine(stringPlayers));
+    }
+
+    public void finish() {
+        currentTrialExecution = -1;
+    }
+
+    public boolean isFinished() {
+        return currentTrialExecution == -1;
     }
 
 

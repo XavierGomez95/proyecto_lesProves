@@ -11,11 +11,19 @@ public class CsvExecutionDAO implements ExecutionDAO {
     private final String csvExecutionPath = "csv_files/execution.csv";
     private File file = new File(csvExecutionPath);
 
+    /**
+     * @return list of {@link Execution} read on csv.
+     */
     @Override
     public List<Execution> readAll() {
         return readExecutions();
     }
 
+    /**
+     * writes executions in csv file
+     *
+     * @param executions updated Execution list
+     */
     @Override
     public void writeAll(List<Execution> executions) {
         deleteContent();
@@ -29,6 +37,11 @@ public class CsvExecutionDAO implements ExecutionDAO {
         }
     }
 
+    /**
+     * {@link #checkFile()} and{@link business.Execution#getInfo()} to write it in csv file.
+     *
+     * @param execution we want to write.
+     */
     private void writeExecution(Execution execution) {
         try {
             checkFile();
@@ -43,7 +56,9 @@ public class CsvExecutionDAO implements ExecutionDAO {
         }
     }
 
-
+    /**
+     * @return list of all {@link Execution} saved in csv file.
+     */
     private List<Execution> readExecutions() {
         Scanner scanFile = null;
         List<Execution> executions = new ArrayList<>();
@@ -66,7 +81,10 @@ public class CsvExecutionDAO implements ExecutionDAO {
         return executions;
     }
 
-
+    /**
+     * @param file we want to check if it is empty.
+     * @return true == empty file.
+     */
     private boolean isDirectoryEmpty(File file) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -77,6 +95,9 @@ public class CsvExecutionDAO implements ExecutionDAO {
         return true;
     }
 
+    /**
+     * checks if the file exists, otherwise we create it.
+     */
     private void checkFile() {
         if (!file.exists()) {
             try {
@@ -87,6 +108,9 @@ public class CsvExecutionDAO implements ExecutionDAO {
         }
     }
 
+    /**
+     * it erases the document to overwrite on it.
+     */
     private void deleteContent() {
         try {
             new FileWriter(file).close();

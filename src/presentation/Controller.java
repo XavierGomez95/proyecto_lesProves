@@ -135,6 +135,8 @@ public class Controller {
      * When the program stops, the information is saved.
      */
     private void exit() {
+        menu.createNewLine();
+        menu.showSuccess("Shutting down...");
         trialDAO.writeAll(trials);
         editionDAO.writeAll(editions);
         executionDAO.writeAll(executions);

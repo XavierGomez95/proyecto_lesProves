@@ -12,7 +12,7 @@ public class CsvEditionDAO implements EditionDAO {
     private File file = new File(csvEditionPath);
 
     /**
-     * @return a list with all Editions
+     * @return list of {@link Edition} read on csv.
      */
     @Override
     public List<Edition> readAll() {
@@ -35,9 +35,9 @@ public class CsvEditionDAO implements EditionDAO {
     }
 
     /**
-     * {@link #checkFile()} and{@link business.Edition#getInfo()} to write it in csv file.
+     * {@link #checkFile()} and{@link Edition#getInfo()} to write it in csv file.
      *
-     * @param edition
+     * @param edition we want to write.
      */
     private void writeEdition(Edition edition) {
         try {
@@ -53,6 +53,9 @@ public class CsvEditionDAO implements EditionDAO {
         }
     }
 
+    /**
+     * checks if the file exists, otherwise we create it.
+     */
     private void checkFile() {
         if (!file.exists()) {
             try {
@@ -63,6 +66,9 @@ public class CsvEditionDAO implements EditionDAO {
         }
     }
 
+    /**
+     * @return list of all {@link Edition} saved in csv file.
+     */
     private List<Edition> readEditions() {
         Scanner scanFile = null;
         List<Edition> editions = new ArrayList<>();
@@ -86,6 +92,10 @@ public class CsvEditionDAO implements EditionDAO {
         return editions;
     }
 
+    /**
+     * @param file we want to check if it is empty.
+     * @return true == empty file.
+     */
     private boolean isDirectoryEmpty(File file) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -96,6 +106,9 @@ public class CsvEditionDAO implements EditionDAO {
         return true;
     }
 
+    /**
+     * it erases the document to overwrite on it.
+     */
     private void deleteContent() {
         try {
             new FileWriter(file).close();

@@ -56,37 +56,18 @@ public class EditionManager {
         List<String> list = new ArrayList<>();
         int currentPosition = 0;
 
-        int Size = editions.size();
-        for (int j = 0; j < Size; j++) {
+        for (Edition edition : editions) {
             if (currentPosition == index) {
-                list.addAll(editions.get(j).listInfo());
-                List<String> nameTrials = editions.get(j).listTrials();
+                list.addAll(edition.listInfo());
+                List<String> nameTrials = edition.listTrials();
                 for (int i = 0; i < nameTrials.size(); i++) {
                     Trial trial = trialManager.getByName(nameTrials.get(i).split(",")[0]);
                     list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
-                    //  list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
-
-                    // list.add(nameTrials.get(i)  + trial.getType());
-
                 }
+                currentPosition++;
             }
-            currentPosition++;
         }
-
         return list;
-    }
-
-
-    /**
-     * @return
-     */
-    public boolean checkCurrentYearEdition() {
-        boolean existing = false;
-        for (Edition e : editions) {
-            e.isYearCoincident(Year.now().getValue());
-            existing = true;
-        }
-        return existing;
     }
 
     /**
@@ -128,7 +109,6 @@ public class EditionManager {
     }
 
     /**
-     *
      * @param trialsName
      * @return
      */

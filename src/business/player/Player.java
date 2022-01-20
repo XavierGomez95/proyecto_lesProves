@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Player{
+public class Player {
     private String name;
     protected int pi;
     private boolean alive;
     private String type;
-    private boolean[] upGraded;
+    private boolean upGraded;
 
     public Player(String name) {
         this.name = name;
         this.pi = 5;
         this.alive = true;
         this.type = "engineer";
-        this.upGraded = new boolean[2];
+        this.upGraded = false;
     }
 
     public Player(String name, int pi, boolean alive, String type) {
@@ -27,7 +27,6 @@ public class Player{
     }
 
     /**
-     *
      * @param names
      * @return
      */
@@ -40,7 +39,6 @@ public class Player{
     }
 
     /**
-     *
      * @param points numerical value with which the final increment value is to be calculated.
      */
     public void subtractPoints(int points) {
@@ -52,19 +50,24 @@ public class Player{
     }
 
     /**
-     *
      * @param points numerical value with which the final increment value is to be calculated.
      */
-    public void addPoints(int points) {
+    public boolean addPoints(int points) {//TODO Que devuelva un boolean y llame a upgrade si sube de LVL
         switch (type) {
             case "engineer", "master" -> this.pi += points;
             case "doctor" -> this.pi += (points * 2);
         }
+        boolean upGraded = false;
+        if (points >= 10) {
+            upGrade();
+            upGraded = true;
+        }
+        return upGraded;
     }
 
     // Antes de preguntar: Continue the execution? [yes/no]:
+
     /**
-     *
      * @return String with the message that will be displayed on the screen before asking the user
      * whether or not to continue with the program execution.
      */
@@ -81,11 +84,11 @@ public class Player{
         switch (type) {
             case "engineer" -> {
                 type = "master";
-                upGraded[0] = true;
+                upGraded = true;
             }
             case "master" -> {
                 type = "doctor";
-                upGraded[1] = true;
+                upGraded = true;
             }
         }
     }
@@ -129,7 +132,6 @@ public class Player{
     }
 
     /**
-     *
      * @return the Player's name.
      */
     public String getName() {
@@ -137,7 +139,6 @@ public class Player{
     }
 
     /**
-     *
      * @return the Player's pi amount.
      */
     public int getPi() {
@@ -145,7 +146,6 @@ public class Player{
     }
 
     /**
-     *
      * @return the Player's type (engineer, master or doctor).
      */
     public String getType() {
@@ -153,7 +153,6 @@ public class Player{
     }
 
     /**
-     *
      * @return true (if a String variable is equal to "master"), or false (if is not)
      */
     public boolean isTypeMaster() {
@@ -161,7 +160,6 @@ public class Player{
     }
 
     /**
-     *
      * @return true (if a String variable is equal to "engineer"), or false (if is not)
      */
     public boolean isTypeEngineer() {
@@ -169,7 +167,6 @@ public class Player{
     }
 
     /**
-     *
      * @return true (if a String variable is equal to "doctor"), or false (if is not)
      */
     public boolean isTypeDoctor() {
@@ -177,7 +174,6 @@ public class Player{
     }
 
     /**
-     *
      * @return true (if an integer variable is greater than or equal to 10), or false (if is not)
      */
     public boolean isUpgradeable() {
@@ -185,7 +181,6 @@ public class Player{
     }
 
     /**
-     *
      * @return true (if an integer attribute is equal to 0), or false (if is not)
      */
     public boolean isKillable() {
@@ -193,11 +188,14 @@ public class Player{
     }
 
     /**
-     *
      * @param summation
      * @return true (if an integer attribute is greater than summation), or false (if is not)
      */
     public boolean successfulPhD(int summation) {
         return pi > summation;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

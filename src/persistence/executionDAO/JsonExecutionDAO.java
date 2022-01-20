@@ -12,17 +12,30 @@ public class JsonExecutionDAO implements ExecutionDAO {
     private final String jsonExecutionPath = "json_files/execution.json";
     private Gson gson = new Gson();
 
+    /**
+     * @return list of {@link Execution} read on json.
+     */
     @Override
     public List<Execution> readAll() {
         return readExecutions();
     }
 
+    /**
+     * writes executions in json file
+     *
+     * @param executions updated Execution list
+     */
     @Override
     public void writeAll(List<Execution> executions) {
         deleteContent();
         writeArray(executions);
     }
 
+    /**
+     * it adds in arrayExecution the json object of each {@link Execution}.
+     *
+     * @param executions we want to write.
+     */
     private void writeArray(List<Execution> executions) {
         JsonArray arrayExecution = new JsonArray();
 
@@ -43,6 +56,11 @@ public class JsonExecutionDAO implements ExecutionDAO {
         }
     }
 
+    /**
+     * it reads the json file.
+     *
+     * @return the list of {@link Execution} read from file.
+     */
     private List<Execution> readExecutions() {
         List<Execution> executions = new ArrayList<>();
         File file = new File(jsonExecutionPath);
@@ -57,6 +75,9 @@ public class JsonExecutionDAO implements ExecutionDAO {
         return executions;
     }
 
+    /**
+     * it erases the document to overwrite on it.
+     */
     private void deleteContent() {
         try {
             new FileWriter(jsonExecutionPath).append("[]").close();
@@ -66,6 +87,9 @@ public class JsonExecutionDAO implements ExecutionDAO {
         }
     }
 
+    /**
+     * checks if the file exists, otherwise we create it.
+     */
     private void checkFile() {
         File file = new File(jsonExecutionPath);
         if (!file.exists()) {

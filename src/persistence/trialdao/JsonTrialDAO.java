@@ -1,5 +1,6 @@
 package persistence.trialdao;
 
+import business.Edition;
 import business.trial.*;
 import com.google.gson.*;
 
@@ -20,11 +21,19 @@ public class JsonTrialDAO implements TrialDAO {
     private final String jsonPHDPath = "json_files/phdDefense.json";
     private final String jsonBudgetPath = "json_files/budgetRequest.json";
 
+    /**
+     * @return list of {@link Trial} read on JSON.
+     */
     @Override
     public List<Trial> readAll() {//podemos hacer que el readTrials() sea el readAll pero asi parece mas limpio?
         return readTrials();
     }
 
+    /**
+     * writes trials in file {@link #writeArrays()}
+     *
+     * @param trials updated Trial list
+     */
     @Override
     public void writeAll(List<Trial> trials) {
         try {
@@ -44,6 +53,9 @@ public class JsonTrialDAO implements TrialDAO {
 
     }
 
+    /**
+     * it writes to each file all the information
+     */
     private void writeArrays() {
         Gson gsonBuild = new GsonBuilder().setPrettyPrinting().create();
         try {
@@ -68,6 +80,11 @@ public class JsonTrialDAO implements TrialDAO {
         }
     }
 
+    /**
+     * it adds in each array of typeTrial the param we want to write.
+     *
+     * @param t trial we want to write.
+     */
     private void addToArray(Trial t) {
         if (t instanceof PublicArticle) {
             checkDirectory(jsonArticlePath);
@@ -81,7 +98,7 @@ public class JsonTrialDAO implements TrialDAO {
             checkDirectory(jsonPHDPath);
             JsonObject jsonObject = JsonParser.parseString(gson.toJson(t)).getAsJsonObject();
             arrayPHD.add(jsonObject);
-        } else if (t instanceof BudgedRequest) {
+        } else if (t instanceof BudgetRequest) {
             checkDirectory(jsonBudgetPath);
             JsonObject jsonObject = JsonParser.parseString(gson.toJson(t)).getAsJsonObject();
             arrayBudget.add(jsonObject);
@@ -89,7 +106,11 @@ public class JsonTrialDAO implements TrialDAO {
     }
 
 
-    // private void checkDirectoryJson (String path) throws CustomMessageException {
+    /**
+     * checks if the file and directory exist, otherwise it creates them.
+     *
+     * @param path of each json file.
+     */
     private void checkDirectory(String path) {
         File directory = new File("json_files");
         directory.mkdir();
@@ -117,6 +138,11 @@ public class JsonTrialDAO implements TrialDAO {
         }
     }
 
+    /**
+     * it reads the 4 json files.
+     *
+     * @return the list of {@link Trial} read from file.
+     */
     private List<Trial> readTrials() {
         List<Trial> trials = new ArrayList<>();
         try {
@@ -138,7 +164,7 @@ public class JsonTrialDAO implements TrialDAO {
         }
 
         try {
-            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonBudgetPath), BudgedRequest[].class)));
+            trials.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonBudgetPath), BudgetRequest[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

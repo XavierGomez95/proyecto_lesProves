@@ -148,4 +148,8 @@ public class Work implements Runnable {
     public void stopWork(){
 
     }
+
+    public String getInfo() {
+        return info;
+    }
 }

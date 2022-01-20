@@ -51,10 +51,6 @@ public class CompositorController {
         switch (mode) {
             case 1 -> option = manageTrials(); // 4.3.1
             case 2 -> option = manageEditions(); // 4.3.2
-            case 3 -> {
-                menu.createNewLine();
-                menu.showSuccess("Shutting down...");
-            }
         }
         return option;
     }

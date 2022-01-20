@@ -1,24 +1,23 @@
 package business.trial;
 
-public class BudgedRequest extends Trial {
+public class BudgetRequest extends Trial {
     private String entityName;
     private long amount;
 
-    public BudgedRequest(String name, String entityName, long amount) {
+    public BudgetRequest(String name, String entityName, long amount) {
         super(name);
         this.entityName = entityName;
         this.amount = amount;
     }
 
 
-
-    public int calculateFormula(int pi) {
-        return (int)(Math.log(pi) / Math.log(2));
+    public boolean calculateFormula(int pi) {
+        int result = (int) (Math.log(amount) / Math.log(2));
+        return result < pi;
     }
 
 
     /**
-     *
      * @return a String with all the information of a budget request ready to be displayed on the screen.
      */
     @Override
@@ -29,7 +28,6 @@ public class BudgedRequest extends Trial {
     }
 
     /**
-     *
      * @return a String with all the information of a budget request ready to be persisted.
      */
     @Override
@@ -41,6 +39,7 @@ public class BudgedRequest extends Trial {
     /**
      * From a string it receives, it separates the information into variables and creates a new instance of the
      * class itself.
+     *
      * @param line String with information about the budget request.
      * @return an instance of the BudgedRequest class.
      */
@@ -49,11 +48,10 @@ public class BudgedRequest extends Trial {
         String entityName = line.split(",")[1];
         long amount = Long.parseLong(line.split(",")[2]);
 
-        return new BudgedRequest(name, entityName, amount);
+        return new BudgetRequest(name, entityName, amount);
     }
 
     /**
-     *
      * @return a String representing the trial type.
      */
     @Override

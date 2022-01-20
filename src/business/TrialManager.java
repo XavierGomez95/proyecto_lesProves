@@ -9,7 +9,6 @@ public class TrialManager {
     private List<Trial> trials;
 
 
-
     public TrialManager(List<Trial> trials) {
         this.trials = trials;
     }
@@ -60,10 +59,10 @@ public class TrialManager {
      * @param budgetAmount
      * @return
      */
-    public BudgedRequest createBudgetRequest(String trialName, String entityName, long budgetAmount) {
-        BudgedRequest budgedRequest = new BudgedRequest(trialName, entityName, budgetAmount);
-        trials.add(budgedRequest);
-        return budgedRequest;
+    public BudgetRequest createBudgetRequest(String trialName, String entityName, long budgetAmount) {
+        BudgetRequest budgetRequest = new BudgetRequest(trialName, entityName, budgetAmount);
+        trials.add(budgetRequest);
+        return budgetRequest;
     }
 
     /**
@@ -150,5 +149,9 @@ public class TrialManager {
             }
         }
         return trial;
+    }
+
+    public boolean executeBudgetRequest(int totalPI, BudgetRequest budgetRequest) {
+        return budgetRequest.calculateFormula(totalPI);
     }
 }

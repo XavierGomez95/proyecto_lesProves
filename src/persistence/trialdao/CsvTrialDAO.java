@@ -14,17 +14,21 @@ public class CsvTrialDAO implements TrialDAO {
     private final String csvPHDPath = "csv_files/phdDefense.csv";
     private final String csvBudgetPath = "csv_files/budgetRequest.csv";
 
+    /**
+     * @return list of {@link Trial} read on CSV.
+     */
     @Override
     public List<Trial> readAll() {//podemos hacer que el readTrials() sea el readAll pero asi parece mas limpio?
         return readTrials();
     }
 
     /**
-     * @param trials
+     * First it erases the 4 files then writes trials in file
+     *
+     * @param trials updated Trial list
      */
     @Override
     public void writeAll(List<Trial> trials) {
-        //primero vaciamos los 4 files
         try {
             new FileWriter(csvArticlePath).close();
             new FileWriter(csvMasterPath).close();
@@ -40,6 +44,9 @@ public class CsvTrialDAO implements TrialDAO {
         }
     }
 
+    /**
+     * @param t trial we want to write in csv file, then {@link #writeLine(String pathTrialType, Trial)}
+     */
     private void writeTrial(Trial t) {
         if (t instanceof PublicArticle) {
             writeLine(csvArticlePath, t);
@@ -47,11 +54,13 @@ public class CsvTrialDAO implements TrialDAO {
             writeLine(csvMasterPath, t);
         } else if (t instanceof PhDefense) {
             writeLine(csvPHDPath, t);
-        } else if (t instanceof BudgedRequest) {
+        } else if (t instanceof BudgetRequest) {
             writeLine(csvBudgetPath, t);
         }
     }
-
+    /**
+     * checks if the file and directory exist, otherwise it creates them.
+     */
     private void checkDirectory(File file) {
         File directory = new File("csv_files");
         directory.mkdir();
@@ -65,6 +74,11 @@ public class CsvTrialDAO implements TrialDAO {
         }
     }
 
+    /**
+     * Reads the 4 files of trials csv
+     *
+     * @return list of all {@link Trial} saved in csv file.
+     */
     private List<Trial> readTrials() {
         Scanner scanFile = null;
         List<Trial> trials = new ArrayList<>();
@@ -105,7 +119,7 @@ public class CsvTrialDAO implements TrialDAO {
             if (budgetFile.exists()) {
                 if (!isDirectoryEmpty(budgetFile)) {
                     while (scanFile.hasNextLine()) {
-                        trials.add(BudgedRequest.fromLine(scanFile.nextLine()));
+                        trials.add(BudgetRequest.fromLine(scanFile.nextLine()));
                     }
                 }
             }
@@ -119,6 +133,10 @@ public class CsvTrialDAO implements TrialDAO {
         return trials;
     }
 
+    /**
+     * @param file we want to check if it is empty.
+     * @return true == empty file.
+     */
     private boolean isDirectoryEmpty(File file) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -129,6 +147,12 @@ public class CsvTrialDAO implements TrialDAO {
         return true;
     }
 
+    /**
+     * {@link #checkDirectory(File)} and  {@link Trial#getInfo()} to write it in csv file.
+     *
+     * @param path to know the type of trial and where save it.
+     * @param t    to {@link Trial#getInfo()}
+     */
     private void writeLine(String path, Trial t) {
         try {
             File file = new File(path);
