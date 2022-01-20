@@ -1,31 +1,35 @@
 [
   {
     "year": 2022,
-    "currentTrialExecution": 0,
+    "currentTrialExecution": -1,
     "players": [
       {
         "name": "Manolo",
         "pi": 5,
         "alive": true,
-        "type": "engineer"
+        "type": "engineer",
+        "upGraded": false
       },
       {
         "name": "Pepe",
         "pi": 5,
         "alive": true,
-        "type": "engineer"
+        "type": "engineer",
+        "upGraded": false
       },
       {
         "name": "Nina",
         "pi": 5,
         "alive": true,
-        "type": "engineer"
+        "type": "engineer",
+        "upGraded": false
       },
       {
         "name": "Salma",
-        "pi": 5,
-        "alive": true,
-        "type": "engineer"
+        "pi": 0,
+        "alive": false,
+        "type": "engineer",
+        "upGraded": false
       }
     ]
   }

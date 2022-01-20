@@ -52,17 +52,11 @@ public class Player {
     /**
      * @param points numerical value with which the final increment value is to be calculated.
      */
-    public boolean addPoints(int points) {
+    public void addPoints(int points) {
         switch (type) {
             case "engineer", "master" -> this.pi += points;
             case "doctor" -> this.pi += (points * 2);
         }
-        boolean upGraded = false;
-        if (points >= 10) {
-            upGrade();
-            upGraded = true;
-        }
-        return upGraded;
     }
 
     // Antes de preguntar: Continue the execution? [yes/no]:

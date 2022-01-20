@@ -29,18 +29,15 @@ public class Work implements Runnable {
 
         else if (trial instanceof PublicArticle p) {
             info = infoConcatName();
-            info += "is submitting...";
+            info += " is submitting...";
 
             boolean articlePublished = p.isArticlePublished();
             if (articlePublished) info = acceptedArticle(p);
             else {
                 boolean reviewAccepted = p.isReviewAccepted(false);
                 if (reviewAccepted) info += " Revisions...";
-
-                else {
                     if (p.isArticleRejected(false)) info = rejectedArticle(p);
                     else info = acceptedArticle(p);
-                }
             }
         }
 
@@ -73,9 +70,9 @@ public class Work implements Runnable {
      * @return A String with information about the execution of trials (Master passed).
      */
     private String masterPassed() {
+        info += " Congrats! PI count: " + player.getPi();
         if (player.isTypeEngineer()) player.upGrade();
         else player.addPoints(3);
-        info += " Congrats! PI count: " + player.getPi();
         return info;
     }
 
@@ -98,9 +95,9 @@ public class Work implements Runnable {
      * @return A String with information about the execution of trials (PhD Defense successfully done).
      */
     private String phdPassed() {
+        info += " was successful. Congrats! PI count: " + player.getPi();
         if (player.isTypeEngineer()) player.upGrade();
         else player.addPoints(5);
-        info += " was successful. Congrats! PI count: " + player.getPi();
         return info;
     }
 
@@ -109,9 +106,9 @@ public class Work implements Runnable {
      * @return A String with the name depending on the type of studies the player has.
      */
     private String infoConcatName() {
-        if (player.isTypeMaster()) info = player.getType() + " " + player.getName();
-        else if (player.isTypeDoctor()) info = player.getName() + ", PhD. ";
-        else if (player.isTypeEngineer()) info = player.getName();
+        if (player.isTypeMaster()) info = "\t" + player.getType() + " " + player.getName();
+        else if (player.isTypeDoctor()) info = "\t" + player.getName() + ", PhD. ";
+        else if (player.isTypeEngineer()) info = "\t" + player.getName();
         return info;
     }
 
@@ -123,7 +120,7 @@ public class Work implements Runnable {
     private String rejectedArticle(PublicArticle p) {
         int pi = p.penaltyPi();
         player.subtractPoints(pi);
-        info += player.getName() + "is submitting..." + " Rejected. PI count: " + player.getPi();
+        info += player.getName() + " is submitting..." + " Rejected. PI count: " + player.getPi();
         if (player.isKillable()) {
             player.killPlayer();
             info += " - Disqualified!";
@@ -139,8 +136,8 @@ public class Work implements Runnable {
     private String acceptedArticle(PublicArticle p) {
         int pi = p.rewardPi();
         player.addPoints(pi);
-        if (player.isUpgradeable()) player.upGrade();
         info += " Accepted! PI count: " + player.getPi();
+        if (player.isUpgradeable()) player.upGrade();
         return info;
     }
 

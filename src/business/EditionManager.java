@@ -64,8 +64,8 @@ public class EditionManager {
                     Trial trial = trialManager.getByName(nameTrials.get(i).split(",")[0]);
                     list.add(new StringBuilder("\t" + (i + 1)).append("- ").append(nameTrials.get(i)).append(trial.getType()).toString());
                 }
-                currentPosition++;
             }
+            currentPosition++;
         }
         return list;
     }
