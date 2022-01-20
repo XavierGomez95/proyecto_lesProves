@@ -35,14 +35,15 @@ public class ConductorController {
         if (editionManager.isCoincident(YEAR)) {
             boolean exist = executionManager.checkCurrentYear();
             menu.showMessage("--- The Trials " + YEAR + " ---");
+            menu.createNewLine();
             if (!exist) {
                 addPlayers();
                 execute();
             } else if (!executionManager.isFinished()) {
                 execute();
             } else {
-                //comprobar quien ha ganado, si algun player sigue vivo TODO
-                menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED - PLAYERS WON");
+                finishExecution();
+
             }
 
         } else {
@@ -52,36 +53,20 @@ public class ConductorController {
         }
     }
 
+
     /**
-     * We ask to {@link #enterPlayers(int num)} and we create them
+     * Loop of {@link Menu#askString(String name)} to {@link ExecutionManager#createPlayers(List names)} of the Edition
      */
     private void addPlayers() {
         int numPlayers = editionManager.checkNumPlayers();
-        enterPlayers(numPlayers);
-    }
-
-    /**
-     * Loop of {@link Menu#askString(String name)} to {@link #createPlayers(List names)} of the Edition
-     *
-     * @param numPlayers to know how many names of players we need
-     */
-    private void enterPlayers(int numPlayers) {
-        List<String> list = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
             String player = menu.askString("Enter the player's name (" + (i + 1) + "/" + numPlayers + "): ");
-            list.add(player);
+            names.add(player);
         }
-        createPlayers(list);
-    }
-
-    /**
-     * it calls {@link ExecutionManager#createPlayers(List names)}
-     *
-     * @param names of players
-     */
-    private void createPlayers(List<String> names) {
         executionManager.createPlayers(names);
     }
+
 
     /**
      * @return
@@ -103,21 +88,22 @@ public class ConductorController {
     private void execute() {
         int num = executionManager.getNumTrial();
         Trial currentTrial = getListTrialsExecution().get(num);
-        if (!isBudgedRequest(currentTrial)) {
-            menu.showMessage("Trial #" + (num + 1) + " - " + currentTrial.getName());
-            listResults(executionManager.start(currentTrial));
 
+        menu.showMessage("Trial #" + (num + 1) + " - " + currentTrial.getName());
+        menu.createNewLine();
+        if (!isBudgedRequest(currentTrial)) {
+            listResults(executionManager.start(currentTrial));
         } else {
             startBudgetRequest((BudgetRequest) currentTrial);
         }
 
 
-        if (!isLastTrial(num + 1)) {
+        if (!isLastTrial(num + 1) && checkPlayersAlive()) {
             executionManager.addNumTrial();
             askToContinue();
         } else {
             executionManager.finishExecution();
-            menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED");
+            finishExecution();
         }
 
     }
@@ -129,12 +115,20 @@ public class ConductorController {
 
     }
 
-    /**
-     * @param t
-     * @return
-     */
-    public boolean isBudgedRequest(Trial t) {
-        return t instanceof BudgetRequest;
+    private void askToContinue() {
+        String answer;
+        menu.createNewLine();
+        do {
+            answer = menu.askString(executionManager.checkUpgrade() + "Continue the execution? [yes/no]: ");
+
+            if (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
+                menu.showError("Enter a correct value [yes/no].");
+            }
+        } while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no"));
+
+        if (answer.equalsIgnoreCase("YES")) {
+            execute();
+        }
     }
 
     /**
@@ -145,6 +139,27 @@ public class ConductorController {
         return getListTrialsExecution().size() <= num;
     }
 
+    private void finishExecution() {
+        menu.createNewLine();
+        if (checkPlayersAlive()) {
+            menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED - PLAYERS WON");
+        } else {
+            menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED - PLAYERS LOST");
+        }
+    }
+
+    private boolean checkPlayersAlive() {
+        return executionManager.checkWin();
+    }
+
+    /**
+     * @param t
+     * @return
+     */
+    public boolean isBudgedRequest(Trial t) {
+        return t instanceof BudgetRequest;
+    }
+
     /**
      *
      */
@@ -153,28 +168,13 @@ public class ConductorController {
         boolean win = trialManager.executeBudgetRequest(totalPI, currentTrial);
         if (win) {
             menu.showMessage("The research group got the budget!");
-            executionManager.addPiBudget();
-
+            listResults(executionManager.addPiBudget());
         } else {
-            executionManager.subtractPiBudget();
+            menu.showMessage("The research group didn't get the budget...");
+            listResults(executionManager.subtractPiBudget());
         }
 
-    }
 
-
-    private void askToContinue() {
-        String answer;
-        do {
-            answer = menu.askString("Continue the execution? [yes/no]:");
-            if (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-                menu.showError("Enter a correct value [yes/no].");
-                menu.createNewLine();
-            }
-        } while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no"));
-
-        if (answer.equalsIgnoreCase("YES")) {
-            execute();
-        }
     }
 
 }

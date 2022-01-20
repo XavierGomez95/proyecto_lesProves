@@ -40,13 +40,13 @@ public class ExecutionManager {
 
     public List<String> start(Trial t) {
         List<Player> players = currentExecution.getPlayers();
-        List<Work> list = new ArrayList<>();
+        List<Work> works = new ArrayList<>();
         for (Player player : players) {
             if (player.isAlive()) {
                 Work w = new Work(player, t);
                 Thread thread = new Thread(w);
                 thread.start();
-                list.add(w);
+                works.add(w);
             }
         }
         try {
@@ -55,7 +55,18 @@ public class ExecutionManager {
             e.printStackTrace();
         }
 
-        return getInfo(list);
+        return getInfo(works);
+    }
+
+    public String checkUpgrade() {
+        List<Player> players = currentExecution.getPlayers();
+        StringBuilder lastData = new StringBuilder();
+        for (Player p : players) {
+            if (p.isUpGraded()) {
+                lastData.append(p.getName()).append(" is now a ").append(p.getType()).append(" (with 5 PI). ");
+            }
+        }
+        return lastData.toString();
     }
 
 
@@ -104,32 +115,72 @@ public class ExecutionManager {
         return total;
     }
 
+    public List<String> subtractPiBudget() {
+        ArrayList<Player> players = currentExecution.getPlayers();
+        List<String> results = new ArrayList<>();
+        for (Player player : players) {
+            player.subtractPoints(2);
+        }
+
+        for (Player p : players) {
+            String info = "";
+            if (p.getType().equals("engineer")) {
+                info = "\t" + p.getName() + ". " + " PI count: " + p.getPi();
+            } else {
+                info = "\t" + p.getName() + ", " + p.getType() + ". PI count: " + p.getPi();
+            }
+            if (p.isKillable()) {
+                p.killPlayer();
+                info += " - Disqualified!";
+            }
+            results.add(info);
+        }
+
+        return results;
+    }
+
     /**
      * In case the players win we add half of their current points
      */
-    public String addPiBudget() {
+    public List<String> addPiBudget() {
         ArrayList<Player> players = currentExecution.getPlayers();
-        StringBuilder sb = new StringBuilder();
-        int[] points = getPipPerPlayer(players);
+        List<String> results = new ArrayList<>();
+        StringBuilder lastString = new StringBuilder();
+        int[] points = getPiPerPlayer(players);
         for (int i = 0; i < points.length; i++) {
             if (players.get(i).isAlive()) {
                 players.get(i).addPoints(points[i] / 2);
-                sb.append(System.lineSeparator());
-                if (true) {//si el addpoint es true significa que hay upgrade
-                    sb.append(players.get(i).getName()).append(", ").append(players.get(i).getType());
-                    sb.append(" PI count: ").append(players.get(i).getPi());
-
+                results.add(System.lineSeparator());
+                if (players.get(i).getType().equals("engineer")) {
+                    results.add("\t" + players.get(i).getName() + ". " + " PI count: " + players.get(i).getPi());
                 } else {
-                    sb.append(players.get(i).getName()).append(". ");
-                    sb.append(" PI count: ").append(players.get(i).getPi());
+                    results.add("\t" + players.get(i).getName() + ", " + players.get(i).getType() + ". PI count: " + players.get(i).getPi());
                 }
+
+                lastString.append(checkUpgradeBudgetRequest(players.get(i)));
             }
+            results.add(lastString.toString());
 
         }
-        return sb.toString();
+        return results;
     }
 
-    private int[] getPipPerPlayer(List<Player> players) {
+    /**
+     * For BudgetRequest Trial, checks if the {@link Player#isUpgradeable()} and {@link Player#upGrade()} it.
+     *
+     * @param p player
+     * @return data of the player upgraded
+     */
+    private String checkUpgradeBudgetRequest(Player p) {
+        if (p.isUpgradeable()) {
+            p.upGrade();
+            return p.getName() + "is now a " + p.getType() + " (with 5 PI)";
+        }
+        return "";
+
+    }
+
+    private int[] getPiPerPlayer(List<Player> players) {
         int[] points = new int[players.size()];
         for (int i = 0; i < points.length; i++) {
             points[i] = players.get(i).getPi();
@@ -137,11 +188,15 @@ public class ExecutionManager {
         return points;
     }
 
-    public void subtractPiBudget() {
-        ArrayList<Player> players = currentExecution.getPlayers();
-        for (int i = 0; i < players.size(); i++) {
-            players.get(i).subtractPoints(2);
-        }
-    }
 
+    public boolean checkWin() {
+        ArrayList<Player> players = currentExecution.getPlayers();
+        boolean playersAlive = false;
+        for (Player p : players) {
+            if (p.isAlive()) {
+                playersAlive = true;
+            }
+        }
+        return playersAlive;
+    }
 }
