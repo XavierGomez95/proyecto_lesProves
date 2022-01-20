@@ -63,8 +63,6 @@ public class Player {
         upGraded = false;
     }
 
-    // Antes de preguntar: Continue the execution? [yes/no]:
-
     /**
      * @return String with the message that will be displayed on the screen before asking the user
      * whether or not to continue with the program execution.
@@ -92,7 +90,7 @@ public class Player {
     }
 
     /**
-     *
+     * Set alive to false
      */
     public void killPlayer() {
         this.alive = false;
