@@ -29,7 +29,7 @@
         "pi": 5,
         "alive": true,
         "type": "engineer",
-        "upGraded": true
+        "upGraded": false
       }
     ]
   }

@@ -1,6 +1,7 @@
 package presentation;
 
 import business.EditionManager;
+import business.ExecutionManager;
 import business.TrialManager;
 import business.Edition;
 import business.trial.Trial;
@@ -21,7 +22,10 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link Menu#createNewLine()}, {@link Menu#showError(String)}, {@link Menu#showMessage(String)},
+     * {@link Menu#askInteger(String)}, {@link #enterMode(int)}.
+     * Runs the compositor controller option of the menu.
+     * {@link #enterMode(int)} to enter a submenu option.
      */
     public void run() {
         int mode;
@@ -34,6 +38,7 @@ public class CompositorController {
             do {
                 mode = menu.askInteger("Enter an option: ");
                 if (mode < 1 || mode > 3) {
+                    menu.createNewLine();
                     menu.showError("Enter a number between 1 and 3 (included).");
                     menu.createNewLine();
                 }
@@ -43,8 +48,9 @@ public class CompositorController {
     }
 
     /**
-     * @param mode
-     * @return
+     * {@link #manageTrials()}, {@link #manageEditions()}.
+     * @param mode number of an option (int).
+     * @return an option (String).
      */
     private String enterMode(int mode) {
         String option = "";
@@ -56,7 +62,10 @@ public class CompositorController {
     }
 
     /**
-     * @return
+     * {@link Menu#showEditionsMenu()}, {@link Menu#askString(String)}, {@link Menu#showError(String)},
+     * {@link Menu#createNewLine()}, {@link #createEdition()}, {@link #listEdition()},
+     * {@link #duplicateEdition()}, {@link #deleteEdition()}.
+     * @return an option (String).
      */
     private String manageEditions() {
         String option = "";
@@ -65,6 +74,7 @@ public class CompositorController {
             do {
                 option = menu.askString("Enter an option: ");
                 if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e"))) {
+                    menu.createNewLine();
                     menu.showError("Enter a letter.");
                     menu.createNewLine();
                 }
@@ -83,17 +93,21 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link Menu#createNewLine()}, {@link Menu#showMessage(String)}, {@link Menu#showSuccess(String)},
+     * {@link #askNumber(String, String, long, long)}, {@link Menu#menuTrials(List)}, {@link Menu#askInteger(String)},
+     * {@link EditionManager#deleteEdition(int, int)},.
+     * Delete an edition.
      */
     private void deleteEdition() {
         List<String> list = editionManager.editionListInfo();
-        int year, numberPlayers;
+        int year;
         if (!list.isEmpty()) {
+            menu.createNewLine();
             menu.showMessage("Which edition do you want to delete?");
             menu.createNewLine();
             menu.menuTrials(list); // 4.3.2.3
 
-            int size = list.size() + 1; // back es list.size() + 1
+            int size = list.size() + 1;
             int option = (int) askNumber("Enter an option: ",
                     "Enter a correct opcion between " + 1 + " and " + size, 1, size);
 
@@ -115,12 +129,16 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link Menu#createNewLine()}, {@link Menu#showError(String)}, {@link #askNumber(String, String, long, long)},
+     * {@link Menu#menuTrials(List)}, {@link Menu#showMessage(String)},
+     * {@link EditionManager#duplicateEdition(int, int, int)}, {@link EditionManager#isCoincident(int)}.
+     * Duplicate an editions.
      */
     private void duplicateEdition() {
         List<String> list = editionManager.editionListInfo();
         int year, numberPlayers;
         if (!list.isEmpty()) {
+            menu.createNewLine();
             menu.showMessage("Which edition do you want to clone?");
             menu.createNewLine();
             menu.menuTrials(list); // 4.3.2.3
@@ -129,15 +147,17 @@ public class CompositorController {
             int option = (int) askNumber("Enter an option: ",
                     "Enter a correct opcion between " + 1 + " and " + size, 1, size);
             if (option < size) {
-                //list = pickTrials(size, list, list.size());
                 menu.createNewLine();
                 do {
                     year = menu.askInteger("Enter the edition's year: ");
                     if (editionManager.isCoincident(year)) {
+                        menu.createNewLine();
+                        menu.createNewLine();
                         menu.showError("This year exists, please enter another year.");
                         menu.createNewLine();
                     }
                     if (year < Year.now().getValue()) {
+                        menu.createNewLine();
                         menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
                         menu.createNewLine();
                     }
@@ -150,12 +170,16 @@ public class CompositorController {
                 menu.showSuccess("The edition was duplicated succesfully!");
             }
         } else {
+            menu.createNewLine();
             menu.showError("There are no trials. Please create first a trial.");
         }
     }
 
     /**
-     *
+     * {@link Menu#createNewLine()}, {@link Menu#showError(String)}, {@link #askNumber(String, String, long, long)},
+     * {@link Menu#menuTrials(List)}, {@link Menu#showMessage(String)},
+     * {@link Menu#showListEditionByYear(List)}, {@link EditionManager#getYearEditionInfo(int, TrialManager)}.
+     * List editions.
      */
     private void listEdition() {
         List<String> listEditions = editionManager.editionListInfo();
@@ -170,17 +194,22 @@ public class CompositorController {
                     "Enter a correct option between " + 1 + " and " + size, 1, size);
             if (option <= size) {
                 List<String> listEditionsInfo = editionManager.getYearEditionInfo(option - 1, trialManager);
-                menu.createNewLine();
+                //menu.createNewLine();
                 menu.showListEditionByYear(listEditionsInfo);
             }
         } else {
+            menu.createNewLine();
             menu.createNewLine();
             menu.showError("There are no trials. Please create first a trial.");
         }
     }
 
     /**
-     *
+     * {@link Menu#createNewLine()}, {@link Menu#askInteger(String)}, {@link TrialManager#trialListNames()},
+     * {@link Menu#showError(String)}, {@link EditionManager#isCoincident(int)}, {@link #askNumber(String, String, long, long)},
+     * {@link Menu#menuEditions(List)}, {@link #pickTrials(int, List, int)},
+     * {@link EditionManager#createEdition(int, int, int, ArrayList)}, {@link Menu#showSuccess(String)}.
+     * Create edition.
      */
     private void createEdition() {
         List<String> list = trialManager.trialListNames();
@@ -190,10 +219,12 @@ public class CompositorController {
             do {
                 editionsYear = menu.askInteger("Enter the edition's year: ");
                 if (editionManager.isCoincident(editionsYear)) {
+                    menu.createNewLine();
                     menu.showError("This year exists, please enter another year.");
                     menu.createNewLine();
                 }
                 if (editionsYear < Year.now().getValue()) {
+                    menu.createNewLine();
                     menu.showError("Enter the curremt year or upper (dont repeat existing year editions).");
                     menu.createNewLine();
                 }
@@ -214,16 +245,18 @@ public class CompositorController {
             menu.createNewLine();
             menu.showSuccess("The edition was created succesfully!");
         } else {
+            menu.createNewLine();
             menu.showError("To create an edition, first, you must create trials.");
             menu.createNewLine();
         }
     }
 
     /**
-     * @param maxTrials
-     * @param listNames
-     * @param size
-     * @return
+     * {@link #askNumber(String, String, long, long)}
+     * @param maxTrials number maximum of trials (int).
+     * @param listNames ArrayList of names (String).
+     * @param size number (int).
+     * @return an ArrayList of names (String).
      */
     private List<String> pickTrials(int maxTrials, List<String> listNames, int size) {
         List<String> list = new ArrayList<>();
@@ -237,7 +270,9 @@ public class CompositorController {
     }
 
     /**
-     * @return
+     * {@link Menu#showTrialsMenu()}, {@link Menu#createNewLine()}, {@link Menu#askString(String)},
+     * {@link Menu#showError(String)}, {@link #createTrial()}, {@link #listTrial()}, {@link #deleteTrial()}.
+     * @return an option of a menu (String).
      */
     private String manageTrials() {
         String option = "";
@@ -246,6 +281,7 @@ public class CompositorController {
             do {
                 option = menu.askString("Enter an option: ");
                 if (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d"))) {
+                    menu.createNewLine();
                     menu.showError("Enter a letter.");
                     menu.createNewLine();
                 }
@@ -263,7 +299,9 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link #askNumber(String, String, long, long)}, {@link Menu#showTrialTypesMenu()}, {@link Menu#createNewLine()},
+     * {@link #enterArticleInfo()}, {@link #enterMasterInfo()}, {@link #enterPHDefenseInfo()}, {@link #enterBudgetRequestInfo()}.
+     * Create a new trial.
      */
     private void createTrial() {
         int option;
@@ -283,7 +321,9 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link #askTrialName()}, {@link Menu#askString(String)}, {@link #askNumber(String, String, long, long)},
+     * {@link TrialManager#createBudgetRequest(String, String, long)}.
+     * Create an instance of a BudgetRequest.
      */
     private void enterBudgetRequestInfo() {
         String trialName = askTrialName();
@@ -294,7 +334,9 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link #askTrialName()}, {@link Menu#askString(String)}, {@link #askNumber(String, String, long, long)},
+     * {@link TrialManager#createPHD(String, String, int)}.
+     * Create an instance of a PhDefense.
      */
     private void enterPHDefenseInfo() {
         int defenseDifficulty;
@@ -306,7 +348,9 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link #askTrialName()}, {@link #askTypeTrialName(String, String)}, {@link #askNumber(String, String, long, long)},
+     * {@link TrialManager#createMaster(String, String, int, int)}.
+     * Create an instance of a Master.
      */
     private void enterMasterInfo() {
         int ectsNumber, creditPassProbability;
@@ -321,7 +365,9 @@ public class CompositorController {
     }
 
     /**
-     *
+     * {@link #askTypeTrialName(String, String)}, {@link #askQuartile()}, {@link #askNumber(String, String, long, long)},
+     * {@link #askTrialName()}, {@link TrialManager#createArticle(String, String, String, int, int, int)}.
+     * Create an instance of a PublicArticle.
      */
     private void enterArticleInfo() {
         int acceptanceProbability, revisionProbability, rejectionProbability;
@@ -342,14 +388,15 @@ public class CompositorController {
     }
 
     /**
-     *
-     * @return
+     * {@link Menu#showError(String)}, {@link Menu#createNewLine()}, {@link Menu#askString(String)}.
+     * @return a quartile (String).
      */
     private String askQuartile() {
         String quartile;
         do {
             quartile = menu.askString("Enter the journal’s quartile: ");
             if (!quartile.equals("Q1") && !quartile.equals("Q2") && !quartile.equals("Q3") && !quartile.equals("Q4")) {
+                menu.createNewLine();
                 menu.showError("Enter a correct value (Q1, Q2, Q3, Q4).");
                 menu.createNewLine();
             }
@@ -358,16 +405,17 @@ public class CompositorController {
     }
 
     /**
-     *
-     * @param msg
-     * @param error
-     * @return
+     * {@link Menu#showError(String)}, {@link Menu#createNewLine()}, {@link Menu#askString(String)}.
+     * @param msg message (String).
+     * @param error error message (String).
+     * @return magazine name (String).
      */
     private String askTypeTrialName(String msg, String error) {
         String magazine;
         do {
             magazine = menu.askString(msg);
             if (magazine.isEmpty()) {
+                menu.createNewLine();
                 menu.showError(error);
                 menu.createNewLine();
             }
@@ -376,18 +424,21 @@ public class CompositorController {
     }
 
     /**
-     *
-     * @return
+     * {@link Menu#showError(String)}, {@link Menu#createNewLine()}, {@link Menu#askString(String)},
+     * {@link TrialManager#isTrialNameUnique(String)}.
+     * @return a name of a Trial (String).
      */
     private String askTrialName() {
         String trialName;
         do {
             trialName = menu.askString("Enter the trial’s name: ");
             if (trialName.isEmpty()) {
+                menu.createNewLine();
                 menu.showError("The trial's name must not be empty!");
                 menu.createNewLine();
             }
             if (!trialManager.isTrialNameUnique(trialName)) {
+                menu.createNewLine();
                 menu.showError("This name is already in use.");
                 menu.createNewLine();
             }
@@ -396,29 +447,37 @@ public class CompositorController {
     }
 
     /**
-     * @param msg
-     * @param errMsg
-     * @param min
-     * @param max
-     * @return
+     * {@link Menu#showError(String)}, {@link Menu#createNewLine()}, {@link Menu#askInteger(String)}.
+     * @param msg message (String).
+     * @param errMsg error message (String).
+     * @param min number between a gap (int).
+     * @param max number between a gap (int).
+     * @return a number.
      */
     private long askNumber(String msg, String errMsg, long min, long max) {
         long num;
         do {
             num = menu.askInteger(msg);
             if (num < min || num > max) {
-                if (max > 0) menu.showError(errMsg);
-                else menu.showMessage("The probability must be 0.");
-                menu.createNewLine();
+                if (max == 0) {
+                    menu.createNewLine();
+                    menu.showError("The probability must be 0.");
+                    menu.createNewLine();
+                } else {
+                    menu.createNewLine();
+                    menu.showError(errMsg);
+                    menu.createNewLine();
+                }
             }
         } while (num < min || num > max);
         return num;
     }
 
-    // REVISAR SI ESTO ESTA BIEN AQUI O VA EN LA CLASE TRIAL
-
     /**
-     *
+     * {@link Menu#showMessage(String)}, {@link Menu#createNewLine()}, {@link TrialManager#trialListNames()},
+     * {@link Menu#menuTrials(List)}, {@link Menu#showError(String)}, {@link TrialManager#trialStringInfo(int)},
+     * {@link #askNumber(String, String, long, long)}.
+     * Controls all the methods around the listTrial option.
      */
     private void listTrial() {
         int inputOption, backOption;
@@ -437,22 +496,24 @@ public class CompositorController {
                 inputOption = (int) askNumber("Enter an option: ",  new StringBuilder("Incorrect input. Enter a number between ")
                         .append(1).append(" and ").append(backOption).toString(), 1, backOption);
             } while (inputOption > backOption || inputOption < 1);
-            if (inputOption != backOption) menu.createNewLine();
-
-
-
-            // ¡¡¡AQUI ES DONDE HE DE HACER EL FILTRO SOLO PARA MOSTRAR LA INFORMACION DE LA OPCION SELECCIONADA!!!
 
             if (inputOption != backOption) {
+                menu.createNewLine();
                 String info = trialManager.trialStringInfo(inputOption - 1);
                 if (!info.isEmpty()) menu.showMessage(info); // 4.3.1.2
-                else menu.showError("There are no trials. Please create first a trial.");
+                else {
+                    menu.createNewLine();
+                    menu.showError("There are no trials. Please create first a trial.");
+                }
             }
         }
     }
 
     /**
-     *
+     * {@link Menu#showMessage(String)}, {@link Menu#createNewLine()}, {@link Menu#menuTrials(List)},
+     * {@link Menu#askInteger(String)}, {@link Menu#askString(String)}, {@link Menu#showError(String)},
+     * {@link EditionManager#dependentTrial(String)}, {@link TrialManager#deleteTrial(int, String)}.
+     * Controls all the methods around the deleteTrial option.
      */
     private void deleteTrial() {
         int indexTrialToDelete;
@@ -469,6 +530,7 @@ public class CompositorController {
                     menu.createNewLine();
                     String trialsName = menu.askString("Enter the trial’s name for confirmation: ");
                     if (editionManager.dependentTrial(trialsName)) {
+                        menu.createNewLine();
                         menu.showError("The trial cannot be deleted because one edition depends on it.");
                     } else {
 
@@ -477,14 +539,21 @@ public class CompositorController {
                         if (deleted) {
                             menu.createNewLine();
                             menu.showSuccess("The trial was successfully deleted.");
-                        } else menu.showError("The trial has not been successfully deleted.");
+                        } else {
+                            menu.createNewLine();
+                            menu.showError("The trial has not been successfully deleted.");
+                        }
                     }
                 }
                 if (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1) {
+                    menu.createNewLine();
                     menu.showError("Enter a value between 1 and " + (list.size() + 1));
                     menu.createNewLine();
                 }
             } while (indexTrialToDelete <= 0 || indexTrialToDelete > list.size() + 1);
-        } else menu.showError("There are no trials. Please create first a trial.");
+        } else {
+            menu.createNewLine();
+            menu.showError("There are no trials. Please create first a trial.");
+        }
     }
 }

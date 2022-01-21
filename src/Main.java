@@ -1,3 +1,12 @@
+/*
+ ************************************************************
+ * @Purpose: Object-oriented programming project.
+ * @Authors: Iris Querol Armero & Xavier Gomez de la Torre
+ * @Creation date: 28-12-2021
+ * @Last modification date: 21-01-2022
+ ************************************************************
+ */
+
 import presentation.Controller;
 import presentation.Menu;
 

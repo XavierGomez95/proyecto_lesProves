@@ -52,18 +52,29 @@ public class ExecutionManager {
     public List<String> start(Trial t) {
         List<Player> players = currentExecution.getPlayers();
         List<Work> works = new ArrayList<>();
+        Thread[] threads = new Thread[players.size()];
+
+        int i = 0;
         for (Player player : players) {
             if (player.isAlive()) {
                 Work w = new Work(player, t);
-                Thread thread = new Thread(w);
-                thread.start();
+                threads[i] = new Thread(w);
+                threads[i++].start();
                 works.add(w);
             }
         }
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        i = 0;
+        for (Player player : players) {
+            if (player.isAlive()) {
+                if (threads[i] != null) {
+                    try {
+                        threads[i++].join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
 
         return getData(works);
@@ -227,5 +238,17 @@ public class ExecutionManager {
             }
         }
         return playersAlive;
+    }
+
+    // TODO - INTERRUPCION DE LOS THREADS
+    /**
+     * Interrupt the threads.
+     */
+    public void finishThreads() {
+        List<Player> players = currentExecution.getPlayers();
+        int size = players.size();
+        for (int i = 0; i < size; i++) {
+            if (!Thread.currentThread().isInterrupted()) Thread.currentThread().interrupt();
+        }
     }
 }

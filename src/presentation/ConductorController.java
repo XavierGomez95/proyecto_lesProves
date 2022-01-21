@@ -47,6 +47,7 @@ public class ConductorController {
 
         } else {
             menu.createNewLine();
+            menu.createNewLine();
             menu.showError("No edition defined for the current year " + YEAR);
             menu.createNewLine();
         }
@@ -82,7 +83,7 @@ public class ConductorController {
     }
 
     /**
-     * it executes the Trial if it is a Budget request {@link #startBudgetRequest(BudgetRequest)}
+     * It executes the Trial if it is a Budget request {@link #startBudgetRequest(BudgetRequest)}
      * otherwise it calls{@link ExecutionManager#start(Trial)} to start the threads.
      */
     private void execute() {
@@ -97,15 +98,14 @@ public class ConductorController {
             startBudgetRequest((BudgetRequest) currentTrial);
         }
 
-
         if (!isLastTrial(num + 1) && checkPlayersAlive()) {
             executionManager.addNumTrial();
             askToContinue();
         } else {
             executionManager.finishExecution();
+            executionManager.finishThreads(); // TODO - COMPROBAR QUE LA INTERRUPCION DE LOS THREADS ES CORRECTA
             finishExecution();
         }
-
     }
 
     /**
@@ -130,6 +130,7 @@ public class ConductorController {
             answer = menu.askString(executionManager.checkUpgrade() + "Continue the execution? [yes/no]: ");
 
             if (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
+                menu.createNewLine();
                 menu.showError("Enter a correct value [yes/no].");
             }
         } while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no"));
@@ -178,12 +179,10 @@ public class ConductorController {
         int totalPI = executionManager.getTotalPI();
         boolean win = trialManager.executeBudgetRequest(totalPI, currentTrial);
         if (win) {
-            menu.showMessage("The research group got the budget!");
-            menu.createNewLine();
+            menu.showSuccess("\t" + "The research group got the budget!");
             listResults(executionManager.addPiBudget());
         } else {
-            menu.showMessage("The research group didn't get the budget...");
-            menu.createNewLine();
+            menu.showMessage("\t" + "The research group didn't get the budget...");
             listResults(executionManager.subtractPiBudget());
         }
 

@@ -3,5 +3,10 @@
     "entityName": "LSGrants",
     "amount": 3333,
     "name": "Requesting the LSGrant for Excellence"
+  },
+  {
+    "entityName": "La Salle - URL",
+    "amount": 1000,
+    "name": "MH Request in POO"
   }
 ]

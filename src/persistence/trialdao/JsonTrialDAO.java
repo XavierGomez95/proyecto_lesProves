@@ -128,12 +128,10 @@ public class JsonTrialDAO implements TrialDAO {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    //throw new CustomMessageException("Error trying to write" + System.lineSeparator());
                 }
 
             } catch (IOException ex) {
                 ex.printStackTrace();
-                //throw new CustomMessageException("Error trying to open" + System.lineSeparator());
             }
         }
     }

@@ -103,6 +103,7 @@ public class Menu {
                 number = sc.nextInt();
                 return number;
             } catch (InputMismatchException e) {
+                createNewLine();
                 showError(new StringBuilder("Incorrect input! Enter a number.").append(System.lineSeparator()).toString());
             } finally {
                 sc.nextLine(); // Remove the \n from the buffer
@@ -126,6 +127,7 @@ public class Menu {
                 answer = sc.nextLine();
                 return answer;
             } catch (InputMismatchException e) {
+                createNewLine();
                 showError("Error, incorrect input data.");
             }
         }
@@ -138,7 +140,7 @@ public class Menu {
      * @param message String that contains a message to be shown.
      */
     public void showError(String message) {
-        System.out.println(TEXT_BOLD + COLOR_RED + System.lineSeparator() + message + RESET_COLOR);
+        System.out.println(TEXT_BOLD + COLOR_RED + message + RESET_COLOR);
     }
 
     /**

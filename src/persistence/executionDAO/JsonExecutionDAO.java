@@ -51,7 +51,6 @@ public class JsonExecutionDAO implements ExecutionDAO {
                 osArticle.write(gsonBuild.toJson(arrayExecution).getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
-                //throw new IOException("Error trying to open" + System.lineSeparator());
             }
         }
     }
@@ -69,7 +68,6 @@ public class JsonExecutionDAO implements ExecutionDAO {
                 executions.addAll(Arrays.asList(gson.fromJson(new FileReader(jsonExecutionPath), Execution[].class)));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                //throw new FileNotFoundException("File not found" + System.lineSeparator());
             }
         }
         return executions;
@@ -82,7 +80,6 @@ public class JsonExecutionDAO implements ExecutionDAO {
         try {
             new FileWriter(jsonExecutionPath).append("[]").close();
         } catch (IOException e) {
-            //throw new IOException("Error trying to delete content" + System.lineSeparator());
             e.printStackTrace();
         }
     }
@@ -103,12 +100,10 @@ public class JsonExecutionDAO implements ExecutionDAO {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    //throw new WrongInputException("Error trying to write" + System.lineSeparator());
                 }
 
             } catch (IOException ex) {
                 ex.printStackTrace();
-                //throw new WrongInputException("Error trying to open" + System.lineSeparator());
             }
         }
     }

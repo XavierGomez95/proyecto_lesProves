@@ -50,6 +50,7 @@ public class Controller {
         do {
             format = menu.askString("Pick a faction: ");
             if (!format.equals("I") && !format.equals("II")) {
+                menu.createNewLine();
                 menu.showError("Error entry."); // Poner el mensaje que quieras.
                 menu.createNewLine();
             }
@@ -104,6 +105,7 @@ public class Controller {
         do {
             format = menu.askString("Enter a role: ");
             if (!format.equals("A") && !format.equals("B")) {
+                menu.createNewLine();
                 menu.showError("Error entry.");
                 menu.createNewLine();
             }

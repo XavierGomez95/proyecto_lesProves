@@ -17,17 +17,17 @@ public class EditionManager {
     }
 
     /**
-     * @param editionsYear
-     * @param numberPlayers
-     * @param numberTrials
-     * @param list
+     * @param editionsYear number of a year (int)
+     * @param numberPlayers number of players (between 1 and 5) (int)
+     * @param numberTrials number of trials (between 3 and 12) (int).
+     * @param list ArrayList of type String
      */
     public void createEdition(int editionsYear, int numberPlayers, int numberTrials, ArrayList<String> list) {
         editions.add(new Edition(editionsYear, numberPlayers, numberTrials, list));
     }
 
     /**
-     * @return
+     * @return an ArrayList of each year of each edition (String).
      */
     public List<String> editionListInfo() {
         List<String> list = new ArrayList<>();
@@ -38,8 +38,8 @@ public class EditionManager {
     }
 
     /**
-     * @param editionsYear
-     * @return
+     * @param editionsYear year of an edition (int).
+     * @return true (the year received by parameter is equal to a year of an existing edition), or false (if not).
      */
     public boolean isCoincident(int editionsYear) {
         for (Edition e : editions) {
@@ -49,8 +49,8 @@ public class EditionManager {
     }
 
     /**
-     * @param index
-     * @return
+     * @param index is a specific position in an ArrayList (int).
+     * @return an ArrayList of type String.
      */
     public List<String> getYearEditionInfo(int index, TrialManager trialManager) {
         List<String> list = new ArrayList<>();
@@ -71,9 +71,9 @@ public class EditionManager {
     }
 
     /**
-     * @param i
-     * @param editionsYear
-     * @param numberPlayers
+     * @param i is a specific position in an ArrayList (int).
+     * @param editionsYear year of an edition (int).
+     * @param numberPlayers number of players (int).
      */
     public void duplicateEdition(int i, int editionsYear, int numberPlayers) {
         ArrayList<String> listNameTrials = new ArrayList<>();
@@ -88,9 +88,9 @@ public class EditionManager {
     }
 
     /**
-     * @param index
-     * @param year
-     * @return
+     * @param index is a specific position in an Edition type List (int).
+     * @param year is a specific year used to check if there's this existing year in an edition (int).
+     * @return true (if the trial was deleted), or false (if not).
      */
     public boolean deleteEdition(int index, int year) {
         boolean deleted = false;
@@ -104,13 +104,12 @@ public class EditionManager {
             }
             cont++;
         }
-
         return deleted;
     }
 
     /**
-     * @param trialsName
-     * @return
+     * @param trialsName a name of a trial (String).
+     * @return true (if exist a dependency between an edition and a trial), or false (if not).
      */
     public boolean dependentTrial(String trialsName) {
         boolean exist = false;
@@ -143,7 +142,7 @@ public class EditionManager {
     /**
      * For {@link ExecutionManager}
      *
-     * @param editionsYear current year
+     * @param editionsYear current year (int).
      * @return names of all trials edition
      */
     public List<String> listTrialsEdition(int editionsYear) {
