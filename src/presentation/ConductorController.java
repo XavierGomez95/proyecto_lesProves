@@ -145,7 +145,7 @@ public class ConductorController {
      * @param num next trial number
      * @return if there is more trials.
      */
-    public boolean isLastTrial(int num) {
+    private boolean isLastTrial(int num) {
         return getListTrialsExecution().size() <= num;
     }
 
