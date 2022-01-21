@@ -187,7 +187,6 @@ public class ExecutionManager {
         ArrayList<Player> players = currentExecution.getPlayers();
         List<String> results = new ArrayList<>();
         int[] points = getPiPerPlayer(players);
-        //results.add(System.lineSeparator()); // TEMPORAL
         for (int i = 0; i < points.length; i++) {
             if (players.get(i).isAlive()) {
                 players.get(i).addPoints(points[i] / 2);

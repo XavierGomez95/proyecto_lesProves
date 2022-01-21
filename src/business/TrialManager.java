@@ -14,12 +14,12 @@ public class TrialManager {
     }
 
     /**
-     * @param trialName name of a public article trial type.
-     * @param magazinesName name of a magazine.
-     * @param quartile String representin a quartile (Q1, Q2, Q3 or Q4).
+     * @param trialName             name of a public article trial type.
+     * @param magazinesName         name of a magazine.
+     * @param quartile              String representin a quartile (Q1, Q2, Q3 or Q4).
      * @param acceptanceProbability probability (integer between 0 and 100 including both)
-     * @param revisionProbability probability (integer between 0 and 100 including both)
-     * @param rejectionProbability probability (integer between 0 and 100 including both)
+     * @param revisionProbability   probability (integer between 0 and 100 including both)
+     * @param rejectionProbability  probability (integer between 0 and 100 including both)
      * @return a new instance of PublicArticle.
      */
     public PublicArticle createArticle(String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
@@ -29,9 +29,9 @@ public class TrialManager {
     }
 
     /**
-     * @param trialName name of a master trial type.
-     * @param mastersName name of a master.
-     * @param ectsNumber number of credits of a master (between 60 and 120 including both).
+     * @param trialName             name of a master trial type.
+     * @param mastersName           name of a master.
+     * @param ectsNumber            number of credits of a master (between 60 and 120 including both).
      * @param creditPassProbability probability (integer between 0 and 100 including both)
      * @return a new instance of StudyMaster.
      */
@@ -42,8 +42,8 @@ public class TrialManager {
     }
 
     /**
-     * @param trialName name of a PhD Defense trial type.
-     * @param fieldOfStudy name of a field of study.
+     * @param trialName         name of a PhD Defense trial type.
+     * @param fieldOfStudy      name of a field of study.
      * @param defenseDifficulty an integer representing the defense difficulty of a PhD Defense (between 1 and 10).
      * @return a new instance of PhDefense.
      */
@@ -54,8 +54,8 @@ public class TrialManager {
     }
 
     /**
-     * @param trialName name of a budget request trial type.
-     * @param entityName name of an entity name.
+     * @param trialName    name of a budget request trial type.
+     * @param entityName   name of an entity name.
      * @param budgetAmount long type representing a budget amount (between 1000 and 2000000000 including both).
      * @return a new instance of BudgetRequest.
      */
@@ -67,6 +67,7 @@ public class TrialManager {
 
     /**
      * {@link Trial#getName()}
+     *
      * @return a list of names, one for each trial.
      */
     public List<String> trialListNames() {
@@ -79,7 +80,8 @@ public class TrialManager {
 
     /**
      * {@link Trial#isNameEqual(String)}
-     * @param i specific position of a Trial type List.
+     *
+     * @param i          specific position of a Trial type List.
      * @param trialsName contains a namr of a trial.
      * @return true (if trial has been deleted), false (if not).
      */
@@ -108,6 +110,7 @@ public class TrialManager {
     /**
      * Compare if the name received by parameter is the same as the name of an existing trial.
      * {@link Trial#checkName(String)}
+     *
      * @param trialName is the name of a trial.
      * @return true (if name is unique), false (if not).
      */
@@ -122,6 +125,7 @@ public class TrialManager {
     /**
      * Gets a trial with a specific name.
      * {@link Trial#isNameEqual(String)}
+     *
      * @param s represents a name (type String).
      * @return a specific trial.
      */
@@ -136,10 +140,11 @@ public class TrialManager {
     }
 
     /**
+     * it is used {@link BudgetRequest#calculateFormula(int totalPI)}
      *
-     * @param totalPI
-     * @param budgetRequest
-     * @return
+     * @param totalPI       all the PI of the players
+     * @param budgetRequest the trial you want to execute
+     * @return if the trial was passed or not (true/false)
      */
     public boolean executeBudgetRequest(int totalPI, BudgetRequest budgetRequest) {
         return budgetRequest.calculateFormula(totalPI);
