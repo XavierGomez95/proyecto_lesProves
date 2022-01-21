@@ -31,17 +31,14 @@ public class Controller {
 
 
     public void run() {
-        String format = chooseFormat();
-        chooseRole(format);
-
+        chooseFormat();
+        chooseRole();
     }
 
     /**
      * The user choose the format to persist the information.
-     *
-     * @return a String to detect whether the user has chosen to persist the project in Json or in Csv.
      */
-    private String chooseFormat() {
+    private void chooseFormat() {
         String format;
 
         menu.showMessage("The IEEE needs to know where your allegiance lies.");
@@ -57,8 +54,6 @@ public class Controller {
         } while (!format.equals("I") && !format.equals("II"));
 
         loadData(format);
-
-        return format;
     }
 
     /**
@@ -96,9 +91,8 @@ public class Controller {
     /**
      * The user decides whether to access the management menu or the execution menu.
      *
-     * @param fileFormat a String to detect whether the user has chosen to persist the project in Json or in Csv.
      */
-    private void chooseRole(String fileFormat) {
+    private void chooseRole() {
         String format;
         menu.showMessage("Welcome to The Trials. Who are you?");
         menu.showRoleMenu();

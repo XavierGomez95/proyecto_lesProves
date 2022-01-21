@@ -33,6 +33,7 @@ public class ConductorController {
             boolean exist = executionManager.checkCurrentYear();
             menu.createNewLine();
             menu.showMessage("--- The Trials " + YEAR + " ---");
+
             if (!exist) {
                 addPlayers();
                 execute();
@@ -40,10 +41,10 @@ public class ConductorController {
                 execute();
             } else {
                 finishExecution();
-
             }
 
         } else {
+
             menu.createNewLine();
             menu.createNewLine();
             menu.showError("No edition defined for the current year " + YEAR);
@@ -58,6 +59,7 @@ public class ConductorController {
     private void addPlayers() {
         int numPlayers = editionManager.checkNumPlayers();
         List<String> names = new ArrayList<>();
+
         for (int i = 0; i < numPlayers; i++) {
             String player = menu.askString("Enter the player's name (" + (i + 1) + "/" + numPlayers + "): ");
             names.add(player);
@@ -71,8 +73,8 @@ public class ConductorController {
      */
     private List<Trial> getListTrialsExecution() {
         List<String> listNamesTrials = editionManager.listTrialsEdition(YEAR);
-
         List<Trial> listTrialsExecution = new ArrayList<>();
+
         for (String s : listNamesTrials) {
             listTrialsExecution.add(trialManager.getByName(s));
         }
@@ -90,6 +92,7 @@ public class ConductorController {
         menu.createNewLine();
         menu.showMessage("Trial #" + (num + 1) + " - " + currentTrial.getName());
         menu.createNewLine();
+
         if (!isBudgedRequest(currentTrial)) {
             listResults(executionManager.start(currentTrial));
         } else {
@@ -148,6 +151,7 @@ public class ConductorController {
 
     private void finishExecution() {
         menu.createNewLine();
+
         if (checkPlayersAlive()) {
             menu.showMessage("THE TRIALS " + YEAR + " HAVE ENDED - PLAYERS WON");
         } else {
@@ -176,6 +180,7 @@ public class ConductorController {
     public void startBudgetRequest(BudgetRequest currentTrial) {
         int totalPI = executionManager.getTotalPI();
         boolean win = trialManager.executeBudgetRequest(totalPI, currentTrial);
+
         if (win) {
             menu.showSuccess("\t" + "The research group got the budget!");
             listResults(executionManager.addPiBudget());
@@ -183,8 +188,5 @@ public class ConductorController {
             menu.showMessage("\t" + "The research group didn't get the budget...");
             listResults(executionManager.subtractPiBudget());
         }
-
-
     }
-
 }

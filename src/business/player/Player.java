@@ -63,14 +63,6 @@ public class Player {
     }
 
     /**
-     * @return String with the message that will be displayed on the screen before asking the user
-     * whether or not to continue with the program execution.
-     */
-    public String requestStringUpGrade() {
-        return name + " is now a " + type + " (with " + pi + " PI). ";
-    }
-
-    /**
      * Set the Player's attribute pi to 5, and convert the Player's type to master (if it's an engineer),
      * or doctor (if it's a master).
      */

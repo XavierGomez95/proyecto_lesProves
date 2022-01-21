@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Menu {
     private Scanner sc;
 
-
     private static final String TEXT_BOLD = "\033[0;1m";
     private static final String COLOR_RED = "\u001B[31m";
     private static final String COLOR_GREEN = "\u001B[32m";
@@ -19,7 +18,6 @@ public class Menu {
     public Menu() {
         this.sc = new Scanner(System.in);
     }
-
 
     /**
      * Show the format menu options on the screen.
@@ -104,7 +102,7 @@ public class Menu {
                 return number;
             } catch (InputMismatchException e) {
                 createNewLine();
-                showError(new StringBuilder("Incorrect input! Enter a number.").append(System.lineSeparator()).toString());
+                showError("Incorrect input! Enter a number." + System.lineSeparator());
             } finally {
                 sc.nextLine(); // Remove the \n from the buffer
             }
@@ -181,15 +179,17 @@ public class Menu {
     }
 
     /**
-     * @param list
+     * @param list of information.
      */
-    public void menuTrials(List<String> list) {
+    public void showList(List<String> list) {
         int max = list.size();
+
         for (int i = 0; i < max; i++) {
-            System.out.println(new StringBuilder("\t" + (i + 1)).append(") ").append(list.get(i)));
+            System.out.println("\t" + (i + 1) + ") " + list.get(i));
         }
+
         System.out.println();
-        System.out.println(new StringBuilder("\t" + (max + 1)).append(") Back").append(System.lineSeparator()));
+        System.out.println("\t" + (max + 1) + ") Back" + System.lineSeparator());
     }
 
     /**
@@ -199,7 +199,7 @@ public class Menu {
         int max = list.size();
         System.out.println("\t--- Trials ---" + System.lineSeparator());
         for (int i = 0; i < max; i++) {
-            System.out.println(new StringBuilder("\t" + (i + 1)).append(") ").append(list.get(i)));
+            System.out.println("\t" + (i + 1) + ") " + list.get(i));
         }
     }
 
@@ -207,9 +207,8 @@ public class Menu {
      * @param list that is displayed on the screen.
      */
     public void showListEditionByYear(List<String> list) {
-        int size = list.size();
-        for (int i = 0; i < size; i++) {
-            System.out.println(list.get(i));
+        for (String s : list) {
+            System.out.println(s);
         }
     }
 }

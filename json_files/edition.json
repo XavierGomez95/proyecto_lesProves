@@ -2,10 +2,11 @@
   {
     "year": 2022,
     "numPlayers": 5,
-    "numTrials": 3,
+    "numTrials": 4,
     "nameTrials": [
       "Submitting to OOPD",
-      "Studying the MPWAR",
+      "Advances in Provably Dense Superstructures",
+      "Advances in Provably Dense Superstructures",
       "MH Request in POO"
     ]
   }

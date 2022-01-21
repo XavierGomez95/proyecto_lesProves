@@ -1,7 +1,6 @@
 package presentation;
 
 import business.EditionManager;
-import business.ExecutionManager;
 import business.TrialManager;
 import business.Edition;
 import business.trial.Trial;
@@ -80,8 +79,6 @@ public class CompositorController {
                 }
             } while (!(option.equals("a") || option.equals("b") || option.equals("c") || option.equals("d") || option.equals("e")));
 
-            //menu.createNewLine();
-
             switch (option) {
                 case "a" -> createEdition();
                 case "b" -> listEdition();
@@ -94,7 +91,7 @@ public class CompositorController {
 
     /**
      * {@link Menu#createNewLine()}, {@link Menu#showMessage(String)}, {@link Menu#showSuccess(String)},
-     * {@link #askNumber(String, String, long, long)}, {@link Menu#menuTrials(List)}, {@link Menu#askInteger(String)},
+     * {@link #askNumber(String, String, long, long)}, {@link Menu#showList(List)}, {@link Menu#askInteger(String)},
      * {@link EditionManager#deleteEdition(int, int)},.
      * Delete an edition.
      */
@@ -105,7 +102,7 @@ public class CompositorController {
             menu.createNewLine();
             menu.showMessage("Which edition do you want to delete?");
             menu.createNewLine();
-            menu.menuTrials(list); // 4.3.2.3
+            menu.showList(list); // 4.3.2.3
 
             int size = list.size() + 1;
             int option = (int) askNumber("Enter an option: ",
@@ -117,11 +114,10 @@ public class CompositorController {
 
                 boolean deleted = editionManager.deleteEdition(option - 1, year);
 
+                menu.createNewLine();
                 if (deleted) {
-                    menu.createNewLine();
                     menu.showSuccess("The edition was successfully deleted!");
                 } else {
-                    menu.createNewLine();
                     menu.showSuccess("The edition has not been deleted!");
                 }
             }
@@ -130,7 +126,7 @@ public class CompositorController {
 
     /**
      * {@link Menu#createNewLine()}, {@link Menu#showError(String)}, {@link #askNumber(String, String, long, long)},
-     * {@link Menu#menuTrials(List)}, {@link Menu#showMessage(String)},
+     * {@link Menu#showList(List)}, {@link Menu#showMessage(String)},
      * {@link EditionManager#duplicateEdition(int, int, int)}, {@link EditionManager#isCoincident(int)}.
      * Duplicate an editions.
      */
@@ -141,7 +137,7 @@ public class CompositorController {
             menu.createNewLine();
             menu.showMessage("Which edition do you want to clone?");
             menu.createNewLine();
-            menu.menuTrials(list); // 4.3.2.3
+            menu.showList(list); // 4.3.2.3
 
             int size = list.size() + 1;
             int option = (int) askNumber("Enter an option: ",
@@ -177,7 +173,7 @@ public class CompositorController {
 
     /**
      * {@link Menu#createNewLine()}, {@link Menu#showError(String)}, {@link #askNumber(String, String, long, long)},
-     * {@link Menu#menuTrials(List)}, {@link Menu#showMessage(String)},
+     * {@link Menu#showList(List)}, {@link Menu#showMessage(String)},
      * {@link Menu#showListEditionByYear(List)}, {@link EditionManager#getYearEditionInfo(int, TrialManager)}.
      * List editions.
      */
@@ -187,14 +183,13 @@ public class CompositorController {
             menu.createNewLine();
             menu.showMessage("Here are the current editions, do you want to see more details or go back?");
             menu.createNewLine();
-            menu.menuTrials(listEditions); // 4.3.2.2
+            menu.showList(listEditions); // 4.3.2.2
 
             int size = listEditions.size() + 1;
             int option = (int) askNumber("Enter an option: ",
                     "Enter a correct option between " + 1 + " and " + size, 1, size);
             if (option <= size) {
                 List<String> listEditionsInfo = editionManager.getYearEditionInfo(option - 1, trialManager);
-                //menu.createNewLine();
                 menu.showListEditionByYear(listEditionsInfo);
             }
         } else {
@@ -475,7 +470,7 @@ public class CompositorController {
 
     /**
      * {@link Menu#showMessage(String)}, {@link Menu#createNewLine()}, {@link TrialManager#trialListNames()},
-     * {@link Menu#menuTrials(List)}, {@link Menu#showError(String)}, {@link TrialManager#trialStringInfo(int)},
+     * {@link Menu#showList(List)}, {@link Menu#showError(String)}, {@link TrialManager#trialStringInfo(int)},
      * {@link #askNumber(String, String, long, long)}.
      * Controls all the methods around the listTrial option.
      */
@@ -490,11 +485,11 @@ public class CompositorController {
         backOption = listNames.size() + 1;
 
         if (!listNames.isEmpty()) {
-            menu.menuTrials(listNames);
+            menu.showList(listNames);
 
             do {
-                inputOption = (int) askNumber("Enter an option: ",  new StringBuilder("Incorrect input. Enter a number between ")
-                        .append(1).append(" and ").append(backOption).toString(), 1, backOption);
+                inputOption = (int) askNumber("Enter an option: ", "Incorrect input. Enter a number between " +
+                        1 + " and " + backOption, 1, backOption);
             } while (inputOption > backOption || inputOption < 1);
 
             if (inputOption != backOption) {
@@ -510,7 +505,7 @@ public class CompositorController {
     }
 
     /**
-     * {@link Menu#showMessage(String)}, {@link Menu#createNewLine()}, {@link Menu#menuTrials(List)},
+     * {@link Menu#showMessage(String)}, {@link Menu#createNewLine()}, {@link Menu#showList(List)},
      * {@link Menu#askInteger(String)}, {@link Menu#askString(String)}, {@link Menu#showError(String)},
      * {@link EditionManager#dependentTrial(String)}, {@link TrialManager#deleteTrial(int, String)}.
      * Controls all the methods around the deleteTrial option.
@@ -523,7 +518,7 @@ public class CompositorController {
         menu.createNewLine();
 
         if (!list.isEmpty()) {
-            menu.menuTrials(list); // 4.3.1.3
+            menu.showList(list); // 4.3.1.3
             do {
                 indexTrialToDelete = menu.askInteger("Enter an option: ");
                 if (indexTrialToDelete <= list.size() && indexTrialToDelete > 0) {
@@ -536,11 +531,10 @@ public class CompositorController {
 
                         boolean deleted = trialManager.deleteTrial(indexTrialToDelete - 1, trialsName);
 
+                        menu.createNewLine();
                         if (deleted) {
-                            menu.createNewLine();
                             menu.showSuccess("The trial was successfully deleted.");
                         } else {
-                            menu.createNewLine();
                             menu.showError("The trial has not been successfully deleted.");
                         }
                     }
