@@ -1,0 +1,8 @@
+unnamed package
+business
+business.player
+business.trial
+persistence.editiondao
+persistence.executionDAO
+persistence.trialdao
+presentation
