@@ -48,8 +48,6 @@ public class JsonTrialDAO implements TrialDAO {
             addToArray(t);
         }
         writeArrays();
-
-
     }
 
     /**

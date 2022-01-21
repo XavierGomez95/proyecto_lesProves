@@ -88,30 +88,6 @@ public class Player {
     }
 
     /**
-     * To read from csv
-     *
-     * @param line line with all Player Objects saved in csv
-     * @return ArrayList of Players
-     */
-    public static ArrayList<Player> fromLine(String line) {
-        String[] arrayPlayers = line.split("}");
-        ArrayList<Player> players = new ArrayList<>();
-
-        for (String player : arrayPlayers) {
-            player = player.substring(1);
-            player = player.replace("{", "");
-            String name = player.split(",")[0];
-            int pi = Integer.parseInt(player.split(",")[1]);
-            boolean alive = Boolean.parseBoolean(player.split(",")[2]);
-            String type = player.split(",")[3];
-
-            players.add(new Player(name, pi, alive, type));
-        }
-        return players;
-    }
-
-
-    /**
      * Gets info to write in csv files
      *
      * @return String line with all Player information
@@ -188,7 +164,34 @@ public class Player {
         return pi > summation;
     }
 
+    /**
+     *
+     * @return true (if player is alive), false (if not).
+     */
     public boolean isAlive() {
         return alive;
+    }
+
+    /**
+     * To read from csv
+     *
+     * @param line line with all Player Objects saved in csv
+     * @return ArrayList of Players
+     */
+    public static ArrayList<Player> fromLine(String line) {
+        String[] arrayPlayers = line.split("}");
+        ArrayList<Player> players = new ArrayList<>();
+
+        for (String player : arrayPlayers) {
+            player = player.substring(1);
+            player = player.replace("{", "");
+            String name = player.split(",")[0];
+            int pi = Integer.parseInt(player.split(",")[1]);
+            boolean alive = Boolean.parseBoolean(player.split(",")[2]);
+            String type = player.split(",")[3];
+
+            players.add(new Player(name, pi, alive, type));
+        }
+        return players;
     }
 }
