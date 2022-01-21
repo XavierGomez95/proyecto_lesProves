@@ -17,56 +17,48 @@ public class TrialManager {
      * @param trialName             name of a public article trial type.
      * @param magazinesName         name of a magazine.
      * @param quartile              String representin a quartile (Q1, Q2, Q3 or Q4).
-     * @param acceptanceProbability probability (integer between 0 and 100 including both)
-     * @param revisionProbability   probability (integer between 0 and 100 including both)
-     * @param rejectionProbability  probability (integer between 0 and 100 including both)
-     * @return a new instance of PublicArticle.
+     * @param acceptanceProbability probability (integer between 0 and 100 including both).
+     * @param revisionProbability   probability (integer between 0 and 100 including both).
+     * @param rejectionProbability  probability (integer between 0 and 100 including both).
      */
-    public PublicArticle createArticle(String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+    public void createArticle(String trialName, String magazinesName, String quartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
         PublicArticle publicArticle = new PublicArticle(magazinesName, quartile, acceptanceProbability, revisionProbability, rejectionProbability, trialName);
         trials.add(publicArticle);
-        return publicArticle;
     }
 
     /**
      * @param trialName             name of a master trial type.
      * @param mastersName           name of a master.
      * @param ectsNumber            number of credits of a master (between 60 and 120 including both).
-     * @param creditPassProbability probability (integer between 0 and 100 including both)
-     * @return a new instance of StudyMaster.
+     * @param creditPassProbability probability (integer between 0 and 100 including both).
      */
-    public StudyMaster createMaster(String trialName, String mastersName, int ectsNumber, int creditPassProbability) {
+    public void createMaster(String trialName, String mastersName, int ectsNumber, int creditPassProbability) {
         StudyMaster studyMaster = new StudyMaster(trialName, mastersName, ectsNumber, creditPassProbability);
         trials.add(studyMaster);
-        return studyMaster;
     }
 
     /**
      * @param trialName         name of a PhD Defense trial type.
      * @param fieldOfStudy      name of a field of study.
      * @param defenseDifficulty an integer representing the defense difficulty of a PhD Defense (between 1 and 10).
-     * @return a new instance of PhDefense.
      */
-    public PhDefense createPHD(String trialName, String fieldOfStudy, int defenseDifficulty) {
+    public void createPHD(String trialName, String fieldOfStudy, int defenseDifficulty) {
         PhDefense phDefense = new PhDefense(trialName, fieldOfStudy, defenseDifficulty);
         trials.add(phDefense);
-        return phDefense;
     }
 
     /**
      * @param trialName    name of a budget request trial type.
      * @param entityName   name of an entity name.
      * @param budgetAmount long type representing a budget amount (between 1000 and 2000000000 including both).
-     * @return a new instance of BudgetRequest.
      */
-    public BudgetRequest createBudgetRequest(String trialName, String entityName, long budgetAmount) {
+    public void createBudgetRequest(String trialName, String entityName, long budgetAmount) {
         BudgetRequest budgetRequest = new BudgetRequest(trialName, entityName, budgetAmount);
         trials.add(budgetRequest);
-        return budgetRequest;
     }
 
     /**
-     * {@link Trial#getName()}
+     * {@link Trial#getName()}.
      *
      * @return a list of names, one for each trial.
      */
@@ -95,8 +87,9 @@ public class TrialManager {
     }
 
     /**
-     * @return a list of a specific trial.
      * {@link Trial#listInfo()}
+     *
+     * @return a list of a specific trial.
      */
     public String trialStringInfo(int index) {
         String list = "";

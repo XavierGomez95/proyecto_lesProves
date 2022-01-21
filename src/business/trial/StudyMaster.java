@@ -1,7 +1,6 @@
 package business.trial;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class StudyMaster extends Trial {
     private String masterName;

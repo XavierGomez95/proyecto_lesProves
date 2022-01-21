@@ -1,6 +1,5 @@
 package business.trial;
 
-
 public abstract class Trial {
     protected String name;
 

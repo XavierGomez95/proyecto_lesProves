@@ -3,7 +3,6 @@ package business.player;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Player {
     private String name;
     protected int pi;

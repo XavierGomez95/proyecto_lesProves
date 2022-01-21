@@ -1,6 +1,5 @@
 package persistence.trialdao;
 
-import business.Edition;
 import business.trial.*;
 import com.google.gson.*;
 

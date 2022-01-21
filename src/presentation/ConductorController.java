@@ -29,12 +29,10 @@ public class ConductorController {
     public void run() {
         menu.createNewLine();
         menu.showMessage("Entering execution mode...");
-        //menu.createNewLine();
         if (editionManager.isCoincident(YEAR)) {
             boolean exist = executionManager.checkCurrentYear();
             menu.createNewLine();
             menu.showMessage("--- The Trials " + YEAR + " ---");
-            //menu.createNewLine();
             if (!exist) {
                 addPlayers();
                 execute();
@@ -103,7 +101,7 @@ public class ConductorController {
             askToContinue();
         } else {
             executionManager.finishExecution();
-            executionManager.finishThreads(); // TODO - COMPROBAR QUE LA INTERRUPCION DE LOS THREADS ES CORRECTA
+            executionManager.finishThreads();
             finishExecution();
         }
     }

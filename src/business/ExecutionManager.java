@@ -6,11 +6,10 @@ import business.trial.Trial;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ExecutionManager {
     private List<Execution> executions;
-    private Execution currentExecution;//la execution que estamos usando
+    private Execution currentExecution; // The execution we are using
 
 
     public ExecutionManager(List<Execution> executions) {
@@ -239,7 +238,6 @@ public class ExecutionManager {
         return playersAlive;
     }
 
-    // TODO - INTERRUPCION DE LOS THREADS
     /**
      * Interrupt the threads.
      */
